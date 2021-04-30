@@ -13,6 +13,8 @@ sample data of each task (Jim S).
 ## surveys 
 links here.
 
+Note you can clone these surveys @ https://surveylex.com
+
 ## assets
 links here / show them.
 
