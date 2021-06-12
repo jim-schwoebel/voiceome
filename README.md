@@ -1,5 +1,5 @@
 # voiceome
-The Voiceome is the largest clinical study in the world to collect voice data labeled with health information. More info @ https://www.voiceome.org/
+The Voiceome is the largest clinical study in the world to collect voice data labeled with health information. More info @ https://www.voiceome.org/ and [the wiki](https://github.com/jim-schwoebel/voiceome/wiki).
 
 ## background
 Why we created this study. 
