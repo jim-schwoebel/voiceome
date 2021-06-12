@@ -45,12 +45,59 @@ cd voiceome
 pip3 install -r requirements.txt
 ```
 
-You now can load the python script to call the references:
+You now can load the python script to call the protocol (.TXT) and references:
 ```
 import .scripts.references
 
-references.picture
-references.
+## protocols 
+Protocol URLs
+A-https://app.surveylex.com/surveys/e1f88ee0-a636-11eb-bcc9-eba67643f616
+B-https://app.surveylex.com/surveys/061da3f0-a637-11eb-bcc9-eba67643f616
+C-https://app.surveylex.com/surveys/a66494c0-a824-11ea-88c1-ab37bac1e1d4
+D-https://app.surveylex.com/surveys/53737620-a637-11eb-bcc9-eba67643f616
+
+## question text 
+0. Consent form
+-- get SurveyLex text 
+00. Microphone check task
+-- get SurveyLex text 
+01. Free speech task
+-- get SurveyLex text
+02. Picture description task
+-- get SurveyLex text
+03. Category naming task
+-- get SurveyLex text
+04. Letter {FAS} Tasks
+-- get SurveyLex text
+05. Paragraph reading task
+-- get SurveyLex text
+06. Sustained phonation ('ahh')
+-- get SurveyLex text
+07. Pa pa pa task
+-- get SurveyLex text
+08. Pa ta ka task
+-- get SurveyLex text
+09. Confrontational naming task
+-- get SurveyLex text
+10. Nonword task
+-- get SurveyLex text
+11. Immediate recall task
+-- get SurveyLex text
+12. Spoken diagnosis task
+-- get SurveyLex text
+13. Spoken medication task
+-- get SurveyLex text
+14. Confounding questions
+-- get SurveyLex text
+15. Demographic questions
+-- get SurveyLex text
+16. Health labels
+-- get SurveyLex text
+17. Fun Facts
+-- get SurveyLex text
+
+## references
+
 ```
 
 ## surveys 
