@@ -20,39 +20,9 @@ Therefore, the main goals of the Voiceome Study include:
 - **Creating an ethics framework** - Create a venue for legal, ethical, and security considerations for collecting voice data for health-related purposes. <em>This can be read in the [Voiceome strategic plan](https://drive.google.com/file/d/1Dme9tUq0eCepja_7Yg9sNqn_JWKaJxJm/view).</em>
 - **Build a lasting community** - The Voiceome project will foster a lasting community and enthusiasm for the field of vocal biomarkers in general. <em>We do this through writing textbooks like [Voice Computing in Python](https://neurolex.ai/voicebook), collaborating with research organizations like the University of Washington and Biogen, and through training fellows through the [Innovation Fellows Program](http://neurolex.ai/research).</em>
  
-## scripts
+## scripts 
 Here are list of scripts used to generate figures in the paper, so our work can be reproduced.
-### data cleaning
-Cleaning voice data from spreadsheets (table)
 
-| Script     |    Description   |   Utility |
-| ----------- | ----------- | ----------- |
-| test | test | test |
-
-### featurization
-We built some featurization scripts for figures in paper (table).
-
-| Script     |    Description   |   Utility |
-| ----------- | ----------- | ----------- |
-| test | test | test |
-
-
-### generating references 
-Age/gender-matched controls.
-
-| Script     |    Description   |   Utility |
-| ----------- | ----------- | ----------- |
-| test | test | test |
-
-
-### visualization
-Visualization scripts (table).
-
-| Script     |    Description   |   Utility |
-| ----------- | ----------- | ----------- |
-| test | test | test |
-
-## references 
 To load the reference data from Survey A, you can call a python script (load_references.py):
 
 ```
@@ -111,6 +81,9 @@ D-https://app.surveylex.com/surveys/53737620-a637-11eb-bcc9-eba67643f616
 -- get SurveyLex text
 17. Fun Facts
 -- get SurveyLex text
+
+## cleaning scripts 
+-- cleaning scripts here (mono 16000 Hz from Allie)
 
 ## featurizers 
 
@@ -184,6 +157,9 @@ Types of features include Acoustic (OPENSMILE GeMAPS + Prosody_Features) and Lin
 -- .JSON
 17. Fun Facts
 -- .JSON
+
+Visualizers 
+-- visualize scripts
 ```
 
 ## surveys 
