@@ -39,8 +39,8 @@ TBA
 
 -- sample data 
 
-## assets
-links here / show them.
-
 ## Cite us!!
-Provide citations here.
+Feel free to cite or work using the format below:
+```
+Citation TBA
+```
