@@ -8,6 +8,8 @@ More information about the Voiceome study can be found @ [the wiki](https://gith
 ## background/goals
 One of the primary causes of slow translation of voice biomarker research is a result of small datasets. There have been many research studies that have shown that acoustic or linguistic voice features relate to health conditions like stress, schizophrenia, depression, bipolar disorder, stroke, and cardiovascular diseases. However, many of these studies have relatively small sample sizes (N<1,000 patients in each class), suffer from poor audio quality (e.g. use of different microphones and data collection techniques), and are difficult to access (e.g. large licensing fees to corporations and/or difficulty obtaining IRB access without close academic ties). These factors dramatically limit the ability to model the underlying data and correlate voice data to health traits, replicate peer-reviewed publications, as well as open up this work to the broader scientific community.
 
+![](https://github.com/jim-schwoebel/voiceome/blob/main/assets/images/thumbnails/confounds.png?raw=true)
+
 Therefore, the main goals of the Voiceome Study include:
 
 - **Standardizing collection tools and features** - Standardize the tools and techniques used to collect and featurize voice samples for use in health-related research with [SurveyLex](https://surveylex.com), a web-enabled survey tool for vocal biomarker research.
