@@ -2,9 +2,7 @@
 The Voiceome is the largest clinical study in the world to collect voice data labeled with health information. More info @ https://www.voiceome.org/
 
 ## background
-The Voiceoeme is the largest clinical study in the world to collect voice data labeled with health information.
--- abstract 
--- background 
+Why we created this study. 
 
 ## scripts
 Here are list of scripts used to generate figures in the paper, so our work can be reproduced.
