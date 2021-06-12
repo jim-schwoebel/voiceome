@@ -212,8 +212,8 @@ Note you can clone these surveys @ https://surveylex.com and replicate our work 
 ## Cite us!!
 Feel free to cite or work using the format below:
 ```
-Schwoebel, James, et al. "The Voiceome Study: A Longitudinal Normative Dataset and Protocol for Speech and Language Biomarker Research 
-." Nature Methods. 2021.
+Schwoebel, James, et al. "The Voiceome Study: A Longitudinal Normative Dataset and 
+Protocol for Speech and Language Biomarker Research." Nature Methods. 2021.
 ```
 
 ## Data access
