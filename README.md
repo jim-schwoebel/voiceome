@@ -10,7 +10,7 @@ One of the primary causes of slow translation of voice biomarker research is a r
 
 This Voiceome study will translate the work of vocal biomarkers faster to patients. Our goals with the initiative are to reach 100,000 labeled speech samples with health information.
 
-## goals
+## overarching goals
 In a larger capacity, you'll help us:.
 
 - **Impact patients** - We can reduce up to 20,000 suicides and psychotic hospitalizations by 2023.
