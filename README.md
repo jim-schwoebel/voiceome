@@ -159,6 +159,10 @@ Visualizers
 -- visualize scripts
 ```
 
+## reference population
+Google analytics .png 
+Population statics via a table 
+
 ## surveys 
 Here are the 4 main surveys used in the Voiceome clinical study:
 
