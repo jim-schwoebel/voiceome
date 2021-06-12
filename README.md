@@ -1,9 +1,7 @@
 # voiceome
-The [Voiceome Study](https://www.voiceome.org/) is the world’s largest clinical study to collect voice information labeled with health traits. We have structured this clinical study as a 1 year ongoing competition with the goal to recruit between 10,000-100,000 patients into the study and track them at multiple time points. 
+The [Voiceome Study](https://www.voiceome.org/) is the world’s largest clinical study to collect voice information labeled with health traits. The goal is to recruit between 10,000-100,000 patients into the study and track them at multiple time points to advance scientific understanding for vocal biomarkers and speed up the process for its commercialization.
 
 [![](https://github.com/jim-schwoebel/voiceome/blob/main/assets/images/thumbnails/voiceome.png?raw=true)](https://www.youtube.com/watch?v=lCk_mffvJ0A&feature=emb_logo)
-
-Our mission is to foster an open environment to advance scientific understanding for vocal biomarkers and speed up the process for its commercialization.
 
 More information about the Voiceome study can be found @ [the wiki](https://github.com/jim-schwoebel/voiceome/wiki) and [website](https://voiceome.org).
 
