@@ -18,25 +18,30 @@ Age/gender-matched controls.
 Visualization scripts (table).
 
 ## references 
-sample data of each task (Jim S).
+To load the reference data from Survey A, you can call a python script (load_references.py):
+
+```
+import references
+
+references('free')
+
+...
+```
 
 ## surveys 
 Note you can clone these surveys @ https://surveylex.com
 
-### Survey A
+### [Survey A](https://app.surveylex.com/surveys/e1f88ee0-a636-11eb-bcc9-eba67643f616)
 ![](https://github.com/jim-schwoebel/voiceome/blob/main/assets/images/A/A.gif)
--- sample data
-### Survey B
+
+### [Survey B](https://app.surveylex.com/surveys/061da3f0-a637-11eb-bcc9-eba67643f616)
 ![](https://github.com/jim-schwoebel/voiceome/blob/main/assets/images/B/B.gif)
--- sample data 
 
-### Survey C
+### [Survey C](https://app.surveylex.com/surveys/a66494c0-a824-11ea-88c1-ab37bac1e1d4)
 ![](https://github.com/jim-schwoebel/voiceome/blob/main/assets/images/C/C.gif)
--- sample data 
 
-### Survey D
+### [Survey D](https://app.surveylex.com/surveys/53737620-a637-11eb-bcc9-eba67643f616)
 ![](https://github.com/jim-schwoebel/voiceome/blob/main/assets/images/D/D.gif)
--- sample data 
 
 ## Cite us!!
 Feel free to cite or work using the format below:
