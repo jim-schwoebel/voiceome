@@ -209,13 +209,7 @@ Data is accessible via a commercial license.
 If you are interested to license or access the Voiceome dataset, please reach out to Jim Schwoebel (VP of Data and Research @ Sonde) @ jim.schwoebel@gmail.com.
 
 ## References
-General references 
-- [Allie ML repository](https://github.com/jim-schwoebel/allie)
-- [Voicebook](https://github.com/jim-schwoebel/voicebook)
-- [SurveyLex](https://surveylex.com)
-- [OpenSmile GeMAPS](https://sail.usc.edu/publications/files/eyben-preprinttaffc-2015.pdf)
-
-Protocols
+Voice Protocols
 - [00. Microphone check task](https://github.com/jim-schwoebel/voiceome/wiki/00.-Microphone-check-task)
 - [01. Free speech task](https://github.com/jim-schwoebel/voiceome/wiki/01.-Free-speech-task)
 - [02. Picture description task](https://github.com/jim-schwoebel/voiceome/wiki/02.-Picture-description-task)
@@ -231,7 +225,7 @@ Protocols
 - [12. Spoken diagnosis task](https://github.com/jim-schwoebel/voiceome/wiki/12.-Spoken-diagnosis-task)
 - [13. Spoken medication task](https://github.com/jim-schwoebel/voiceome/wiki/13.-Spoken-medication-task)
 
-Health labels
+Health questionniares 
 - [Confounding quetsions](https://github.com/jim-schwoebel/voiceome/wiki/14.-Confounding-questions)
 - [Demographic questions](https://github.com/jim-schwoebel/voiceome/wiki/15.-Demographic-questions)
 - [Custom lichert scales](https://github.com/jim-schwoebel/voiceome/wiki/16.-Health-labels#lichert-questions-custom-made)
@@ -249,3 +243,9 @@ Synergistic datasets
 - [Voice_datasets repo](https://github.com/jim-schwoebel/voice_datasets)
 - [Coswara]()
 - [mPower]()
+
+Other references 
+- [Allie ML repository](https://github.com/jim-schwoebel/allie)
+- [Voicebook](https://github.com/jim-schwoebel/voicebook)
+- [SurveyLex](https://surveylex.com)
+- [OpenSmile GeMAPS](https://sail.usc.edu/publications/files/eyben-preprinttaffc-2015.pdf)
