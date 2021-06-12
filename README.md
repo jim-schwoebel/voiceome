@@ -3,19 +3,21 @@ The [Voiceome Study](https://www.voiceome.org/) is the world’s largest clinica
 
 [![](https://github.com/jim-schwoebel/voiceome/blob/main/assets/images/thumbnails/voiceome.png?raw=true)](https://www.youtube.com/watch?v=lCk_mffvJ0A&feature=emb_logo)
 
+Our mission is to foster an open environment to advance scientific understanding for vocal biomarkers and speed up the process for its commercialization.
+
 More information about the Voiceome study can be found @ [the wiki](https://github.com/jim-schwoebel/voiceome/wiki) and [website](https://voiceome.org).
 
-## background
+## background/goals
 One of the primary causes of slow translation of voice biomarker research is a result of small datasets. There have been many research studies that have shown that acoustic or linguistic voice features relate to health conditions like stress, schizophrenia, depression, bipolar disorder, stroke, and cardiovascular diseases. However, many of these studies have relatively small sample sizes (N<1,000 patients in each class), suffer from poor audio quality (e.g. use of different microphones and data collection techniques), and are difficult to access (e.g. large licensing fees to corporations and/or difficulty obtaining IRB access without close academic ties). These factors dramatically limit the ability to model the underlying data and correlate voice data to health traits, replicate peer-reviewed publications, as well as open up this work to the broader scientific community.
 
-This Voiceome study will translate the work of vocal biomarkers faster to patients. Our goals with the initiative are to reach 100,000 labeled speech samples with health information.
+The main goals of the Voiceome Study include:
 
-## overarching goals
-In a larger capacity, you'll help us:.
-
-- **Impact patients** - We can reduce up to 20,000 suicides and psychotic hospitalizations by 2023.
-- **Make new scientific discoveries** - We can discover up to 50 new health correlations that we have never discovered (e.g. sleeping disorder biomarkers in the voice), which can lead to follow-on studies within industry and academia alike
-- **Improve clinical workflows** - Our work fits within the collaborative care in medicine, with primary care physicians taking an instrumental role in referring at-risk patients to psychiatrists sooner - ultimately reducing the burden of mental illness through earlier, simpler interventions with fewer side effects.
+- **Standardizing collection tools and features** - Standardize the tools and techniques used to collect and featurize voice samples for use in health-related research with [SurveyLex](https://surveylex.com), a web-enabled survey tool for vocal biomarker research.
+- **Establishing reference ranges** - Create a standard set of normative ranges of features across various ages, genders, microphone types, and dialects labeled with health information
+- **Standardizing voice survey methodology** - Standardize the series of voice tasks used to collect speech samples for use in the voiceome.
+- **Standardizing health trait labels** - Standardize the type of health trait labels tied to voice information to emit the most signal from the voice.
+- **Creating machine learning models** - From Voiceome Study dataset, build and optimize novel machine learning models; to publish this work in academic journals openly.
+- **Creating an ethics framework** - Create a venue for legal, ethical, and security considerations for collecting voice data for health-related purposes.
 - **Build a lasting community** - The Voiceome project will foster a lasting community and enthusiasm for the field of vocal biomarkers in general.
  
 ## scripts
