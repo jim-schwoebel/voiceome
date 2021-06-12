@@ -8,12 +8,33 @@ Why we created this study.
 Here are list of scripts used to generate figures in the paper, so our work can be reproduced.
 ### data cleaning
 Cleaning voice data from spreadsheets (table)
+
+| Script     |    Description   |   Utility |
+| ----------- | ----------- | ----------- |
+| test | test | test |
+
 ### featurization
 We built some featurization scripts for figures in paper (table).
+
+| Script     |    Description   |   Utility |
+| ----------- | ----------- | ----------- |
+| test | test | test |
+
+
 ### generating references 
 Age/gender-matched controls.
+
+| Script     |    Description   |   Utility |
+| ----------- | ----------- | ----------- |
+| test | test | test |
+
+
 ### visualization
 Visualization scripts (table).
+
+| Script     |    Description   |   Utility |
+| ----------- | ----------- | ----------- |
+| test | test | test |
 
 ## references 
 To load the reference data from Survey A, you can call a python script (load_references.py):
