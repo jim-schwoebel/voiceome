@@ -221,7 +221,18 @@ Protocols
 - [Picture_description]()
 - [Freespeech]()
 
-Datasets
+Health labels
+- [PHQ-9](https://www.mdcalc.com/phq-9-patient-health-questionnaire-9)
+- [GAD-7](https://patient.info/doctor/generalised-anxiety-disorder-assessment-gad-7)
+- [Altman Self-rating scale](https://psychology-tools.com/test/altman-self-rating-mania-scale)
+- [Audit-C](https://www.mdcalc.com/audit-c-alcohol-use)
+- [Sheehan disability scale](http://memorialparkpsychiatry.com/doc/sheehan_disability_scale.pdf)
+- [ADHD Self-rating Scale - Part A](https://psychology-tools.com/test/adult-adhd-self-report-scale)
+- [Insomnia Severity Index](https://www.ons.org/sites/default/files/InsomniaSeverityIndex_ISI.pdf)
+- [Stanford Sleepiness Scale](https://www.med.upenn.edu/cbti/assets/user-content/documents/Stanford%20Sleepiness%20Scale.pdf)
+- [PTSD-5](https://www.ptsd.va.gov/professional/assessment/documents/pc-ptsd5-screen.pdf)
+
+Synergistic datasets
 - [Voice_datasets repo](https://github.com/jim-schwoebel/voice_datasets)
 - [Coswara]()
 - [mPower]()
