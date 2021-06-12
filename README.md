@@ -40,11 +40,9 @@ Visualization scripts (table).
 To load the reference data from Survey A, you can call a python script (load_references.py):
 
 ```
-import references
-
-references('free')
-
-...
+git clone {}
+cd 
+python3 ___ --reference {}
 ```
 
 ## surveys 
