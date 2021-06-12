@@ -280,14 +280,10 @@ Health questionniares
 - [Stanford Sleepiness Scale](https://www.med.upenn.edu/cbti/assets/user-content/documents/Stanford%20Sleepiness%20Scale.pdf)
 - [PTSD-5](https://www.ptsd.va.gov/professional/assessment/documents/pc-ptsd5-screen.pdf)
 
-Synergistic datasets
-- [Voice_datasets repo](https://github.com/jim-schwoebel/voice_datasets)
-- [Coswara]()
-- [mPower]()
-
 Other references 
 - [Allie ML repository](https://github.com/jim-schwoebel/allie)
 - [Voicebook](https://github.com/jim-schwoebel/voicebook)
 - [SurveyLex](https://surveylex.com)
 - [OpenSmile GeMAPS](https://sail.usc.edu/publications/files/eyben-preprinttaffc-2015.pdf)
 - [Voiceome strategic plan](https://drive.google.com/file/d/1Dme9tUq0eCepja_7Yg9sNqn_JWKaJxJm/view)
+- [Voice_datasets repo](https://github.com/jim-schwoebel/voice_datasets)
