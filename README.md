@@ -43,7 +43,14 @@ To load the reference data from Survey A, you can call a python script (load_ref
 git clone git@github.com:jim-schwoebel/voiceome.git
 cd voiceome
 pip3 install -r requirements.txt
-python3 ___ --reference {}
+```
+
+You now can load the python script to call the references:
+```
+import .scripts.references
+
+references.picture
+references.
 ```
 
 ## surveys 
