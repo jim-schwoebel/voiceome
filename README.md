@@ -209,8 +209,8 @@ Note you can clone these surveys @ https://surveylex.com and replicate our work 
 ### [Survey D](https://app.surveylex.com/surveys/53737620-a637-11eb-bcc9-eba67643f616)
 ![](https://github.com/jim-schwoebel/voiceome/blob/main/assets/images/D/D.gif)
 
-## Cite us!!
-Feel free to cite or work using the format below:
+## Cite us
+If you incorporate our work in your research, feel free to reference us with the APA format below:
 ```
 Schwoebel, James, et al. "The Voiceome Study: A Longitudinal Normative Dataset and Protocol for Speech and Language Biomarker Research." Nature Methods. 2021.
 ```
