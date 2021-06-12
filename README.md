@@ -96,6 +96,79 @@ D-https://app.surveylex.com/surveys/53737620-a637-11eb-bcc9-eba67643f616
 17. Fun Facts
 -- get SurveyLex text
 
+## featurizers 
+
+Take in audio and get back feature embeddings / quality checks for each task per the paper implementations.
+
+00. Microphone check task
+-- .JSON
+01. Free speech task
+-- .JSON
+02. Picture description task
+-- .JSON
+03. Category naming task
+-- .JSON
+04. Letter {FAS} Tasks
+-- .JSON
+05. Paragraph reading task
+-- .JSON
+06. Sustained phonation ('ahh')
+-- .JSON
+07. Pa pa pa task
+-- .JSON
+08. Pa ta ka task
+-- .JSON
+09. Confrontational naming task
+-- .JSON
+10. Nonword task
+-- .JSON
+11. Immediate recall task
+-- .JSON
+12. Spoken diagnosis task
+-- .JSON
+13. Spoken medication task
+-- .JSON
+
+## references 
+Types of features include Acoustic (OPENSMILE GeMAPS + Prosody_Features) and Linguistic (Features in Allie here)
+
+00. Microphone check task
+-- .JSON
+01. Free speech task
+-- .JSON
+02. Picture description task
+-- .JSON
+03. Category naming task
+-- .JSON
+04. Letter {FAS} Tasks
+-- .JSON
+05. Paragraph reading task
+-- .JSON
+06. Sustained phonation ('ahh')
+-- .JSON
+07. Pa pa pa task
+-- .JSON
+08. Pa ta ka task
+-- .JSON
+09. Confrontational naming task
+-- .JSON
+10. Nonword task
+-- .JSON
+11. Immediate recall task
+-- .JSON
+12. Spoken diagnosis task
+-- .JSON
+13. Spoken medication task
+-- .JSON
+14. Confounding questions
+-- .JSON
+15. Demographic questions
+-- .JSON
+16. Health labels
+-- .JSON
+17. Fun Facts
+-- .JSON
+
 ## references
 
 ```
