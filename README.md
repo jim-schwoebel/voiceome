@@ -58,6 +58,10 @@ Feel free to cite or work using the format below:
 Citation TBA
 ```
 
+## Data access
+
+Data is accessible via a commercial license. If you are interested to license or access the Voiceome dataset, please reach out to Jim Schwoebel @ jim.schwoebel@gmail.com
+
 ## References
 General references 
 - [Allie ML repository](https://github.com/jim-schwoebel/allie)
