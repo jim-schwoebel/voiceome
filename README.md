@@ -3,9 +3,19 @@ The Voiceome is the largest clinical study in the world to collect voice data la
 
 ## background
 The Voiceoeme is the largest clinical study in the world to collect voice data labeled with health information.
+-- abstract 
+-- background 
 
-## featurizations scripts
-We built some featurization scripts to help reproduce our work in the paper.
+## scripts
+Here are list of scripts used to generate figures in the paper, so our work can be reproduced.
+### data cleaning
+Cleaning voice data from spreadsheets (table)
+### featurization
+We built some featurization scripts for figures in paper (table).
+### generating references 
+Age/gender-matched controls.
+### visualization
+Visualization scripts (table).
 
 ## sample data / features 
 sample data of each task (Jim S).
