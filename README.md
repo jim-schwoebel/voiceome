@@ -1,5 +1,5 @@
 # voiceome
-The Voiceome Study is the world’s largest clinical study to collect voice information labeled with health traits. We have structured this trial as a 1 year ongoing competition with the goal to recruit between 10,000-100,000 patients into the study and track them weekly for a month. This will allow for calculations of voice task inter- and intra-individual variability and build machine learning models for a wide variety of labels. It will also lay out the limitations and opportunities for voice biomarker research into the future.
+The Voiceome Study is the world’s largest clinical study to collect voice information labeled with health traits. We have structured this clinical study as a 1 year ongoing competition with the goal to recruit between 10,000-100,000 patients into the study and track them at multiple time points. 
 
 ![](https://www.youtube.com/watch?v=lCk_mffvJ0A&feature=emb_logo)
 
