@@ -263,3 +263,4 @@ Other references
 - [Voicebook](https://github.com/jim-schwoebel/voicebook)
 - [SurveyLex](https://surveylex.com)
 - [OpenSmile GeMAPS](https://sail.usc.edu/publications/files/eyben-preprinttaffc-2015.pdf)
+- [Voiceome strategic plan](https://drive.google.com/file/d/1Dme9tUq0eCepja_7Yg9sNqn_JWKaJxJm/view)
