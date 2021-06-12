@@ -168,9 +168,6 @@ Types of features include Acoustic (OPENSMILE GeMAPS + Prosody_Features) and Lin
 -- .JSON
 17. Fun Facts
 -- .JSON
-
-## references
-
 ```
 
 ## surveys 
