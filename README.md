@@ -216,10 +216,20 @@ General references
 - [OpenSmile GeMAPS](https://sail.usc.edu/publications/files/eyben-preprinttaffc-2015.pdf)
 
 Protocols
-- [Nonwords]()
-- [BNT_images]()
-- [Picture_description]()
-- [Freespeech]()
+- [00. Microphone check task]()
+- [01. Free speech task]()
+- [02. Picture description task]()
+- [03. Category naming task]()
+- [04. Letter {FAS} Tasks]()
+- [05. Paragraph reading task]()
+- [06. Sustained phonation ('ahh')]()
+- [07. Pa pa pa task]()
+- [08. Pa ta ka task]()
+- [09. Confrontational naming task]()
+- [10. Nonword task]()
+- [11. Immediate recall task]()
+- [12. Spoken diagnosis task]()
+- [13. Spoken medication task]()
 
 Health labels
 - [PHQ-9](https://www.mdcalc.com/phq-9-patient-health-questionnaire-9)
