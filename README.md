@@ -46,7 +46,20 @@ Citation TBA
 ```
 
 ## References
+General references 
 - [Allie ML repository](https://github.com/jim-schwoebel/allie)
 - [Voicebook](https://github.com/jim-schwoebel/voicebook)
 - [SurveyLex](https://surveylex.com)
 - [OpenSmile GeMAPS](https://sail.usc.edu/publications/files/eyben-preprinttaffc-2015.pdf)
+
+Protocols
+- [Nonwords]()
+- [BNT_images]()
+- [Picture_description]()
+- [Freespeech]()
+
+Datasets
+- [Coswara]()
+- [mPower]()
+
+
