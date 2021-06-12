@@ -40,7 +40,7 @@ Visualization scripts (table).
 To load the reference data from Survey A, you can call a python script (load_references.py):
 
 ```
-git clone {}
+git clone git@github.com:jim-schwoebel/voiceome.git
 cd 
 python3 ___ --reference {}
 ```
