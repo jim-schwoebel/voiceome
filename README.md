@@ -44,3 +44,9 @@ Feel free to cite or work using the format below:
 ```
 Citation TBA
 ```
+
+## References
+- [Allie ML repository](https://github.com/jim-schwoebel/allie)
+- [Voicebook](https://github.com/jim-schwoebel/voicebook)
+- [SurveyLex](https://surveylex.com)
+- [OpenSmile GeMAPS](https://sail.usc.edu/publications/files/eyben-preprinttaffc-2015.pdf)
