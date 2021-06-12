@@ -20,11 +20,8 @@ Therefore, the main goals of the Voiceome Study include:
 - **Creating an ethics framework** - Create a venue for legal, ethical, and security considerations for collecting voice data for health-related purposes. <em>This can be read in the [Voiceome strategic plan](https://drive.google.com/file/d/1Dme9tUq0eCepja_7Yg9sNqn_JWKaJxJm/view).</em>
 - **Build a lasting community** - The Voiceome project will foster a lasting community and enthusiasm for the field of vocal biomarkers in general. <em>We do this through writing textbooks like [Voice Computing in Python](https://neurolex.ai/voicebook), collaborating with research organizations like the University of Washington and Biogen, and through training fellows through the [Innovation Fellows Program](http://neurolex.ai/research).</em>
  
-## scripts 
-Here are list of scripts used to generate figures in the paper, so our work can be reproduced.
-
-To load the reference data from Survey A, you can call a python script (load_references.py):
-
+## Getting started
+To get started, clone this repository:
 ```
 git clone git@github.com:jim-schwoebel/voiceome.git
 cd voiceome
