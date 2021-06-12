@@ -267,7 +267,7 @@ Voice Protocols
 - [13. Spoken medication task](https://github.com/jim-schwoebel/voiceome/wiki/13.-Spoken-medication-task)
 
 Health questionniares 
-- [Confounding quetsions](https://github.com/jim-schwoebel/voiceome/wiki/14.-Confounding-questions)
+- [Confounding questions](https://github.com/jim-schwoebel/voiceome/wiki/14.-Confounding-questions)
 - [Demographic questions](https://github.com/jim-schwoebel/voiceome/wiki/15.-Demographic-questions)
 - [Custom lichert scales](https://github.com/jim-schwoebel/voiceome/wiki/16.-Health-labels#lichert-questions-custom-made)
 - [PHQ-9](https://www.mdcalc.com/phq-9-patient-health-questionnaire-9)
