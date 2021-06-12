@@ -16,7 +16,7 @@ Note you can clone these surveys @ https://surveylex.com
 ### Survey A
 ![](https://github.com/jim-schwoebel/voiceome/blob/main/assets/images/A/A.gif)
 ### Survey B
-TBA
+![](https://github.com/jim-schwoebel/voiceome/blob/main/assets/images/B/B.gif)
 ### Survey C
 TBA
 ### Survey D
