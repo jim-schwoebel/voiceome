@@ -11,8 +11,8 @@ One of the primary causes of slow translation of voice biomarker research is a r
 Therefore, the main goals of the Voiceome Study include:
 
 - **Standardizing collection tools and features** - Standardize the tools and techniques used to collect and featurize voice samples for use in health-related research with [SurveyLex](https://surveylex.com), a web-enabled survey tool for vocal biomarker research.
-- **Establishing reference ranges** - Create a standard set of normative ranges of features across various ages, genders, microphone types, and dialects labeled with health information
-- **Standardizing voice survey methodology** - Standardize the series of voice tasks used to collect speech samples for use in the voiceome.
+- **Establishing reference ranges** - Create a standard set of normative ranges of features across various ages, genders, microphone types, and dialects labeled with health information. <em>These are provided as tables and scripts in this repository</em>.
+- **Standardizing voice protocols** - Standardize the series of voice tasks used to collect speech samples for use in the voiceome. <em>These protocols can be found in the [wiki](https://github.com/jim-schwoebel/voiceome/wiki).</em>
 - **Standardizing health trait labels** - Standardize the type of health trait labels tied to voice information to emit the most signal from the voice.
 - **Creating machine learning models** - From Voiceome Study dataset, build and optimize novel machine learning models; to publish this work in academic journals openly.
 - **Creating an ethics framework** - Create a venue for legal, ethical, and security considerations for collecting voice data for health-related purposes.
