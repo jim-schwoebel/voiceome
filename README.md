@@ -16,7 +16,7 @@ Therefore, the main goals of the Voiceome Study include:
 - **Standardizing health trait labels** - Standardize the type of health trait labels tied to voice information to emit the most signal from the voice. <em>These are provided [here](https://github.com/jim-schwoebel/voiceome/wiki/16.-Health-labels#lichert-questions-custom-made).</em>
 - **Creating machine learning models** - From Voiceome Study dataset, build and optimize novel machine learning models; to publish this work in academic journals openly. <em>These models will be published on in follow-on publications into the future.</em>
 - **Creating an ethics framework** - Create a venue for legal, ethical, and security considerations for collecting voice data for health-related purposes. <em>This can be read in the Voiceome strategic plan.</em>
-- **Build a lasting community** - The Voiceome project will foster a lasting community and enthusiasm for the field of vocal biomarkers in general. <em>We do this through writing textbooks like [Voice Computing in Python](https://neurolex.ai/voicebook) and through sponsoring fellows through the [Innovation Fellows Program](http://innovate.neurolex.co).</em>
+- **Build a lasting community** - The Voiceome project will foster a lasting community and enthusiasm for the field of vocal biomarkers in general. <em>We do this through writing textbooks like [Voice Computing in Python](https://neurolex.ai/voicebook), partnering with research organizations like Biogen, and through training fellows through the [Innovation Fellows Program](http://neurolex.ai/research).</em>
  
 ## scripts
 Here are list of scripts used to generate figures in the paper, so our work can be reproduced.
