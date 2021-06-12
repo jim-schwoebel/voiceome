@@ -11,9 +11,16 @@ We built some featurization scripts to help reproduce our work in the paper.
 sample data of each task (Jim S).
 
 ## surveys 
-links here.
-
 Note you can clone these surveys @ https://surveylex.com
+
+### Survey A
+![](https://github.com/jim-schwoebel/voiceome/blob/main/assets/images/A/A.gif)
+### Survey B
+TBA
+### Survey C
+TBA
+### Survey D
+TBA 
 
 ## assets
 links here / show them.
