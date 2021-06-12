@@ -17,7 +17,7 @@ Age/gender-matched controls.
 ### visualization
 Visualization scripts (table).
 
-## sample data / features 
+## references 
 sample data of each task (Jim S).
 
 ## surveys 
@@ -31,12 +31,11 @@ Note you can clone these surveys @ https://surveylex.com
 -- sample data 
 
 ### Survey C
-TBA
-
+![](https://github.com/jim-schwoebel/voiceome/blob/main/assets/images/C/C.gif)
 -- sample data 
-### Survey D
-TBA 
 
+### Survey D
+![](https://github.com/jim-schwoebel/voiceome/blob/main/assets/images/D/D.gif)
 -- sample data 
 
 ## Cite us!!
@@ -62,5 +61,3 @@ Datasets
 - [Voice_datasets repo](https://github.com/jim-schwoebel/voice_datasets)
 - [Coswara]()
 - [mPower]()
-
-
