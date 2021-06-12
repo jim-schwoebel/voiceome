@@ -8,7 +8,7 @@ More info @ https://www.voiceome.org/ and [the wiki](https://github.com/jim-schw
 ## background
 One of the primary causes of slow translation of voice biomarker research is a result of small datasets. There have been many research studies that have shown that acoustic or linguistic voice features relate to health conditions like stress, schizophrenia, depression, bipolar disorder, stroke, and cardiovascular diseases. However, many of these studies have relatively small sample sizes (N<1,000 patients in each class), suffer from poor audio quality (e.g. use of different microphones and data collection techniques), and are difficult to access (e.g. large licensing fees to corporations and/or difficulty obtaining IRB access without close academic ties). These factors dramatically limit the ability to model the underlying data and correlate voice data to health traits, replicate peer-reviewed publications, as well as open up this work to the broader scientific community.
 
-By contributing to our work, you'll have a direct, large-scale impact on patients by supporting the Human Voiceome Study. This study will translate the work of vocal biomarkers faster to patients. Our goals with the initiative are to reach 100,000 labeled speech samples with health information.
+This Voiceome study will translate the work of vocal biomarkers faster to patients. Our goals with the initiative are to reach 100,000 labeled speech samples with health information.
 
 ## goals
 In a larger capacity, you'll help us:.
