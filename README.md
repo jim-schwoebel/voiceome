@@ -225,7 +225,10 @@ Data is accessible via a commercial license.
 If you are interested to license or access the Voiceome dataset, please reach out to Jim Schwoebel (VP of Data and Research @ Sonde) @ jim.schwoebel@gmail.com.
 
 ## Collaborators
+<center>
+![](https://github.com/jim-schwoebel/voiceome/blob/main/assets/images/thumbnails/sonde.png)
 ![](https://github.com/jim-schwoebel/voiceome/blob/main/assets/images/thumbnails/collaborators.png)
+</center>
 
 ## References
 Voice Protocols
