@@ -29,7 +29,16 @@ references('free')
 ```
 
 ## surveys 
-Note you can clone these surveys @ https://surveylex.com
+Here are the 4 main surveys used in the Voiceome clinical study:
+
+| Survey     |    Link    |   Number of completions |
+| ----------- | ----------- | ----------- |
+| Survey A      | [https://app.surveylex.com/surveys/e1f88ee0-a636-11eb-bcc9-eba67643f616](https://app.surveylex.com/surveys/e1f88ee0-a636-11eb-bcc9-eba67643f616)      | Title       |
+| Survey B  | [https://app.surveylex.com/surveys/061da3f0-a637-11eb-bcc9-eba67643f616](https://app.surveylex.com/surveys/061da3f0-a637-11eb-bcc9-eba67643f616) | 1400 |
+| Survey C | [https://app.surveylex.com/surveys/a66494c0-a824-11ea-88c1-ab37bac1e1d4](https://app.surveylex.com/surveys/a66494c0-a824-11ea-88c1-ab37bac1e1d4) | 800 |
+| Survey D | [https://app.surveylex.com/surveys/53737620-a637-11eb-bcc9-eba67643f616](https://app.surveylex.com/surveys/53737620-a637-11eb-bcc9-eba67643f616) | 100 |
+
+Note you can clone these surveys @ https://surveylex.com and replicate our work in other patient populations.
 
 ### [Survey A](https://app.surveylex.com/surveys/e1f88ee0-a636-11eb-bcc9-eba67643f616)
 ![](https://github.com/jim-schwoebel/voiceome/blob/main/assets/images/A/A.gif)
