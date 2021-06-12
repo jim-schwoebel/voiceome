@@ -38,6 +38,8 @@ Here are the 4 main surveys used in the Voiceome clinical study:
 | Survey C | [https://app.surveylex.com/surveys/a66494c0-a824-11ea-88c1-ab37bac1e1d4](https://app.surveylex.com/surveys/a66494c0-a824-11ea-88c1-ab37bac1e1d4) | 800 |
 | Survey D | [https://app.surveylex.com/surveys/53737620-a637-11eb-bcc9-eba67643f616](https://app.surveylex.com/surveys/53737620-a637-11eb-bcc9-eba67643f616) | 100 |
 
+Previews for each of these surveys are provided below as .GIFs so that you can quickly visualize the survey experience for clinical study participants.
+
 Note you can clone these surveys @ https://surveylex.com and replicate our work in other patient populations.
 
 ### [Survey A](https://app.surveylex.com/surveys/e1f88ee0-a636-11eb-bcc9-eba67643f616)
