@@ -932,3 +932,13 @@ print('+/- %s'%(str(std_)))
 
 os.chdir(basedir)
 # we go to the right spot and need to map elictation types to prompts
+
+## CLEAN_CSV --> ages, twenties, etc. --> cleaning script to get data formats converted (using datacleaner)
+
+## Make Functions ## 
+# --> stich together all the BNT-naming prompts (1 master session)
+# --> stitch together all the Nonword-naming prompts (1 master session)
+
+## Transcribe Sessions (Azure) ##
+## Featurize sesions ## 
+## Visualize relative to standards ## 
