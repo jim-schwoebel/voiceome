@@ -1,0 +1,1 @@
+{"TranscriptEngineOptions": ["azure", "deepspeech_dict", "deepspeech_nodict", "wav2vec"]}
