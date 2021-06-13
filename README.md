@@ -30,10 +30,12 @@ Anyone >18 years of age that could speak English was eligible to participate in 
 ## Getting started
 This assumes you are using a MacOS-related computer.
 
-To get started, clone this repository:
+To get started, clone this repository in a virtual environment and install requirements.txt:
 ```
 git clone git@github.com:jim-schwoebel/voiceome.git
 cd voiceome
+virtualenv env 
+source env/bin/activate
 pip3 install -r requirements.txt
 ```
 
