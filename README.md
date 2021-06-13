@@ -108,6 +108,7 @@ def visualize(task):
 | 'AzureKey' | 'TEST' | Any string related to the Azure string | Azure key for API usage in transcription. | 
 | 'Features' | [] | [] | [] |
 | 'Task' | 'MicrophoneTest' | [] | The default task to customize API usage. | 
+| 'TranscriptEngine' | "azure" | ["azure","deepspeech_dict","deepspeech_nodict", "wav2vec"] | Whether or not you should clean audio files during featurization to mono16000Hz. | 
 | 'CleanAudio' | True | [True, False] | Whether or not you should clean audio files during featurization to mono16000Hz. | 
 
 ## surveys 
