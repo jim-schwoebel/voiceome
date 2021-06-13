@@ -50,7 +50,8 @@ Opensmile installation
 ```
 Optionally, if you want to transcribe data with Microsoft Azure, update the ['settings.json'](https://github.com/jim-schwoebel/voiceome/blob/main/settings.json) Azure Key:
 ```
-
+{"AzureKey": "KEY_GOES_HERE", 
+...}
 ```
 
 You now can load the python script to call the protocol (.TXT) and references:
