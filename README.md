@@ -107,7 +107,7 @@ def visualize(task):
 | ----------- | ----------- | ----------- | ----------- |
 | 'AzureKey' | 'TEST' | Any string related to the Azure string | Azure key for API usage in transcription. | 
 | 'Features' | 'opensmile_features' | ['opensmile_features', 'prosody_features' 'pause_features', 'audiotext_features'] | The default feature embedding to use to calculate features/references. |
-| 'Features' | ['PHQ9']| ['PHQ9','GAD7'] | The default health label for sorting data. |
+| 'Features' | ['PHQ9']| ['PHQ9', 'GAD7'] | The default health label for sorting data. |
 | 'Task' | 'microphone_task' | ['microphone_task', 'freespeech_task', 'picture_task', 'category_task', 'letterf_task', 'paragraph_task', 'ahh_task', 'papapa_task', 'pataka_task', 'confrontational_task', 'nonword_task', 'recall_mandog_task', 'recall_tourbus_task', 'diagnosis_task', 'medication_task'] | The default task to customize API usage. | 
 | 'TranscriptEngine' | "azure" | ["azure", "deepspeech_dict", "deepspeech_nodict", "wav2vec"] | The default transcription engine to use for audiotext_features. | 
 | 'CleanAudio' | True | [True, False] | Whether or not you should clean audio files during featurization to mono16000Hz. | 
