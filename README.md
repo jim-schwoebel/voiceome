@@ -117,7 +117,7 @@ Then you can get outputs of various references per the settings.json.
 ## changing settings
 
 
-[Settings.json](https://github.com/jim-schwoebel/voiceome/blob/main/settings.json) specifies various settings for the API. The configuration options are listed in the table below.
+[Settings.json](https://github.com/jim-schwoebel/voiceome/blob/main/settings.json) specifies various settings for the API. The configuration options are listed in the table below. Note all possible options are listed out in the [options folder](https://github.com/jim-schwoebel/voiceome/tree/main/data/options) as .JSON files.
 
 | Setting     |    Default option   |  All Options | Description |
 | ----------- | ----------- | ----------- | ----------- |
