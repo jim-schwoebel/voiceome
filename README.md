@@ -101,7 +101,7 @@ def visualize(task):
 -- visualize scripts
 ```
 
-Settings.json specifies various settings for the API. The configuration options are listed in the table below.
+[Settings.json](https://github.com/jim-schwoebel/voiceome/blob/main/settings.json) specifies various settings for the API. The configuration options are listed in the table below.
 
 | Setting     |    Default option   |  All Options | Description |
 | ----------- | ----------- | ----------- | ----------- |
