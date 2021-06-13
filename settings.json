@@ -1,2 +1,3 @@
 {"azure_key": "KEY_GOES_HERE", 
- "features": ["opensmile_features", "prosody_features", "pause_features", "audiotext_features"]}
+ "features": ["opensmile_features", "prosody_features", "pause_features", "audiotext_features"],
+ "task": "MicrophoneTest"}
