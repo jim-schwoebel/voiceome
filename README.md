@@ -28,11 +28,18 @@ Anyone >18 years of age that could speak English was eligible to participate in 
 |  ![](https://github.com/jim-schwoebel/voiceome/blob/main/assets/images/thumbnails/overview.png) | ![](https://github.com/jim-schwoebel/voiceome/blob/main/assets/images/thumbnails/locations.png) |
 
 ## Getting started
+This assumes you are using a MacOS-related computer.
+
 To get started, clone this repository:
 ```
 git clone git@github.com:jim-schwoebel/voiceome.git
 cd voiceome
 pip3 install -r requirements.txt
+```
+
+Now install OpenSMILE:
+```
+Opensmile installation
 ```
 
 You now can load the python script to call the protocol (.TXT) and references:
