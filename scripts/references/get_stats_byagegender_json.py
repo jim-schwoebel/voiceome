@@ -119,6 +119,7 @@ for i in range(len(labels)):
 	print(directory.split('/')[-1].split('_')[1].lower())
 	if str(labels[i]).lower().find(directory.split('/')[-1].split('_')[1].lower()) > 0:
 		audiofiles=[labels[i]]
+		break
 
 os.chdir(directory)
 listdir=os.listdir()
@@ -182,41 +183,38 @@ for i in tqdm(range(len(jsonfiles))):
 				ind_=l
 				break 
 
-	try:
-		age_=age[ind_]
-		gender_=genders[ind_]
-		transcript_=json.load(open(jsonfiles[i]))['transcripts']['audio']['azure']
-		# get list 
-		
-		for j in range(len(labels)):
-			try:
-				dict_[labels[j]]=dict_[labels[j]]+[stats[labels[j]]]
+	age_=age[ind_]
+	gender_=genders[ind_]
+	transcript_=json.load(open(jsonfiles[i]))['transcripts']['audio']['azure']
+	# get list 
+	
+	for j in range(len(labels)):
+		try:
+			dict_[labels[j]]=dict_[labels[j]]+[stats[labels[j]]]
 
-				# by gender
-				if age_ in ['teens','twenties'] and gender_ in ['Male']:
-					dict_twenties_male[labels[j]] = dict_twenties_male[labels[j]] + [stats[labels[j]]]
-				elif age_ in ['teens','twenties'] and gender_ in ['Female']:
-					dict_twenties_female[labels[j]] = dict_twenties_female[labels[j]] + [stats[labels[j]]]
-				elif age_ in ['thirties'] and gender_ in ['Male']:
-					dict_thirties_male[labels[j]] = dict_thirties_male[labels[j]] + [stats[labels[j]]]
-				elif age_ in ['thirties'] and gender_ in ['Female']:
-					dict_thirties_female[labels[j]] = dict_thirties_female[labels[j]] + [stats[labels[j]]]
-				elif age_ in ['fourties'] and gender_ in ['Male']:
-					dict_fourties_male[labels[j]] = dict_fourties_male[labels[j]] + [stats[labels[j]]]
-				elif age_ in ['fourties'] and gender_ in ['Female']:
-					dict_fourties_female[labels[j]] = dict_fourties_female[labels[j]] + [stats[labels[j]]]
-				elif age_ in ['fifties'] and gender_ in ['Male']:
-					dict_fifties_male[labels[j]] = dict_fifties_male[labels[j]] + [stats[labels[j]]]
-				elif age_ in ['fifties'] and gender_ in ['Female']:
-					dict_fifties_female[labels[j]] = dict_fifties_female[labels[j]] + [stats[labels[j]]]
-				elif age_ in ['sixties', 'seventies', 'eighties', 'nineties'] and gender_ in ['Male']:
-					dict_sixties_male[labels[j]] = dict_sixties_male[labels[j]] + [stats[labels[j]]]
-				elif age_ in ['sixties', 'seventies', 'eighties', 'nineties'] and gender_ in ['Female']:
-					dict_sixties_female[labels[j]] = dict_sixties_female[labels[j]] + [stats[labels[j]]]
-			except:
-				pass
-	except:
-		pass
+			# by gender
+			if age_ in ['teens','twenties'] and gender_ in ['Male']:
+				dict_twenties_male[labels[j]] = dict_twenties_male[labels[j]] + [stats[labels[j]]]
+			elif age_ in ['teens','twenties'] and gender_ in ['Female']:
+				dict_twenties_female[labels[j]] = dict_twenties_female[labels[j]] + [stats[labels[j]]]
+			elif age_ in ['thirties'] and gender_ in ['Male']:
+				dict_thirties_male[labels[j]] = dict_thirties_male[labels[j]] + [stats[labels[j]]]
+			elif age_ in ['thirties'] and gender_ in ['Female']:
+				dict_thirties_female[labels[j]] = dict_thirties_female[labels[j]] + [stats[labels[j]]]
+			elif age_ in ['fourties'] and gender_ in ['Male']:
+				dict_fourties_male[labels[j]] = dict_fourties_male[labels[j]] + [stats[labels[j]]]
+			elif age_ in ['fourties'] and gender_ in ['Female']:
+				dict_fourties_female[labels[j]] = dict_fourties_female[labels[j]] + [stats[labels[j]]]
+			elif age_ in ['fifties'] and gender_ in ['Male']:
+				dict_fifties_male[labels[j]] = dict_fifties_male[labels[j]] + [stats[labels[j]]]
+			elif age_ in ['fifties'] and gender_ in ['Female']:
+				dict_fifties_female[labels[j]] = dict_fifties_female[labels[j]] + [stats[labels[j]]]
+			elif age_ in ['sixties', 'seventies', 'eighties', 'nineties'] and gender_ in ['Male']:
+				dict_sixties_male[labels[j]] = dict_sixties_male[labels[j]] + [stats[labels[j]]]
+			elif age_ in ['sixties', 'seventies', 'eighties', 'nineties'] and gender_ in ['Female']:
+				dict_sixties_female[labels[j]] = dict_sixties_female[labels[j]] + [stats[labels[j]]]
+		except:
+			pass
 
 n_total=str(len(dict_[labels[0]]))
 
