@@ -220,10 +220,9 @@ Schwoebel, James, et al. "The Voiceome Study: A Longitudinal Normative Dataset a
 ```
 
 ## Data access
+We have tried to make these reference ranges as open as possible. These are available in this repository under an Apache 2.0 license.
 
-Data is accessible via a commercial license. 
-
-If you are interested to license or access the Voiceome dataset, please reach out to Jim Schwoebel (VP of Data and Research @ Sonde) @ jim.schwoebel@gmail.com.
+Raw audio data and features are accessible via a commercial license. If you are interested to license or access the Voiceome dataset, please reach out to Jim Schwoebel (VP of Data and Research @ Sonde) @ jim.schwoebel@gmail.com.
 
 ## Collaborators
 [![](https://github.com/jim-schwoebel/voiceome/blob/main/assets/images/thumbnails/sonde.png)](https://sondehealth.com)
