@@ -613,7 +613,7 @@ def get_reference(task, feature_embedding, feature, agegender, basedir):
         features=features+options[feature_embeddings[i]]
 
     # print(features)
-    
+
     # age options
     agegenders=['TwentiesMale', 'TwentiesFemale', 'ThirtiesMale', 'ThirtiesFemale', 'FourtiesMale]', 'FourtiesFemale', 'FiftiesMale', 'FiftiesFemale', 'SixtiesMale', 'SixtiesFemale', 'AllAgesGenders']
 
@@ -801,7 +801,7 @@ visualize_bar_cohorts(featuretype, feature_embedding, names, means, stds, 'Twent
 
 
 ######################################################################
-##                      TEST SURVEY A DATA                          ##
+##                 TEST SURVEY A DATA ANALYSIS                      ##
 ######################################################################
 
 # ## do analysis 
@@ -925,3 +925,10 @@ print('ANIMALS')
 mean_, std_ = mean_std(animal_metrics)
 print(mean_)
 print('+/- %s'%(str(std_)))
+
+######################################################################
+##              TEST SURVEY A FEATURIZATION/CLEANING                ##
+######################################################################
+
+os.chdir(basedir)
+# we go to the right spot and need to map elictation types to prompts
