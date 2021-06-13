@@ -48,7 +48,7 @@ Optionally, if you want to featurize new data, install OpenSMILE:
 ```
 Opensmile installation
 ```
-Optionally, if you want to transcribe data with Microsoft Azure, update 'settings.json' Azure Key:
+Optionally, if you want to transcribe data with Microsoft Azure, update the ['settings.json'](https://github.com/jim-schwoebel/voiceome/blob/main/settings.json) Azure Key:
 ```
 
 ```
