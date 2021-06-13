@@ -2,4 +2,6 @@
  "TranscriptEngine": "Azure",
  "Features": ["opensmile_features", "prosody_features", "pause_features", "audiotext_features"],
  "Task": "MicrophoneTest",
- "CleanAudio": true}
+ "CleanAudio": true,
+ "DefaultAge": 'all',
+ "DefaultGender": 'all'}
