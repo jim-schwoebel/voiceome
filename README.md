@@ -44,9 +44,13 @@ Now install FFmpeg and SoX (if you don't have Homebrew, install it before this s
 brew install ffmpeg sox
 ```
 
-Now install OpenSMILE:
+Optionally, if you want to featurize new data, install OpenSMILE:
 ```
 Opensmile installation
+```
+Optionally, if you want to transcribe data with Microsoft Azure, update 'settings.json' Azure Key:
+```
+
 ```
 
 You now can load the python script to call the protocol (.TXT) and references:
