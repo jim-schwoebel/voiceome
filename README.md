@@ -222,7 +222,7 @@ Schwoebel, James, et al. "The Voiceome Study: A Longitudinal Normative Dataset a
 ## Data access
 We have tried to make acoustic and linguistic feature reference ranges for each task as open as possible. These are available in this repository under an Apache 2.0 license.
 
-Also, note that OpenSMILE GeMAPS features are for research-only use. Keep this in mind if you are working on commercial deployments. openSMILE follows a dual-licensing model. Since the main goal of the project is widespread use of the software to facilitate research in the field of machine learning from audio-visual signals, the source code, and binaries are freely available for private, research, and educational use under an open-source license (see LICENSE). It is not allowed to use the open-source version of openSMILE for any sort of commercial product. Fundamental research in companies, for example, is permitted, but if a product is the result of the research, we require you to buy a commercial development license. Contact us at info@audeering.com (or visit us at https://www.audeering.com) for more information.
+Also, note that OpenSMILE GeMAPS features are for research-only use. Keep this in mind if you are working on commercial deployments. Read more about their dual licensing model [here](https://github.com/audeering/opensmile). Since this repository was in the scope of research, we fall within this dual license model and can publish these references openly.
 
 Raw audio data for the Voiceome Study is accessible via a commercial license. If you are interested to license or access the Voiceome dataset, please reach out to Jim Schwoebel (VP of Data and Research @ Sonde) @ jim.schwoebel@gmail.com.
 
