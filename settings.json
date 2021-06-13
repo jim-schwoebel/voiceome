@@ -4,5 +4,4 @@
  "FeatureType": "F0semitoneFrom27.5Hz_sma3nz_amean",
  "Task": "microphone_task",
  "CleanAudio": true,
- "DefaultAge": "all",
- "DefaultGender": "all"}
+ "DefaultAgeGender": "AllAgesGenders"}
