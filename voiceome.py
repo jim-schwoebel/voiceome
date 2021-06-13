@@ -450,7 +450,7 @@ def mean_std(list_):
     array_=np.array(list_)
     return np.mean(array_), np.std(array_)
     
-def get_reference(task, featuretype, feature, agegender, basedir):
+def get_reference(task, feature_embedding, feature, agegender, basedir):
 
     curdir=os.getcwd()
 
@@ -606,10 +606,10 @@ def get_reference(task, featuretype, feature, agegender, basedir):
     os.chdir('data')
     os.chdir('options')
     options=json.load(open('feature_options.json'))
-    featuretypes=list(options)
+    feature_embeddings=list(options)
     features=list()
     for i in range(len(featuretypes)):
-        features=features+options[featuretypes[i]]
+        features=features+options[feature_embeddings[i]]
 
     print(features)
     # age options
@@ -618,11 +618,14 @@ def get_reference(task, featuretype, feature, agegender, basedir):
     os.chdir(curdir)
 
     # return results 
-    if featuretype in featuretypes and feature in features and agegender in agegenders:
+    if feature_embedding in feature_embeddings and feature in features and agegender in agegenders:
         return data[featuretype][feature][agegender]
     else:
         return 'ERROR - FeatureType, Feature, or Age not recognize. Please check these settings and try again.'
-    
+
+# def reference_task_embedding(task, featuretype, feature, agegender, basedir):
+
+
 def visualize(task, feature, age, gender):
     # put in task, age, and gender and get a bar graph
     
@@ -642,7 +645,7 @@ os.environ['AZURE_REGION']='East-US'
 # all other settings
 basedir=os.getcwd()
 transcript_engine=settings['TranscriptEngine']
-features=settings['Features']
+feature_embedding=settings['FeatureEmbedding']
 featuretype=settings['FeatureType']
 task=settings['Task']
 clean_audio=settings['CleanAudio']
@@ -650,7 +653,7 @@ agegender = settings['DefaultAgeGender']
 
 # get reference 
 print(features + ' - ' + featuretype)
-data=get_reference(task, features, featuretype, agegender, basedir)
+data=get_reference(task, feature_embedding, featuretype, agegender, basedir)
 table = BeautifulTable()
 table.columns.header = ["Task", "FeatureType", "Feature", "AgeGender", "Average", "Standard Deviation", "Sample Number"]
 table.rows.append([task, features, featuretype, agegender, data['AverageValue'], data['StdValue'], data['SampleNumber']])
