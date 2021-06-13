@@ -105,9 +105,10 @@ def visualize(task):
 
 | Setting     |    Default option   |  All Options | Description |
 | ----------- | ----------- | ----------- | ----------- |
-| 'Azure' | 'TEST' | Any string related to the Azure string | Azure key for API usage in transcription. | 
+| 'AzureKey' | 'TEST' | Any string related to the Azure string | Azure key for API usage in transcription. | 
 | 'Features' | [] | [] | [] |
 | 'Task' | 'MicrophoneTest' | [] | The default task to customize API usage. | 
+| 'CleanAudio' | True | [True, False] | Whether or not you should clean audio files during featurization to mono16000Hz. | 
 
 ## surveys 
 Here are the 4 main surveys used in the Voiceome clinical study:
