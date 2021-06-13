@@ -39,130 +39,50 @@ You now can load the python script to call the protocol (.TXT) and references:
 ```
 import .scripts.references
 
-## protocols 
-Protocol URLs
-A-https://app.surveylex.com/surveys/e1f88ee0-a636-11eb-bcc9-eba67643f616
-B-https://app.surveylex.com/surveys/061da3f0-a637-11eb-bcc9-eba67643f616
-C-https://app.surveylex.com/surveys/a66494c0-a824-11ea-88c1-ab37bac1e1d4
-D-https://app.surveylex.com/surveys/53737620-a637-11eb-bcc9-eba67643f616
+## protocols
+def get_urls():
+  A-https://app.surveylex.com/surveys/e1f88ee0-a636-11eb-bcc9-eba67643f616
+  B-https://app.surveylex.com/surveys/061da3f0-a637-11eb-bcc9-eba67643f616
+  C-https://app.surveylex.com/surveys/a66494c0-a824-11ea-88c1-ab37bac1e1d4
+  D-https://app.surveylex.com/surveys/53737620-a637-11eb-bcc9-eba67643f616
 
-## question text 
-0. Consent form
--- get SurveyLex text 
-00. Microphone check task
--- get SurveyLex text 
-01. Free speech task
--- get SurveyLex text
-02. Picture description task
--- get SurveyLex text
-03. Category naming task
--- get SurveyLex text
-04. Letter {FAS} Tasks
--- get SurveyLex text
-05. Paragraph reading task
--- get SurveyLex text
-06. Sustained phonation ('ahh')
--- get SurveyLex text
-07. Pa pa pa task
--- get SurveyLex text
-08. Pa ta ka task
--- get SurveyLex text
-09. Confrontational naming task
--- get SurveyLex text
-10. Nonword task
--- get SurveyLex text
-11. Immediate recall task
--- get SurveyLex text
-12. Spoken diagnosis task
--- get SurveyLex text
-13. Spoken medication task
--- get SurveyLex text
-14. Confounding questions
--- get SurveyLex text
-15. Demographic questions
--- get SurveyLex text
-16. Health labels
--- get SurveyLex text
-17. Fun Facts
--- get SurveyLex text
+def get_questions():
+  --> questions 
+  --> sample responses 
+  --> sample audio
+  --> sample features
+  From surveylex export (sample.csv)
 
-## cleaning scripts 
--- cleaning scripts here (mono 16000 Hz from Allie)
+def clean_audio(audiofile):
+  --> clean audio into mono 16000 Hz with Allie script
 
-## featurizers 
+def featurize_audio(audiofile):
+  --> featurize audio file (acoustic)
+  --> featurize audio file (linguistic)
 
-Take in audio and get back feature embeddings / quality checks for each task per the paper implementations.
+def check_quality(audiofile, task):
+  --> quality references 
+  
+def transcribe_audio():
+  --> transcribe using Microsoft Azure with a key
+ 
+def get_reference(task, embedding, feature, age):
+  00. Microphone check task
+  01. Free speech task
+  02. Picture description task
+  03. Category naming task
+  04. Letter {FAS} Tasks
+  05. Paragraph reading task
+  06. Sustained phonation ('ahh')
+  07. Pa pa pa task
+  08. Pa ta ka task
+  09. Confrontational naming task
+  10. Nonword task
+  11. Immediate recall task
+  12. Spoken diagnosis task
+  13. Spoken medication task
 
-00. Microphone check task
--- .JSON
-01. Free speech task
--- .JSON
-02. Picture description task
--- .JSON
-03. Category naming task
--- .JSON
-04. Letter {FAS} Tasks
--- .JSON
-05. Paragraph reading task
--- .JSON
-06. Sustained phonation ('ahh')
--- .JSON
-07. Pa pa pa task
--- .JSON
-08. Pa ta ka task
--- .JSON
-09. Confrontational naming task
--- .JSON
-10. Nonword task
--- .JSON
-11. Immediate recall task
--- .JSON
-12. Spoken diagnosis task
--- .JSON
-13. Spoken medication task
--- .JSON
-
-## references 
-Types of features include Acoustic (OPENSMILE GeMAPS + Prosody_Features) and Linguistic (Features in Allie here)
-
-00. Microphone check task
--- .JSON
-01. Free speech task
--- .JSON
-02. Picture description task
--- .JSON
-03. Category naming task
--- .JSON
-04. Letter {FAS} Tasks
--- .JSON
-05. Paragraph reading task
--- .JSON
-06. Sustained phonation ('ahh')
--- .JSON
-07. Pa pa pa task
--- .JSON
-08. Pa ta ka task
--- .JSON
-09. Confrontational naming task
--- .JSON
-10. Nonword task
--- .JSON
-11. Immediate recall task
--- .JSON
-12. Spoken diagnosis task
--- .JSON
-13. Spoken medication task
--- .JSON
-14. Confounding questions
--- .JSON
-15. Demographic questions
--- .JSON
-16. Health labels
--- .JSON
-17. Fun Facts
--- .JSON
-
-Visualizers 
+def visualize(task):
 -- visualize scripts
 ```
 
