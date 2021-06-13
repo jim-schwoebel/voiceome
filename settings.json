@@ -1,7 +1,7 @@
 {"AzureKey": "KEY_GOES_HERE", 
  "TranscriptEngine": "Azure",
  "Features": ["opensmile_features", "prosody_features", "pause_features", "audiotext_features"],
- "FeatureType": ["F0semitoneFrom27.5Hz_sma3nz_amean"],
+ "FeatureType": "F0semitoneFrom27.5Hz_sma3nz_amean",
  "Task": "microphone_task",
  "CleanAudio": true,
  "DefaultAge": "all",
