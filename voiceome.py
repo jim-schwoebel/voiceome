@@ -602,6 +602,9 @@ def get_reference(task, featuretype, feature, agegender, basedir):
         data=json.load(open('49_medication_task.json'))
 
     # calculate possible featurestypes here 
+    os.chdir(basedir)
+    os.chdir('data')
+    os.chdir('options')
     options=json.load(open('feature_options.json'))
     featuretypes=list(options)
     features=list()
