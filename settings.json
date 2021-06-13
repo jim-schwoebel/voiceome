@@ -1,3 +1,4 @@
-{"azure_key": "KEY_GOES_HERE", 
- "features": ["opensmile_features", "prosody_features", "pause_features", "audiotext_features"],
- "task": "MicrophoneTest"}
+{"AzureKey": "KEY_GOES_HERE", 
+ "Features": ["opensmile_features", "prosody_features", "pause_features", "audiotext_features"],
+ "Task": "MicrophoneTest",
+ "CleanAudio": True}
