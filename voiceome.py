@@ -180,7 +180,7 @@ def transcribe_audio(file, transcript_engine, settingsdir, tokenizer, model):
         # convert audio file to 16000 Hz mono audio 
         os.system('ffmpeg -i "%s" -acodec pcm_s16le -ac 1 -ar 16000 "%s" -y'%(file, newaudio))
         command='deepspeech --model %s/deepspeech-0.7.0-models.pbmm --audio "%s" >> "%s"'%(deepspeech_dir, newaudio, textfile)
-        print(command)
+        # print(command)
         os.system(command)
 
         # get transcript
@@ -216,7 +216,7 @@ def transcribe_audio(file, transcript_engine, settingsdir, tokenizer, model):
         # convert audio file to 16000 Hz mono audio 
         os.system('ffmpeg -i "%s" -acodec pcm_s16le -ac 1 -ar 16000 "%s" -y'%(file, newaudio))
         command='deepspeech --model %s/deepspeech-0.7.0-models.pbmm --scorer %s/deepspeech-0.7.0-models.scorer --audio "%s" >> "%s"'%(deepspeech_dir, deepspeech_dir, newaudio, textfile)
-        print(command)
+        # print(command)
         os.system(command)
 
         # get transcript
@@ -384,8 +384,8 @@ def prosody_featurize(audiofile,fsize):
         features=list(feat_dict.values())[0:-1]
         labels=list(feat_dict)[0:-1]
     
-    print(features)
-    print(labels)
+    # print(features)
+    # print(labels)
 
     return features, labels
 
@@ -612,7 +612,8 @@ def get_reference(task, feature_embedding, feature, agegender, basedir):
     for i in range(len(feature_embeddings)):
         features=features+options[feature_embeddings[i]]
 
-    print(features)
+    # print(features)
+    
     # age options
     agegenders=['TwentiesMale', 'TwentiesFemale', 'ThirtiesMale', 'ThirtiesFemale', 'FourtiesMale]', 'FourtiesFemale', 'FiftiesMale', 'FiftiesFemale', 'SixtiesMale', 'SixtiesFemale', 'AllAgesGenders']
 
@@ -796,132 +797,131 @@ print(table)
 visualize_bar(featuretype, feature_embedding, names, means, stds, 'TwentiesMale', basedir, False)
 
 names_2, means_2, stds_2, ages_2, samplenums =reference_feature_across_tasks(feature_embedding, featuretype, 'TwentiesFemale', basedir)
-visualize_bar_cohorts(featuretype, feature_embedding, names, means, stds, 'TwentiesMale', means_2, stds_2, 'TwentiesFemale', basedir, True)
+visualize_bar_cohorts(featuretype, feature_embedding, names, means, stds, 'TwentiesMale', means_2, stds_2, 'TwentiesFemale', basedir, False)
 
-# # now go through and ask user what they want to do...
-# ### by folder 
-# ### by sample
+
+######################################################################
+##                      TEST SURVEY A DATA                          ##
+######################################################################
 
 # ## do analysis 
-# g=pd.read_csv('new2.csv')
-# labels=list(g)
+os.chdir(basedir)
+os.chdir('data')
+os.chdir('test')
+g=pd.read_csv('data.csv')
+labels=list(g)
 
-# for i in range(len(labels)):
-#     if labels[i].lower().find('caterpillar') > 0:
-#         caterpillar=labels[i]
+for i in range(len(labels)):
+    if labels[i].lower().find('caterpillar') > 0:
+        caterpillar=labels[i]
 
-# fox=g['Please click the start button and then say:  "The quick brown fox jumps over the lazy dog."  You may press the Stop button if you finish before the timer runs out.']
-# memory=g['Tell us about a recent happy memory based on experiences from the past month.']
-# picture=g['Tell us everything you see going on in this picture.  <center>![Aphasia image](http://www.neurolex.co/uploads/alphasia.png)</center>']
-# animals=g['Category: ANIMALS. Name all the animals you can think of as quickly as possible before the time elapses below.']
-# letterf=g['Letter: F. Name all the words beginning with the letter F you can think of as quickly as possible before the time elapses below.']
-# passage=g[caterpillar]
-# mandog=g['Please repeat back what you just heard as accurately as possible. You may press the stop button if you finish before the timer runs out.']
-# tourbus=g['Please repeat back what you just heard as accurately as possible. You may press the stop button if you finish before the timer runs out..1']
+fox=g['Please click the start button and then say:\n\n"The quick brown fox jumps over the lazy dog."\n\nYou may press the Stop button if you finish before the timer runs out.']
+memory=g['Tell us about a recent happy memory based on experiences from the past month.']
+picture=g['Tell us everything you see going on in this picture.\n\n<center>![Aphasia image](http://www.neurolex.co/uploads/alphasia.png)</center>']
+animals=g['Category: ANIMALS. Name all the animals you can think of as quickly as possible before the time elapses below.']
+letterf=g['Letter: F. Name all the words beginning with the letter F you can think of as quickly as possible before the time elapses below.']
+passage=g[caterpillar]
+mandog=g['Please repeat back what you just heard as accurately as possible. You may press the stop button if you finish before the timer runs out.']
+tourbus=g['Please repeat back what you just heard as accurately as possible. You may press the stop button if you finish before the timer runs out..1']
 
-# # get transcripts
-# transcript=extract_transcript('(nlx-35ec5930-a10d-11ea-ad75-47afc39b88d6 00:00:59.90) I spent some time recently in the back garden with my dogs.  Um, it was really nice because we just relaxed and sat out there. It was a sunny day. It had been raining a lot recently and it was the first sunny day. So we got to sit out and relax. My family were also there and it was a really enjoyable afternoon.  Also, we cook together later in the day, so that was enjoyable as well.  ')
+# get transcripts
+transcript=extract_transcript('(nlx-35ec5930-a10d-11ea-ad75-47afc39b88d6 00:00:59.90) I spent some time recently in the back garden with my dogs.  Um, it was really nice because we just relaxed and sat out there. It was a sunny day. It had been raining a lot recently and it was the first sunny day. So we got to sit out and relax. My family were also there and it was a really enjoyable afternoon.  Also, we cook together later in the day, so that was enjoyable as well.  ')
 
-# # passage references
-# fox_passage="The Quick Brown Fox jumps over the lazy dog."
-# caterpillar_passage="Do you like amusement parks? Well, I sure do. To amuse myself, I went twice last spring. My most MEMORABLE moment was riding on the Caterpillar, which is a gigantic roller coaster high above the ground. When I saw how high the Caterpillar rose into the bright blue sky I knew it was for me. After waiting in line for thirty minutes, I made it to the front where the man measured my height to see if I was tall enough. I gave the man my coins, asked for change, and jumped on the cart. Tick, tick, tick, the Caterpillar climbed slowly up the tracks. It went SO high I could see the parking lot. Boy was I SCARED! I thought to myself, â€œThereâ€™s no turning back now.â€ People were so scared they screamed as we swiftly zoomed fast, fast, and faster along the tracks. As quickly  as it started, the Caterpillar came to a stop. Unfortunately, it was time to pack the car and drive home. That night I dreamt of the wild ride on the Caterpillar. Taking a trip to the amusement park and riding on the Caterpillar was my MOST memorable moment ever!"
-# mandog_passage="the man saw the boy that the dog chased"
-# tourbus_passage="the tour bus is coming into the town to pick up the people from the hotel to go swimming."
+# passage references
+fox_passage="The Quick Brown Fox jumps over the lazy dog."
+caterpillar_passage="Do you like amusement parks? Well, I sure do. To amuse myself, I went twice last spring. My most MEMORABLE moment was riding on the Caterpillar, which is a gigantic roller coaster high above the ground. When I saw how high the Caterpillar rose into the bright blue sky I knew it was for me. After waiting in line for thirty minutes, I made it to the front where the man measured my height to see if I was tall enough. I gave the man my coins, asked for change, and jumped on the cart. Tick, tick, tick, the Caterpillar climbed slowly up the tracks. It went SO high I could see the parking lot. Boy was I SCARED! I thought to myself, â€œThereâ€™s no turning back now.â€ People were so scared they screamed as we swiftly zoomed fast, fast, and faster along the tracks. As quickly  as it started, the Caterpillar came to a stop. Unfortunately, it was time to pack the car and drive home. That night I dreamt of the wild ride on the Caterpillar. Taking a trip to the amusement park and riding on the Caterpillar was my MOST memorable moment ever!"
+mandog_passage="the man saw the boy that the dog chased"
+tourbus_passage="the tour bus is coming into the town to pick up the people from the hotel to go swimming."
 
-# # print(transcript)
-# print('Fox passage')
-# fox_metrics=list()
-# for i in range(len(fox)):
-#     transcript=extract_transcript(fox[i])
-#     metric=passage_features(transcript, fox_passage)
-#     fox_metrics.append(metric)
+# print(transcript)
+print('Fox passage')
+fox_metrics=list()
+for i in range(len(fox)):
+    transcript=extract_transcript(fox[i])
+    metric=passage_features(transcript, fox_passage)
+    fox_metrics.append(metric)
 
-# mean_, std_=mean_std(fox_metrics)
-# print(mean_)
-# print('+/- %s'%(str(std_)))
+mean_, std_=mean_std(fox_metrics)
+print(mean_)
+print('+/- %s'%(str(std_)))
 
-# # print(transcript)
-# print('Paragraph - caterpillar')
-# caterpillar_metrics=list()
-# for i in range(len(passage)):
-#     transcript=extract_transcript(passage[i])
-#     metric=passage_features(transcript, caterpillar_passage)
-#     caterpillar_metrics.append(metric)
+# print(transcript)
+print('Paragraph - caterpillar')
+caterpillar_metrics=list()
+for i in range(len(passage)):
+    transcript=extract_transcript(passage[i])
+    metric=passage_features(transcript, caterpillar_passage)
+    caterpillar_metrics.append(metric)
 
-# mean_, std_=mean_std(caterpillar_metrics)
-# print(mean_)
-# print('+/- %s'%(str(std_)))
+mean_, std_=mean_std(caterpillar_metrics)
+print(mean_)
+print('+/- %s'%(str(std_)))
 
-# # print(transcript)
-# print('Recall - mandog')
-# recall_mandog=g['Please listen carefully to the following audio clip once.  [autoplay](https://s3.amazonaws.com/www.voiceome.org/data/mandog.mp3)']
-# mandog_metrics=list()
-# for i in range(len(mandog_passage)):
-#     transcript=extract_transcript(mandog[i])
-#     recall_transcript=extract_transcript(recall_mandog)
-#     metric=passage_features(transcript, mandog_passage)
-#     mandog_metrics.append(metric)
+# print(transcript)
+print('Recall - mandog')
+# recall_mandog=g['Please listen carefully to the following audio clip once.\n\n[autoplay](https://s3.amazonaws.com/www.voiceome.org/data/mandog.mp3)']
+mandog_metrics=list()
+transcript=extract_transcript(mandog[0])
+# recall_transcript=extract_transcript(recall_mandog)
+metric=passage_features(transcript, mandog_passage)
+mandog_metrics.append(metric)
 
-# mean_, std_=mean_std(mandog_metrics)
-# print(mean_)
-# print('+/- %s'%(str(std_)))
+mean_, std_=mean_std(mandog_metrics)
+print(mean_)
+print('+/- %s'%(str(std_)))
 
-# # print(transcript)
-# print('Recall - tourbus')
-# recall_tourbus=g['Please listen carefully to the following audio clip once.  [autoplay](https://s3.amazonaws.com/www.voiceome.org/data/tourbus.mp3)']
-# tourbus_metrics=list()
-# for i in range(len(tourbus)):
-#     transcript=extract_transcript(tourbus[i])
-#     recall_transcript=extract_transcript(recall_tourbus[i])
-#     metric=passage_features(transcript, tourbus_passage)
-#     tourbus_metrics.append(metric)
+# print(transcript)
+print('Recall - tourbus')
+# recall_tourbus=g['Please listen carefully to the following audio clip once.\n\n[autoplay](https://s3.amazonaws.com/www.voiceome.org/data/tourbus.mp3)']
+tourbus_metrics=list()
+transcript=extract_transcript(tourbus[0])
+# recall_transcript=extract_transcript(recall_tourbus[i])
+metric=passage_features(transcript, tourbus_passage)
+tourbus_metrics.append(metric)
 
-# mean_, std_=mean_std(tourbus_metrics)
-# print(mean_)
-# print('+/- %s'%(str(std_)))
+mean_, std_=mean_std(tourbus_metrics)
+print(mean_)
+print('+/- %s'%(str(std_)))
 
-# print('LetterF')
-# letterf_metrics=list()
-# for i in range(len(letterf)):
-#     transcript=extract_transcript(letterf[i])
-#     print(transcript)
-#     metric=letterf_features(transcript)
-#     letterf_metrics.append(metric)
+print('LetterF')
+letterf_metrics=list()
+for i in range(len(letterf)):
+    transcript=extract_transcript(letterf[i])
+    print(transcript)
+    metric=letterf_features(transcript)
+    letterf_metrics.append(metric)
 
-# mean_, std_=mean_std(letterf_metrics)
-# print(mean_)
-# print('+/- %s'%(str(std_)))
+mean_, std_=mean_std(letterf_metrics)
+print(mean_)
+print('+/- %s'%(str(std_)))
 
-# # print(passage_features(transcript, caterpillar_passage))
-# # print(passage_features(transcript, mandog_passage))
-# # print(passage_features(transcript, tourbus_passage))
-# animals=g['Category: ANIMALS. Name all the animals you can think of as quickly as possible before the time elapses below.']
-# animal_metrics=list()
+animals=g['Category: ANIMALS. Name all the animals you can think of as quickly as possible before the time elapses below.']
+animal_metrics=list()
 
-# words=list()
-# stopwords=['um', 'think','hum','oh',"let's",'blue','name','uhm','brown',"i'm",'category','ok','uh',
-#            'time','ah', 'yeah', 'hey', 'love', 'lot', 'god', 'eh', 'funny', 'sure', 'honey', 'sugar',
-#            'doc', 'email', 'al', 'il', 'rap', 'count', 'talk', 'check', 'ha', 'anything', 'jack', 'cheap',
-#            'wow', 'world', 'devil', 'gosh', 'mama', 'please', 'kind', 'king', 'thing', 'sorry', 'see',
-#            'awesome', 'uhm', 'yellow', 'tail', 'need', 'mu', 'search', 'wizard', 'kid', 'wanna', 'mind', 'girl',
-#            'giant', 'fire', 'care', 'steak', 'weather', 'war', 'window', 'rock', 'ego', 'word', 'camera', 'square',
-#            'kiwi', 'pie', 'cheat', 'kit', 'grey', 'warm', 'dumb', 'border', 'auto', 'god', 'fear', 'die', 'author', 'mix',
-#            'experience', 'grow', 'aw', 'doe', 'drive', 'stuck', 'number', 'oil', 'fan', 'pay', 'amazon', 'problem', 'jesus',
-#            'laugh', "i'd", 'ghost', 'cause', 'target', 'pay', 'mingo', 'tire', 'strange', 'bar', 'canadian', 'beef', 
-#            'wine', 'asp', 'poop', 'dollar', 'record', 'coca', 'exit', 'ceo', 'donald', 'blog', 'store', 'myth', 'act', 'ow',
-#            'horny', 'alliana', 'gun', 'cina', 'firm', 'elf', 'walmart', 'remind', 'mr', 'underground', 'hurdle', 'payroll',
-#            'commas',' audi', 'salon', 'milk']
+words=list()
+stopwords=['um', 'think','hum','oh',"let's",'blue','name','uhm','brown',"i'm",'category','ok','uh',
+           'time','ah', 'yeah', 'hey', 'love', 'lot', 'god', 'eh', 'funny', 'sure', 'honey', 'sugar',
+           'doc', 'email', 'al', 'il', 'rap', 'count', 'talk', 'check', 'ha', 'anything', 'jack', 'cheap',
+           'wow', 'world', 'devil', 'gosh', 'mama', 'please', 'kind', 'king', 'thing', 'sorry', 'see',
+           'awesome', 'uhm', 'yellow', 'tail', 'need', 'mu', 'search', 'wizard', 'kid', 'wanna', 'mind', 'girl',
+           'giant', 'fire', 'care', 'steak', 'weather', 'war', 'window', 'rock', 'ego', 'word', 'camera', 'square',
+           'kiwi', 'pie', 'cheat', 'kit', 'grey', 'warm', 'dumb', 'border', 'auto', 'god', 'fear', 'die', 'author', 'mix',
+           'experience', 'grow', 'aw', 'doe', 'drive', 'stuck', 'number', 'oil', 'fan', 'pay', 'amazon', 'problem', 'jesus',
+           'laugh', "i'd", 'ghost', 'cause', 'target', 'pay', 'mingo', 'tire', 'strange', 'bar', 'canadian', 'beef', 
+           'wine', 'asp', 'poop', 'dollar', 'record', 'coca', 'exit', 'ceo', 'donald', 'blog', 'store', 'myth', 'act', 'ow',
+           'horny', 'alliana', 'gun', 'cina', 'firm', 'elf', 'walmart', 'remind', 'mr', 'underground', 'hurdle', 'payroll',
+           'commas',' audi', 'salon', 'milk']
 
-# for i in range(len(animals)):
-#     transcript=extract_transcript(animals[i]).lower().replace('.','').replace('?','').replace(',','').split()
-#     count=0
-#     for j in range(len(transcript)):
-#         # cehck if the word is a noun
-#         if nltk.pos_tag(word_tokenize(transcript[j]))[0][1] == 'NN' and transcript[j] not in stopwords: 
-#             count=count+1
+for i in range(len(animals)):
+    transcript=extract_transcript(animals[i]).lower().replace('.','').replace('?','').replace(',','').split()
+    count=0
+    for j in range(len(transcript)):
+        # cehck if the word is a noun
+        if nltk.pos_tag(word_tokenize(transcript[j]))[0][1] == 'NN' and transcript[j] not in stopwords: 
+            count=count+1
 
-#     animal_metrics.append(count)
-# print('ANIMALS')
-# mean_, std_ = mean_std(animal_metrics)
-# print(mean_)
-# print('+/- %s'%(str(std_)))
+    animal_metrics.append(count)
+print('ANIMALS')
+mean_, std_ = mean_std(animal_metrics)
+print(mean_)
+print('+/- %s'%(str(std_)))
