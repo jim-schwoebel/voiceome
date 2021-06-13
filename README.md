@@ -113,6 +113,17 @@ def visualize(task):
 | 'CleanAudio' | True | [True, False] | Whether or not you should clean audio files during featurization to mono16000Hz. | 
 | 'DefaultAgeGender' | 'all' | ['TwentiesMale', 'TwentiesFemale', 'ThirtiesMale', 'ThirtiesFemale', 'FourtiesMale]', 'FourtiesFemale', 'FiftiesMale', 'FiftiesFemale', 'SixtiesMale', 'SixtiesFemale', 'AllAgesGenders'] | The default age and gender to use for reference ranges. | 
 
+
++---------+---------+------------------+---------+---------+----------+--------+
+|  Task   | Feature |     Feature      | AgeGend | Average | Standard | Sample |
+|         |  Type   |                  |   er    |         |  Deviati |  Numbe |
+|         |         |                  |         |         |    on    |   r    |
++---------+---------+------------------+---------+---------+----------+--------+
+| microph | Opensmi | F0semitoneFrom27 | AllAges | 30.258  |  6.547   |  2466  |
+| one_tas | leFeatu | .5Hz_sma3nz_amea | Genders |         |          |        |
+|    k    |   res   |        n         |         |         |          |        |
++---------+---------+------------------+---------+---------+----------+--------+
+
 ## surveys 
 Here are the 4 main surveys used in the Voiceome clinical study:
 
