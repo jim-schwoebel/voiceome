@@ -63,15 +63,16 @@ def get_questions():
 def clean_audio(audiofile):
   --> clean audio into mono 16000 Hz with Allie script
 
-def featurize_audio(audiofile):
+def transcribe_audio():
+  --> transcribe using Microsoft Azure with a key
+  
+def featurize_audio(audiofile, embedding):
+  if / elif
   --> featurize audio file (acoustic)
   --> featurize audio file (linguistic)
 
 def check_quality(audiofile, task):
   --> quality references 
-  
-def transcribe_audio():
-  --> transcribe using Microsoft Azure with a key
  
 def get_reference(task, embedding, feature, age):
   00. Microphone check task
