@@ -101,6 +101,14 @@ def visualize(task):
 -- visualize scripts
 ```
 
+Settings.json specifies various settings for the API. The configuration options are listed in the table below.
+
+| Setting     |    Default option   |  All Options | Description |
+| ----------- | ----------- | ----------- | ----------- |
+| 'Azure' | 'TEST' | Any string related to the Azure string | Azure key for API usage in transcription. | 
+| 'Features' | [] | [] | [] |
+| 'Task' | 'MicrophoneTest' | [] | The default task to customize API usage. | 
+
 ## surveys 
 Here are the 4 main surveys used in the Voiceome clinical study:
 
