@@ -23,8 +23,9 @@ Therefore, the main goals of the Voiceome Study include:
 ## Clinical trial design
 Anyone >18 years of age that could speak English was eligible to participate in the Voiceome Study. Each participant was randomly assigned one of three tracks (AAAA, ABAB, ABCD, or ACBD) and could participate in follow-on surveys separated by roughly three weeks in these tracks. Subjects were primarily recruited on Amazon Mechanical Turk with a paid incentive ($5-20/session). 
 
-![](https://github.com/jim-schwoebel/voiceome/blob/main/assets/images/thumbnails/overview.png)
-![](https://github.com/jim-schwoebel/voiceome/blob/main/assets/images/thumbnails/locations.png)
+| Overvew    |    Locations   |   
+| ----------- | ----------- | 
+|  ![](https://github.com/jim-schwoebel/voiceome/blob/main/assets/images/thumbnails/overview.png) | ![](https://github.com/jim-schwoebel/voiceome/blob/main/assets/images/thumbnails/locations.png) |
 
 ## Getting started
 To get started, clone this repository:
