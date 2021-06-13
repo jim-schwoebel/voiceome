@@ -1,0 +1,802 @@
+'''
+================================================ 
+            VOICEOME REPOSITORY                     
+================================================ 
+
+repository name: Voiceome 
+repository version: 1.0 
+repository link: https://github.com/jim-schwoebel/voiceome 
+author: Jim Schwoebel 
+author contact: jim.schwoebel@gmail.com 
+description: A set of scripts related to the Voiceome Study, a clinical study for speech and language biomarker research N=6000+ 
+license category: opensource 
+license: Apache 2.0 license 
+organization name: Sonde Health Inc. 
+location: Boston, MA 
+website: https://sondehealth.com 
+release date: 2021-06-13 
+
+This code (Voiceome) is hereby released under a Apache 2.0 license license. 
+
+For more information, check out the license terms below. 
+
+================================================ 
+              DESCRIPTION                    
+================================================ 
+
+Voiceome.py 
+
+A simple set of scripts to help with various tasks related to the Voiceome 
+dataset. This includes:
+- cleaning audio to mono16Hz  
+- featurizing audio 
+- querying reference ranges as published in the paper 
+- transcribing audio files with Microsoft Azure (given environment variables)
+- defining quality criteria for each speech task / calculating metrics
+
+Thank you for your interest in our work!
+
+================================================ 
+                LICENSE TERMS                      
+================================================ 
+
+Copyright 2021 NeuroLex Laboratories, Inc. 
+Licensed under the Apache License, Version 2.0 (the "License"); 
+you may not use this file except in compliance with the License. 
+You may obtain a copy of the License at 
+
+     http://www.apache.org/licenses/LICENSE-2.0 
+
+Unless required by applicable law or agreed to in writing, software 
+distributed under the License is distributed on an "AS IS" BASIS, 
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+See the License for the specific language governing permissions and 
+limitations under the License. 
+'''
+
+######################################################################
+##                           IMPORTS                               ##
+######################################################################
+import sys, os, json, time, shutil, argparse, random, math
+import soundfile as sf
+import numpy as np
+from pyvad import vad, trim, split
+import pandas as pd
+from datetime import datetime
+import librosa
+import matplotlib.pyplot as plt
+import numpy as np
+import difflib
+import nltk
+from nltk import word_tokenize
+import speech_recognition as sr
+from tqdm import tqdm
+from beautifultable import BeautifulTable
+
+directory=os.getcwd()
+
+# import text libraries 
+sys.path.append(directory+'/scripts/features/helpers')
+import text_features as tfea
+import text2_features as tf
+import nltk_features as nf 
+import textacy_features as tfe
+import spacy_features as spf
+
+import spacy
+nlp=spacy.load('en_core_web_sm')
+
+# import digipsych_prosody 
+sys.path.append(directory+'/scripts/features/helpers/DigiPsych_Prosody')
+from prosody import Voice_Prosody
+
+######################################################################
+##                      HELPER FUNCTIONS                            ##
+######################################################################
+def prev_dir(directory):
+    g=directory.split('/')
+    dir_=''
+    for i in range(len(g)):
+        if i != len(g)-1:
+            if i==0:
+                dir_=dir_+g[i]
+            else:
+                dir_=dir_+'/'+g[i]
+    # print(dir_)
+    return dir_
+
+def parseArff(arff_file):
+    '''
+    Parses Arff File created by OpenSmile Feature Extraction
+    '''
+    f = open(arff_file,'r', encoding='utf-8')
+    data = []
+    labels = []
+    for line in f:
+        if '@attribute' in line:
+            temp = line.split(" ")
+            feature = temp[1]
+            labels.append(feature)
+        if ',' in line:
+            temp = line.split(",")
+            for item in temp:
+                data.append(item)
+    temp = arff_file.split('/')
+    temp = temp[-1]
+    data[0] = temp[:-5] + '.wav'
+
+    newdata=list()
+    newlabels=list()
+    for i in range(len(data)):
+        try:
+            newdata.append(float(data[i]))
+            newlabels.append(labels[i])
+        except:
+            pass
+    return newdata,newlabels
+
+def clean_audio(audiofile):
+    # replace wavfile with a version that is 16000 Hz mono audio
+    if audiofile.endswith('.wav'):
+        os.system('ffmpeg -i "%s" -ar 16000 -ac 1 "%s" -y'%(audiofile,audiofile[0:-4]+'_cleaned.wav'))
+        os.remove(audiofile)
+        return [audiofile[0:-4]+'_cleaned.wav']
+    elif audiofile.endswith('.mp3'):
+        os.system('ffmpeg -i "%s" -ar 16000 -ac 1 "%s" -y'%(audiofile,audiofile[0:-4]+'.wav'))
+        os.remove(audiofile)
+        return [audiofile[0:-4]+'_cleaned.wav']
+
+def transcribe_audio(file, transcript_engine, settingsdir, tokenizer, model):
+
+    # create all transcription methods here
+    print('%s transcribing: %s'%(transcript_engine, file))
+
+    # use the audio file as the audio source
+    r = sr.Recognizer()
+    transcript_engine = default_audio_transcriber
+
+    if transcript_engine == 'deepspeech_nodict':
+
+        curdir=os.getcwd()
+        os.chdir(settingsdir+'/features/audio_features/helpers')
+        listdir=os.listdir()
+        deepspeech_dir=os.getcwd()
+
+        # download models if not in helper directory
+        if 'deepspeech-0.7.0-models.pbmm' not in listdir:
+            os.system('wget https://github.com/mozilla/DeepSpeech/releases/download/v0.7.0/deepspeech-0.7.0-models.pbmm --no-check-certificate')
+
+        # initialize filenames
+        textfile=file[0:-4]+'.txt'
+        newaudio=file[0:-4]+'_newaudio.wav'
+        
+        if deepspeech_dir.endswith('/'):
+            deepspeech_dir=deepspeech_dir[0:-1]
+
+        # go back to main directory
+        os.chdir(curdir)
+
+        # convert audio file to 16000 Hz mono audio 
+        os.system('ffmpeg -i "%s" -acodec pcm_s16le -ac 1 -ar 16000 "%s" -y'%(file, newaudio))
+        command='deepspeech --model %s/deepspeech-0.7.0-models.pbmm --audio "%s" >> "%s"'%(deepspeech_dir, newaudio, textfile)
+        print(command)
+        os.system(command)
+
+        # get transcript
+        transcript=open(textfile).read().replace('\n','')
+
+        # remove temporary files
+        os.remove(textfile)
+        os.remove(newaudio)
+
+    elif transcript_engine == 'deepspeech_dict':
+
+        curdir=os.getcwd()
+        os.chdir(settingsdir+'/features/audio_features/helpers')
+        listdir=os.listdir()
+        deepspeech_dir=os.getcwd()
+
+        # download models if not in helper directory
+        if 'deepspeech-0.7.0-models.pbmm' not in listdir:
+            os.system('wget https://github.com/mozilla/DeepSpeech/releases/download/v0.7.0/deepspeech-0.7.0-models.pbmm --no-check-certificate')
+        if 'deepspeech-0.7.0-models.scorer' not in listdir:
+            os.system('wget https://github.com/mozilla/DeepSpeech/releases/download/v0.7.0/deepspeech-0.7.0-models.scorer --no-check-certificate')
+
+        # initialize filenames
+        textfile=file[0:-4]+'.txt'
+        newaudio=file[0:-4]+'_newaudio.wav'
+        
+        if deepspeech_dir.endswith('/'):
+            deepspeech_dir=deepspeech_dir[0:-1]
+
+        # go back to main directory
+        os.chdir(curdir)
+
+        # convert audio file to 16000 Hz mono audio 
+        os.system('ffmpeg -i "%s" -acodec pcm_s16le -ac 1 -ar 16000 "%s" -y'%(file, newaudio))
+        command='deepspeech --model %s/deepspeech-0.7.0-models.pbmm --scorer %s/deepspeech-0.7.0-models.scorer --audio "%s" >> "%s"'%(deepspeech_dir, deepspeech_dir, newaudio, textfile)
+        print(command)
+        os.system(command)
+
+        # get transcript
+        transcript=open(textfile).read().replace('\n','')
+
+        # remove temporary files
+        os.remove(textfile)
+        os.remove(newaudio)
+
+    elif transcript_engine == 'wav2vec':
+
+        # load pretrained model
+        audio_input, _ = sf.read(file)
+
+        # transcribe
+        input_values = tokenizer(audio_input, return_tensors="pt").input_values
+        logits = model(input_values).logits
+        predicted_ids = torch.argmax(logits, dim=-1)
+        transcript = tokenizer.batch_decode(predicted_ids)[0].lower()
+
+    elif transcript_engine == 'azure':
+        # https://colab.research.google.com/github/scgupta/yearn2learn/blob/master/speech/asr/python_speech_recognition_notebook.ipynb#scrollTo=IzfBW4kczY9l
+
+        """performs continuous speech recognition with input from an audio file"""
+        # <SpeechContinuousRecognitionWithFile>
+        transcript=''
+        done=False 
+
+        def stop_cb(evt):
+            print('CLOSING on {}'.format(evt))
+            nonlocal done
+            done = True
+
+        def get_val(evt):
+            nonlocal transcript 
+            transcript = transcript+ ' ' +evt.result.text
+            return transcript
+
+        speech_config = speechsdk.SpeechConfig(subscription=os.environ['AZURE_SPEECH_KEY'], region=os.environ['AZURE_REGION'])
+        speech_config.speech_recognition_language=os.environ['AZURE_SPEECH_RECOGNITION_LANGUAGE']
+        audio_config = speechsdk.audio.AudioConfig(filename=file)
+        speech_recognizer = speechsdk.SpeechRecognizer(speech_config=speech_config, audio_config=audio_config)
+        stream = speechsdk.audio.PushAudioInputStream()
+
+        # Connect callbacks to the events fired by the speech recognizer
+        speech_recognizer.recognizing.connect(lambda evt: print('interim text: "{}"'.format(evt.result.text)))
+        speech_recognizer.recognized.connect(lambda evt:  print('azure-streaming-stt: "{}"'.format(get_val(evt))))
+        speech_recognizer.session_stopped.connect(lambda evt: print('SESSION STOPPED {}'.format(evt)))
+        speech_recognizer.canceled.connect(lambda evt: print('CANCELED {}'.format(evt)))
+        speech_recognizer.session_stopped.connect(stop_cb)
+        speech_recognizer.canceled.connect(stop_cb)
+
+        # start continuous speech recognition
+        speech_recognizer.start_continuous_recognition()
+
+        # push buffer chunks to stream
+        buffer, rate = read_wav_file(file)
+        audio_generator = simulate_stream(buffer)
+        for chunk in audio_generator:
+          stream.write(chunk)
+          time.sleep(0.1)  # to give callback a chance against this fast loop
+
+        # stop continuous speech recognition
+        stream.close()
+        while not done:
+            time.sleep(0.5)
+
+        speech_recognizer.stop_continuous_recognition()
+        time.sleep(0.5)  # Let all callback run
+
+
+def opensmile_featurize(audiofile, basedir, feature_extractor):
+        feature_extractors=['avec2013.conf', 'emobase2010.conf', 'IS10_paraling.conf', 'IS13_ComParE.conf', 'IS10_paraling_compat.conf', 'emobase.conf', 
+                             'emo_large.conf', 'IS11_speaker_state.conf', 'IS12_speaker_trait_compat.conf', 'IS09_emotion.conf', 'IS12_speaker_trait.conf', 
+                             'prosodyShsViterbiLoudness.conf', 'ComParE_2016.conf', 'GeMAPSv01a.conf']
+
+        os.rename(audiofile,audiofile.replace(' ','_'))
+        audiofile=audiofile.replace(' ','_')
+        arff_file=audiofile[0:-4]+'.arff'
+        curdir=os.getcwd()
+        opensmile_folder=basedir+'/helpers/opensmile/opensmile-2.3.0'
+        print(opensmile_folder)
+        print(feature_extractor)
+        print(audiofile)
+        print(arff_file)
+
+        if feature_extractor== 'GeMAPSv01a.conf':
+            command='SMILExtract -C %s/config/gemaps/%s -I %s -O %s'%(opensmile_folder, feature_extractor, audiofile, arff_file)
+            print(command)
+            os.system(command)
+        else:
+            os.system('SMILExtract -C %s/config/%s -I %s -O %s'%(opensmile_folder, feature_extractor, audiofile, arff_file))
+
+        features, labels = parseArff(arff_file)
+
+        # remove temporary arff_file
+        os.remove(arff_file)
+        os.chdir(curdir)
+
+        return features, labels
+
+def pause_featurize(wavfile, transcript):
+    data, fs = librosa.core.load(wavfile)
+    duration=librosa.get_duration(y=data, sr=fs)
+    time = np.linspace(0, len(data)/fs, len(data))
+    newdata=list()
+    for i in range(len(data)):
+        if data[i] > 1:
+            newdata.append(1.0)
+        elif data[i] < -1:
+            newdata.append(-1.0)
+        else:
+            newdata.append(data[i])
+
+    vact = vad(np.array(newdata), fs, fs_vad = 16000, hop_length = 30, vad_mode=2)
+    vact = list(vact)
+    while len(time) > len(vact):
+        vact.append(0.0)
+    utterances=list()
+
+    for i in range(len(vact)):
+        if vact[i] != vact[i-1]:
+            # voice shift 
+            if vact[i] == 1:
+                start = i
+            else:
+                # this means it is end 
+                end = i
+                utterances.append([start/fs,end/fs])
+                
+    pauses=list()
+    pause_lengths=list()
+    for i in range(len(utterances)-1):
+        pauses.append([utterances[i][1], utterances[i+1][0]])
+        pause_length=utterances[i+1][0] - utterances[i][1]
+        pause_lengths.append(pause_length)
+    
+    # get descriptive stats of pause leengths
+    average_pause = np.mean(np.array(pause_lengths))
+    std_pause = np.std(np.array(pause_lengths))
+    
+    if len(utterances) > 0:
+        first_phonation=utterances[0][0]
+        last_phonation=utterances[len(utterances)-1][1]
+    else:
+        first_phonation=0
+        last_phonation=0
+        
+    words=transcript.lower().split()
+    
+    if len(utterances)-1 != -1:
+        features = [utterances, pauses, len(utterances), len(pauses), average_pause, std_pause, first_phonation, last_phonation, (len(utterances)/duration)*60, (len(words)/duration)*60, duration]
+    else:
+        features = [utterances, pauses, len(utterances), 0, 0, 0, first_phonation, last_phonation, (len(utterances)/duration)*60, (len(words)/duration)*60, duration]
+        
+    labels = ['UtteranceTimes', 'PauseTimes', 'UtteranceNumber', 'PauseNumber', 'AveragePauseLength', 'StdPauseLength', 'TimeToFirstPhonation','TimeToLastPhonation', 'UtterancePerMin', 'WordsPerMin', 'Duration']
+    return features, labels
+
+def prosody_featurize(audiofile,fsize):
+    df = pd.DataFrame()
+    vp = Voice_Prosody()
+    if audiofile.endswith('.wav'):
+        print('Prosody featurizing:',audiofile)
+        feat_dict = vp.featurize_audio(audiofile,int(fsize))
+        features=list(feat_dict.values())[0:-1]
+        labels=list(feat_dict)[0:-1]
+    
+    print(features)
+    print(labels)
+
+    return features, labels
+
+def audiotext_featurize(wavfile, transcript):
+	# get features 
+    features2, labels2 = tf.text2_featurize(transcript)
+    nltk_features, nltk_labels=nf.nltk_featurize(transcript)
+    textacy_features, textacy_labels=tfe.textacy_featurize(transcript, nlp)
+    spacy_features, spacy_labels=spf.spacy_featurize(transcript, nlp)
+    text_features,text_labels=tfea.text_featurize(transcript)
+
+    # concatenate feature arrays 
+    features=np.append(np.array(nltk_features),np.array(textacy_features))
+    features=np.append(features,np.array(spacy_features))
+    features=np.append(features, np.array(text_features))
+    
+    # concatenate labels
+    labels=nltk_labels+textacy_labels+spacy_labels+text_labels
+    features=list(np.append(features, np.array(features2)))
+    labels=labels+labels2
+
+    return features, labels 
+
+
+######################################################################
+##                     QUALITY METRICS                              ##
+######################################################################
+
+def extract_transcript(transcript):
+    try:
+        return transcript.split(') ')[1]
+    except:
+        return ''
+
+def animal_features(transcript, animal_list):
+    transcript=transcript.lower().split(' ')
+    count=0
+    for j in range(len(transcript)):
+        if transcript in animal_list:
+            count=count+1
+    return count 
+
+def letterf_features(transcript):
+    transcript=transcript.lower().split(' ')
+    count=0
+    words=list()
+    for j in range(len(transcript)):
+        if transcript[j].startswith('f') and transcript[j] not in words:
+            count=count+1
+            words.append(transcript[j])
+    return count
+
+def passage_features(transcript, reference):
+    # similarity (https://stackoverflow.com/questions/1471153/string-similarity-metrics-in-python)
+    # similarity
+    seq=difflib.SequenceMatcher(a=transcript.lower(), b=reference.lower())
+    # longest matching string
+    match = seq.find_longest_match(0, len(transcript), 0, len(reference))
+    
+    return 100*seq.ratio() #, match.size, match.a, match.b
+
+def mean_std(list_):
+    array_=np.array(list_)
+    return np.mean(array_), np.std(array_)
+    
+def get_reference(task, featuretype, feature, agegender, basedir):
+
+    curdir=os.getcwd()
+
+    os.chdir(basedir)
+    os.chdir('data')
+    os.chdir('references')
+
+    # go to proper location
+    if task in ['microphone_task', 'freespeech_task', 'picture_task', 'category_task',
+                'letterf_task', 'paragraph_task', 'ahh_task', 'papapa_task', 'pataka_task',
+                'mandog_task', 'tourbus_task', 'diagnosis_task', 'medication_task']:
+        os.chdir('main_tasks')
+
+    elif task in ['mushroom_task', 'bicycle_task', 'camel_task', 'camera_task', 'chicken_task', 
+                  'dinosaur_task', 'balloon_task', 'glasses_task', 'gorilla_task', 'volcano_task', 
+                  'asparagus_task', 'pizza_task', 'railroad_task', 'scissors_task', 'shovel_task', 
+                  'flamingo_task', 'suitcase_task', 'telephone_task', 'ladder_task', 'toothbrush_task', 
+                  'hammer_task', 'coconut_task', 'wallet_task', 'pineapple_task', 'cactus_task']:
+        os.chdir('bnt_task')
+
+    elif task in ['plive_task', 'broe_task', 'jome_task', 'zulx_task', 'zowl_task', 
+                  'vave_task', 'fwov_task', 'nayb_task', 'kwaj_task', 'bwiz_task']:
+        os.chdir('nonword_task')
+
+    # 00. Microphone check task = 'microphone_task'
+    if task == 'microphone_task': 
+        data=json.load(open('00_mic_check.json'))
+
+    # 01. Free speech task = 'freespeech_task'
+    elif task == 'freespeech_task':
+        data=json.load(open('01_free_speech.json'))
+
+    # 02. Picture description task = 'picture_task'
+    elif task == 'picture_task':
+        data=json.load(open('02_picture_description.json'))
+
+    # 03. Category naming task = 'category_task'
+    elif task == 'category_task':
+        data=json.load(open('03_animal_naming.json'))
+
+    # 04. Letter {FAS} Tasks = 'leterf_task'
+    elif task == 'letterf_task':
+        data=json.load(open('04_letter_f_naming.json'))
+
+    # 05. Paragraph reading task = 'paragraph_task'
+    elif task == 'paragraph_task':
+        data=json.load(open('05_caterpillar_reading.json'))
+
+    # 06. Sustained phonation ('ahh') = 'ahh_task'
+    elif task == 'ahh_task':
+        data=json.load(open('06_sustained_ahh.json'))
+
+    # 07. Pa pa pa task = 'papapa_task'
+    elif task == 'papapa_task':
+        data=json.load(open('07_pa_pa_pa.json'))
+
+    # 08. Pa taska ka task - 'pataka_task'
+    elif task == 'pataka_task':
+        data=json.load(open('08_pa_ta_ka.json'))
+
+    # 09. Confrontational naming task (different images) - 'bnt_task'
+    elif task == 'mushroom_task':
+        data=json.load(open('01_Mushroom.json'))
+    elif task == 'bicycle_task':
+        data=json.load(open('02_Bicycle.json'))
+    elif task == 'camel_task':
+        data=json.load(open('03_Camel.json'))
+    elif task == 'camera_task':
+        data=json.load(open('04_Camera.json'))
+    elif task == 'chicken_task':
+        data=json.load(open('05_Chicken.json'))
+    elif task == 'dinosaur_task':
+        data=json.load(open('06_Dinosaur.json'))
+    elif task == 'balloon_task':
+        data=json.load(open('07_Balloon.json'))
+    elif task == 'glasses_task':
+        data=json.load(open('08_Glasses.json'))
+    elif task == 'gorilla_task':
+        data=json.load(open('09_Gorilla.json'))
+    elif task == 'volcano_task':
+        data=json.load(open('10_Volcano.json'))
+    elif task == 'asparagus_task':
+        data=json.load(open('11_Asparagus.json'))
+    elif task == 'pizza_task':
+        data=json.load(open('12_Pizza.json'))
+    elif task == 'railroad_task':
+        data=json.load(open('13_Railroad.json'))
+    elif task == 'scissors_task':
+        data=json.load(open('14_Scissors.json'))
+    elif task == 'shovel_task':
+        data=json.load(open('15_Shovel.json'))
+    elif task == 'flamingo_task':
+        data=json.load(open('16_Flamingo.json'))
+    elif task == 'suitcase_task':
+        data=json.load(open('17_Suitcase.json'))
+    elif task == 'telephone_task':
+        data=json.load(open('18_Telephone.json'))
+    elif task == 'ladder_task':
+        data=json.load(open('19_Ladder.json'))
+    elif task == 'toothbrush_task':
+        data=json.load(open('20_Toothbrush.json'))
+    elif task == 'hammer_task':
+        data=json.load(open('21_Hammer.json'))
+    elif task == 'coconut_task':
+        data=json.load(open('22_Coconut.json'))
+    elif task == 'wallet_task':
+        data=json.load(open('23_Wallet.json'))
+    elif task == 'pineapple_task':
+        data=json.load(open('24_Pineapple.json'))
+    elif task == 'cactus_task':
+        data=json.load(open('25_Cactus.json'))
+
+
+    # 10. Nonword task (different nonwords) - 'nonword_task'
+    elif task == 'plive_task':
+        data=json.load(open('01_Plive.json'))
+    elif task == 'broe_task':
+        data=json.load(open('02_Fwov.json'))
+    elif task == 'jome_task':
+        data=json.load(open('03_Zowl.json'))
+    elif task == 'zulx_task':
+        data=json.load(open('04_Zulx.json'))
+    elif task == 'zowl_task':
+        data=json.load(open('05_Vave.json'))
+    elif task == 'vave_task':
+        data=json.load(open('06_Kwaj.json'))
+    elif task == 'fwov_task':
+        data=json.load(open('07_Jome.json'))
+    elif task == 'nayb_task':
+        data=json.load(open('08_Bwiz.json'))
+    elif task == 'kwaj_task':
+        data=json.load(open('09_Broe.json'))
+    elif task == 'bwiz_task':
+        data=json.load(open('10_Nayb.json'))
+
+    # 11. Immediate recall task -  'mandog_task' or 'tourbus_task'
+    elif task == 'mandog_task':
+        data=json.load(open('45_repeat_mandog.json'))
+
+    elif task == 'tourbus_task':
+        data=json.load(open('47_repeat_schoolbus.json'))
+
+    # 12. Spoken diagnosis task - 'diagnosis_task'
+    elif task == 'diagnosis_task':
+        data=json.load(open('48_diagnosis_task.json'))
+
+    # 13. Spoken medication task - 'medication_task'
+    elif task == 'medication_task':
+        data=json.load(open('49_medication_task.json'))
+
+    # calculate possible featurestypes here 
+    featuretypes=['OpensmileFeatures', 'ProsodyFeatures', 'PauseFeatures', 'AudiotextFeatures']
+
+    # calculate possible features here
+    features=['F0semitoneFrom27.5Hz_sma3nz_amean', 'F0semitoneFrom27.5Hz_sma3nz_stddevNorm', 'F0semitoneFrom27.5Hz_sma3nz_percentile20.0', 'F0semitoneFrom27.5Hz_sma3nz_percentile50.0', 'F0semitoneFrom27.5Hz_sma3nz_percentile80.0', 'F0semitoneFrom27.5Hz_sma3nz_pctlrange0-2', 'F0semitoneFrom27.5Hz_sma3nz_meanRisingSlope', 'F0semitoneFrom27.5Hz_sma3nz_stddevRisingSlope', 'F0semitoneFrom27.5Hz_sma3nz_meanFallingSlope', 'F0semitoneFrom27.5Hz_sma3nz_stddevFallingSlope', 
+              'loudness_sma3_amean', 'loudness_sma3_stddevNorm', 'loudness_sma3_percentile20.0', 'loudness_sma3_percentile50.0', 'loudness_sma3_percentile80.0', 'loudness_sma3_pctlrange0-2', 'loudness_sma3_meanRisingSlope', 'loudness_sma3_stddevRisingSlope', 'loudness_sma3_meanFallingSlope', 'loudness_sma3_stddevFallingSlope', 'jitterLocal_sma3nz_amean', 'jitterLocal_sma3nz_stddevNorm', 'shimmerLocaldB_sma3nz_amean', 'shimmerLocaldB_sma3nz_stddevNorm', 'HNRdBACF_sma3nz_amean', 
+              'HNRdBACF_sma3nz_stddevNorm', 'logRelF0-H1-H2_sma3nz_amean', 'logRelF0-H1-H2_sma3nz_stddevNorm', 'logRelF0-H1-A3_sma3nz_amean', 'logRelF0-H1-A3_sma3nz_stddevNorm', 'F1frequency_sma3nz_amean', 'F1frequency_sma3nz_stddevNorm', 'F1bandwidth_sma3nz_amean', 'F1bandwidth_sma3nz_stddevNorm', 'F1amplitudeLogRelF0_sma3nz_amean', 'F1amplitudeLogRelF0_sma3nz_stddevNorm', 'F2frequency_sma3nz_amean', 'F2frequency_sma3nz_stddevNorm', 'F2amplitudeLogRelF0_sma3nz_amean', 
+              'F2amplitudeLogRelF0_sma3nz_stddevNorm', 'F3frequency_sma3nz_amean', 'F3frequency_sma3nz_stddevNorm', 'F3amplitudeLogRelF0_sma3nz_amean', 'F3amplitudeLogRelF0_sma3nz_stddevNorm', 'alphaRatioV_sma3nz_amean', 'alphaRatioV_sma3nz_stddevNorm', 'hammarbergIndexV_sma3nz_amean', 'hammarbergIndexV_sma3nz_stddevNorm', 'slopeV0-500_sma3nz_amean', 'slopeV0-500_sma3nz_stddevNorm', 'slopeV500-1500_sma3nz_amean', 'slopeV500-1500_sma3nz_stddevNorm', 'alphaRatioUV_sma3nz_amean', 'hammarbergIndexUV_sma3nz_amean', 
+              'slopeUV0-500_sma3nz_amean', 'slopeUV500-1500_sma3nz_amean', 'loudnessPeaksPerSec', 'VoicedSegmentsPerSec', 'MeanVoicedSegmentLengthSec', 'StddevVoicedSegmentLengthSec', 'MeanUnvoicedSegmentLength', 'StddevUnvoicedSegmentLength', 
+              # this is the pause_features array
+              'Speech_Time_VADInt_1', 'Total_Time_VADInt_1', 'Pause_Time_VADInt_1', 'Pause_Percentage_VADInt_1', 'Pause_Speech_Ratio_VADInt_1', 'Mean_Pause_Length_VADInt_1', 'Pause_Variability_VADInt_1', 'Speech_Time_VADInt_2', 'Total_Time_VADInt_2', 'Pause_Time_VADInt_2', 'Pause_Percentage_VADInt_2', 'Pause_Speech_Ratio_VADInt_2', 'Mean_Pause_Length_VADInt_2', 'Pause_Variability_VADInt_2', 'Speech_Time_VADInt_3', 'Total_Time_VADInt_3', 'Pause_Time_VADInt_3', 'Pause_Percentage_VADInt_3', 
+              'Pause_Speech_Ratio_VADInt_3', 'Mean_Pause_Length_VADInt_3', 'Pause_Variability_VADInt_3', 
+              # PauseFeatures
+              'UtteranceNumber', 'PauseNumber', 'AveragePauseLength', 'StdPauseLength', 'TimeToFirstPhonation', 'TimeToLastPhonation', 'UtterancePerMin', 'WordsPerMin', 'Duration',
+              # audiotexttext_features array
+              'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'space', 'numbers', 'capletters', 'cc', 'cd', 'dt', 'ex', 'in', 'jj', 'jjr', 'jjs', 'ls', 'md', 'nn', 'nnp', 'nns', 'pdt', 'pos', 'prp', 'prp2', 'rbr', 'rbs', 'rp', 'to', 'uh', 'vb', 'vbd', 'vbg', 'vbn', 'vbp', 'vbz', 'wdt', 'wp', 'wrb', 'polarity', 'subjectivity', 'repeat', 'uniquewords', 'n_sents', 'n_words', 'n_chars', 'n_syllables', 
+              'n_unique_words', 'n_long_words', 'n_monosyllable_words', 'n_polysyllable_words', 'flesch_kincaid_grade_level', 'flesch_reading_ease', 'smog_index', 'gunning_fog_index', 'coleman_liau_index', 'automated_readability_index', 'lix', 'gulpease_index', 'wiener_sachtextformel', 'PROPN', 'ADP', 'DET', 'NUM', 'PUNCT', 'SPACE', 'VERB', 'NOUN', 'ADV', 'CCONJ', 'PRON', 'ADJ', 'SYM', 'PART', 'INTJ', 'X', 'pos_other', 'NNP', 'IN', 'DT', 'CD', 'NNPS', ',', '_SP', 'VBZ', 'NN', 'RB', 
+              'CC', '', 'NNS', '.', 'PRP', 'MD', 'VB', 'HYPH', 'VBD', 'JJ', ':', '-LRB-', '$', '-RRB-', 'VBG', 'VBN', 'NFP', 'RBR', 'POS', 'VBP', 'RP', 'JJS', 'PRP$', 'EX', 'JJR', 'WP', 'WDT', 'TO', 'WRB', "''", '``', 'PDT', 'AFX', 'RBS', 'UH', 'WP$', 'FW', 'XX', 'LS', 'ADD', 'tag_other', 'compound', 'ROOT', 'prep', 'det', 'pobj', 'nummod', 'punct', 'nsubj', 'advmod', 'conj', 'aux', 'dobj', 'nmod', 'acl', 'appos', 'npadvmod', 'amod', 'agent', 'case', 'intj', 'prt', 'pcomp', 'ccomp', 'attr', 
+              'dep', 'acomp', 'poss', 'auxpass', 'expl', 'mark', 'nsubjpass', 'quantmod', 'advcl', 'relcl', 'oprd', 'neg', 'xcomp', 'csubj', 'predet', 'parataxis', 'dative', 'preconj', 'csubjpass', 'meta', 'dep_other', '\ufeffXxx', 'Xxxxx', 'XXxxx', 'xx', 'Xxxx', 'Xxx', 'xXxxx', 'xxx', 'xxxx', ' ', '-', 'xxx.xxxx.xxx', 'dddd', '[', '#', 'dd', ']', 'XXX-d', '*', 'XXXX', 'XXX', 'Xx', '--', '    ', '   ', '  ', "'x", 'X.', 'xxx--', ';', 'Xxx.', '(', ')', "'", '“', '”', 'Xx.', '!', "'xx", 'xx!--Xxx',
+              "x'xxxx", '?', '_', "x'x", "x'xx", "Xxx'xxxx", 'Xxxxx--', 'xxxx--', '--xxxx', 'X--', 'xx--', 'xxxx”--xxx', 'xxx--“xxxx', "Xxx'x", ';--', 'xxx--_xxx', "xxx'x", 'xxx!--xxxx', 'xxxx?--_Xxx', "Xxxxx'x", 'xxxx--“xxxx', "xxxx'xxx", '--Xxxxx', ',--', '?--', 'xx--“xx', 'xx!--X', '.--', 'xxx--“xxx', ':--', 'Xxxxx--“xxxx', 'xxxx!--xxxx', 'xx”--xxx', 'xxxx--_xxx', 'xxxx--“xxx', '--xx', '--X', 'xxxx!--Xxx', '--xxx', 'xxx_.', 'xxxx--_xx', 'xxxx--_xx_xxxx', 'xx!--xxxx', 'xxxx!--xx', "X'xx", "xxxx'x", 
+              "X_'x", "xxx'xxx", '--Xxxx', "X'Xxxxx", "Xx'xxxx", '--Xxx', 'xxxx”--xxxx', 'xxxx!--', 'xxxx--“x', 'Xxxx!--Xxxx', 'xxx!--Xxx', 'Xxxxx.', 'xxxx_.', 'xx--“Xxxx', 'Xxxxx”--xxx', 'xxxx”--xx', 'xxxx--“xx', "Xxxxx!--Xxx'x", "X'xxxx", 'Xxxxx?--', '--Xx', 'xxxx!”--Xx', "xxxx--“X'x", "xxxx'", 'xxx.--“Xxxx', 'xxxx--“X', 'xxxx!--X', 'Xxx”--xx', 'xxx”--xxx', 'xxx-_xxx', "x'Xxxxx", 'Xxxxx!--X', 'Xxxxx!--Xxx', 'dd-d.xxx', 'xxxx://xxx.xxxx.xxx/d/dd/', 'xXxxxx', 'xxxx://xxxx.xxx/xxxx', 'd.X.', '/', 'd.X.d', 
+              'd.X', '%', 'Xd', 'xxxx://xxx.xxxx.xxx', 'ddd(x)(d', 'X.X.', 'ddd', 'xxxx@xxxx.xxx', 'xxxx://xxxx.xxx', 'd,ddd', 'shape_other', 'mean sentence polarity', 'std sentence polarity', 'max sentence polarity', 'min sentence polarity', 'median sentence polarity', 'mean sentence subjectivity', 'std sentence subjectivity', 'max sentence subjectivity', 'min sentence subjectivity', 'median sentence subjectivity', 'character count', 'word count', 'sentence number', 'words per sentence', 'unique chunk noun text', 
+              'unique chunk root text', 'unique chunk root head text', 'chunkdep ROOT', 'chunkdep pobj', 'chunkdep nsubj', 'chunkdep dobj', 'chunkdep conj', 'chunkdep appos', 'chunkdep attr', 'chunkdep nsubjpass', 'chunkdep dative', 'chunkdep pcomp', 'number of named entities', 'PERSON', 'NORP', 'FAC', 'ORG', 'GPE', 'LOC', 'PRODUCT', 'EVENT', 'WORK_OF_ART', 'LAW', 'LANGUAGE', 'DATE', 'TIME', 'PERCENT', 'MONEY', 'QUANTITY', 'ORDINAL', 'CARDINAL', 'filler ratio', 'type token ratio', 'standardized word entropy', 
+              'question ratio', 'number ratio', 'Brunets Index', 'Honores statistic', 'datewords freq', 'word number', 'five word count', 'max word length', 'min word length', 'variance of vocabulary', 'std of vocabulary', 'sentencenum', 'periods', 'questions', 'interjections', 'repeatavg', 'filler_ratio', 'type_token_ratio', 'standardized_word_entropy', 'question_ratio', 'number_ratio', 'brunets_index', 'honores_statistic', 'pronoun_to_noun_ratio']
+
+    # age options
+    agegenders=['TwentiesMale', 'TwentiesFemale', 'ThirtiesMale', 'ThirtiesFemale', 'FourtiesMale]', 'FourtiesFemale', 'FiftiesMale', 'FiftiesFemale', 'SixtiesMale', 'SixtiesFemale', 'AllAgesGenders']
+
+    os.chdir(curdir)
+
+    # return results 
+    if featuretype in featuretypes and feature in features and agegender in agegenders:
+        return data[featuretype][feature][agegender]
+    else:
+        return 'ERROR - FeatureType, Feature, or Age not recognize. Please check these settings and try again.'
+    
+def visualize(task, feature, age, gender):
+    # put in task, age, and gender and get a bar graph
+    
+    # now show bar graph 
+    pass
+
+######################################################################
+##                           MAIN SCRIPT                           ##
+######################################################################
+settings=json.load(open('settings.json'))
+
+# specify azure settings 
+os.environ['AZURE_SPEECH_KEY']=settings['AzureKey']
+os.environ['AZURE_SPEECH_RECOGNITION_LANGUAGE']='en-US'
+os.environ['AZURE_REGION']='East-US'
+
+# all other settings
+basedir=os.getcwd()
+transcript_engine=settings['TranscriptEngine']
+features=settings['Features']
+featuretype=settings['FeatureType']
+task=settings['Task']
+clean_audio=settings['CleanAudio']
+agegender = settings['DefaultAgeGender']
+
+# get reference 
+print(features + ' - ' + featuretype)
+data=get_reference(task, features, featuretype, agegender, basedir)
+table = BeautifulTable()
+table.columns.header = ["Task", "FeatureType", "Feature", "AgeGender", "Average", "Standard Deviation", "Sample Number"]
+table.rows.append([task, features, featuretype, agegender, data['AverageValue'], data['StdValue'], data['SampleNumber']])
+
+print(table)
+
+
+
+# # now go through and ask user what they want to do...
+# ### by folder 
+# ### by sample
+
+# ## do analysis 
+# g=pd.read_csv('new2.csv')
+# labels=list(g)
+
+# for i in range(len(labels)):
+#     if labels[i].lower().find('caterpillar') > 0:
+#         caterpillar=labels[i]
+
+# fox=g['Please click the start button and then say:  "The quick brown fox jumps over the lazy dog."  You may press the Stop button if you finish before the timer runs out.']
+# memory=g['Tell us about a recent happy memory based on experiences from the past month.']
+# picture=g['Tell us everything you see going on in this picture.  <center>![Aphasia image](http://www.neurolex.co/uploads/alphasia.png)</center>']
+# animals=g['Category: ANIMALS. Name all the animals you can think of as quickly as possible before the time elapses below.']
+# letterf=g['Letter: F. Name all the words beginning with the letter F you can think of as quickly as possible before the time elapses below.']
+# passage=g[caterpillar]
+# mandog=g['Please repeat back what you just heard as accurately as possible. You may press the stop button if you finish before the timer runs out.']
+# tourbus=g['Please repeat back what you just heard as accurately as possible. You may press the stop button if you finish before the timer runs out..1']
+
+# # get transcripts
+# transcript=extract_transcript('(nlx-35ec5930-a10d-11ea-ad75-47afc39b88d6 00:00:59.90) I spent some time recently in the back garden with my dogs.  Um, it was really nice because we just relaxed and sat out there. It was a sunny day. It had been raining a lot recently and it was the first sunny day. So we got to sit out and relax. My family were also there and it was a really enjoyable afternoon.  Also, we cook together later in the day, so that was enjoyable as well.  ')
+
+# # passage references
+# fox_passage="The Quick Brown Fox jumps over the lazy dog."
+# caterpillar_passage="Do you like amusement parks? Well, I sure do. To amuse myself, I went twice last spring. My most MEMORABLE moment was riding on the Caterpillar, which is a gigantic roller coaster high above the ground. When I saw how high the Caterpillar rose into the bright blue sky I knew it was for me. After waiting in line for thirty minutes, I made it to the front where the man measured my height to see if I was tall enough. I gave the man my coins, asked for change, and jumped on the cart. Tick, tick, tick, the Caterpillar climbed slowly up the tracks. It went SO high I could see the parking lot. Boy was I SCARED! I thought to myself, â€œThereâ€™s no turning back now.â€ People were so scared they screamed as we swiftly zoomed fast, fast, and faster along the tracks. As quickly  as it started, the Caterpillar came to a stop. Unfortunately, it was time to pack the car and drive home. That night I dreamt of the wild ride on the Caterpillar. Taking a trip to the amusement park and riding on the Caterpillar was my MOST memorable moment ever!"
+# mandog_passage="the man saw the boy that the dog chased"
+# tourbus_passage="the tour bus is coming into the town to pick up the people from the hotel to go swimming."
+
+# # print(transcript)
+# print('Fox passage')
+# fox_metrics=list()
+# for i in range(len(fox)):
+#     transcript=extract_transcript(fox[i])
+#     metric=passage_features(transcript, fox_passage)
+#     fox_metrics.append(metric)
+
+# mean_, std_=mean_std(fox_metrics)
+# print(mean_)
+# print('+/- %s'%(str(std_)))
+
+# # print(transcript)
+# print('Paragraph - caterpillar')
+# caterpillar_metrics=list()
+# for i in range(len(passage)):
+#     transcript=extract_transcript(passage[i])
+#     metric=passage_features(transcript, caterpillar_passage)
+#     caterpillar_metrics.append(metric)
+
+# mean_, std_=mean_std(caterpillar_metrics)
+# print(mean_)
+# print('+/- %s'%(str(std_)))
+
+# # print(transcript)
+# print('Recall - mandog')
+# recall_mandog=g['Please listen carefully to the following audio clip once.  [autoplay](https://s3.amazonaws.com/www.voiceome.org/data/mandog.mp3)']
+# mandog_metrics=list()
+# for i in range(len(mandog_passage)):
+#     transcript=extract_transcript(mandog[i])
+#     recall_transcript=extract_transcript(recall_mandog)
+#     metric=passage_features(transcript, mandog_passage)
+#     mandog_metrics.append(metric)
+
+# mean_, std_=mean_std(mandog_metrics)
+# print(mean_)
+# print('+/- %s'%(str(std_)))
+
+# # print(transcript)
+# print('Recall - tourbus')
+# recall_tourbus=g['Please listen carefully to the following audio clip once.  [autoplay](https://s3.amazonaws.com/www.voiceome.org/data/tourbus.mp3)']
+# tourbus_metrics=list()
+# for i in range(len(tourbus)):
+#     transcript=extract_transcript(tourbus[i])
+#     recall_transcript=extract_transcript(recall_tourbus[i])
+#     metric=passage_features(transcript, tourbus_passage)
+#     tourbus_metrics.append(metric)
+
+# mean_, std_=mean_std(tourbus_metrics)
+# print(mean_)
+# print('+/- %s'%(str(std_)))
+
+# print('LetterF')
+# letterf_metrics=list()
+# for i in range(len(letterf)):
+#     transcript=extract_transcript(letterf[i])
+#     print(transcript)
+#     metric=letterf_features(transcript)
+#     letterf_metrics.append(metric)
+
+# mean_, std_=mean_std(letterf_metrics)
+# print(mean_)
+# print('+/- %s'%(str(std_)))
+
+# # print(passage_features(transcript, caterpillar_passage))
+# # print(passage_features(transcript, mandog_passage))
+# # print(passage_features(transcript, tourbus_passage))
+# animals=g['Category: ANIMALS. Name all the animals you can think of as quickly as possible before the time elapses below.']
+# animal_metrics=list()
+
+# words=list()
+# stopwords=['um', 'think','hum','oh',"let's",'blue','name','uhm','brown',"i'm",'category','ok','uh',
+#            'time','ah', 'yeah', 'hey', 'love', 'lot', 'god', 'eh', 'funny', 'sure', 'honey', 'sugar',
+#            'doc', 'email', 'al', 'il', 'rap', 'count', 'talk', 'check', 'ha', 'anything', 'jack', 'cheap',
+#            'wow', 'world', 'devil', 'gosh', 'mama', 'please', 'kind', 'king', 'thing', 'sorry', 'see',
+#            'awesome', 'uhm', 'yellow', 'tail', 'need', 'mu', 'search', 'wizard', 'kid', 'wanna', 'mind', 'girl',
+#            'giant', 'fire', 'care', 'steak', 'weather', 'war', 'window', 'rock', 'ego', 'word', 'camera', 'square',
+#            'kiwi', 'pie', 'cheat', 'kit', 'grey', 'warm', 'dumb', 'border', 'auto', 'god', 'fear', 'die', 'author', 'mix',
+#            'experience', 'grow', 'aw', 'doe', 'drive', 'stuck', 'number', 'oil', 'fan', 'pay', 'amazon', 'problem', 'jesus',
+#            'laugh', "i'd", 'ghost', 'cause', 'target', 'pay', 'mingo', 'tire', 'strange', 'bar', 'canadian', 'beef', 
+#            'wine', 'asp', 'poop', 'dollar', 'record', 'coca', 'exit', 'ceo', 'donald', 'blog', 'store', 'myth', 'act', 'ow',
+#            'horny', 'alliana', 'gun', 'cina', 'firm', 'elf', 'walmart', 'remind', 'mr', 'underground', 'hurdle', 'payroll',
+#            'commas',' audi', 'salon', 'milk']
+
+# for i in range(len(animals)):
+#     transcript=extract_transcript(animals[i]).lower().replace('.','').replace('?','').replace(',','').split()
+#     count=0
+#     for j in range(len(transcript)):
+#         # cehck if the word is a noun
+#         if nltk.pos_tag(word_tokenize(transcript[j]))[0][1] == 'NN' and transcript[j] not in stopwords: 
+#             count=count+1
+
+#     animal_metrics.append(count)
+# print('ANIMALS')
+# mean_, std_ = mean_std(animal_metrics)
+# print(mean_)
+# print('+/- %s'%(str(std_)))
