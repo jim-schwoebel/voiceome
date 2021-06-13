@@ -139,7 +139,7 @@ Here are the 4 main surveys used in the Voiceome clinical study:
 
 | Survey     |    Link    |   Number of completions |
 | ----------- | ----------- | ----------- |
-| Survey A      | [https://app.surveylex.com/surveys/8a32cbb0-cc8a-11eb-9ea3-938cc8b6d71e](https://app.surveylex.com/surveys/8a32cbb0-cc8a-11eb-9ea3-938cc8b6d71e), but for new studies recommend a slightly altered survey [here](https://app.surveylex.com/surveys/2f5b97d0-cc94-11eb-8595-0ba9699e9d53)      | 6,426     |
+| Survey A      | [https://app.surveylex.com/surveys/8a32cbb0-cc8a-11eb-9ea3-938cc8b6d71e](https://app.surveylex.com/surveys/8a32cbb0-cc8a-11eb-9ea3-938cc8b6d71e), but for new studies recommend a slightly altered survey [here](https://app.surveylex.com/surveys/2f5b97d0-cc94-11eb-8595-0ba9699e9d53).      | 6,426     |
 | Survey B  | [https://app.surveylex.com/surveys/061da3f0-a637-11eb-bcc9-eba67643f616](https://app.surveylex.com/surveys/061da3f0-a637-11eb-bcc9-eba67643f616) | 1400 |
 | Survey C | [https://app.surveylex.com/surveys/a66494c0-a824-11ea-88c1-ab37bac1e1d4](https://app.surveylex.com/surveys/a66494c0-a824-11ea-88c1-ab37bac1e1d4) | 800 |
 | Survey D | [https://app.surveylex.com/surveys/53737620-a637-11eb-bcc9-eba67643f616](https://app.surveylex.com/surveys/53737620-a637-11eb-bcc9-eba67643f616) | 100 |
