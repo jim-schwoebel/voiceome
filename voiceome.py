@@ -58,6 +58,7 @@ limitations under the License.
 ##                           IMPORTS                               ##
 ######################################################################
 import sys, os, json, time, shutil, argparse, random, math
+import matplotlib.pyplot as plt
 import soundfile as sf
 import numpy as np
 from pyvad import vad, trim, split
@@ -608,7 +609,7 @@ def get_reference(task, feature_embedding, feature, agegender, basedir):
     options=json.load(open('feature_options.json'))
     feature_embeddings=list(options)
     features=list()
-    for i in range(len(featuretypes)):
+    for i in range(len(feature_embeddings)):
         features=features+options[feature_embeddings[i]]
 
     print(features)
@@ -619,18 +620,134 @@ def get_reference(task, feature_embedding, feature, agegender, basedir):
 
     # return results 
     if feature_embedding in feature_embeddings and feature in features and agegender in agegenders:
-        return data[featuretype][feature][agegender]
+        return data[feature_embedding][feature][agegender]
     else:
         return 'ERROR - FeatureType, Feature, or Age not recognize. Please check these settings and try again.'
 
-# def reference_task_embedding(task, featuretype, feature, agegender, basedir):
+def reference_task_embedding(task, feature_embedding, agegender, basedir):
+    # get all options 
+    os.chdir(basedir)
+    os.chdir('data')
+    os.chdir('options')
 
+    feature_options=json.load(open('feature_options.json'))
+    feature_embeddings=list(feature_options)
 
-def visualize(task, feature, age, gender):
-    # put in task, age, and gender and get a bar graph
-    
-    # now show bar graph 
-    pass
+    agegender_options=json.load(open('agegender_options.json'))
+    agegenders=agegender_options['AgeGenderOptions']
+
+    names=list()
+    means=list()
+    stds=list()
+    ages=list()
+    samplenums=list()
+
+    if feature_embedding in feature_embeddings and agegender in agegenders:
+        features=feature_options[feature_embedding]
+
+        for i in range(len(features)):
+            data=get_reference(task, feature_embedding, features[i], agegender, basedir)
+            names.append(features[i])
+            means.append(data['AverageValue'])
+            stds.append(data['StdValue'])
+            ages.append(agegender)
+            samplenums.append(data['SampleNumber'])
+
+    elif feature_embedding not in feature_embeddings:
+        print('ERROR - [%s] is not a recognized feature embedding'%(feature_embedding))
+    elif agegender not in agegenders:
+        print('ERROR - [%s] is not a recognized age and gender'%(agegender))
+       
+    return names, means, stds, ages, samplenums
+
+def reference_feature_across_tasks(feature_embedding, feature, agegender, basedir):
+    # get all options 
+    os.chdir(basedir)
+    os.chdir('data')
+    os.chdir('options')
+
+    feature_options=json.load(open('feature_options.json'))
+    feature_embeddings=list(feature_options)        
+
+    agegender_options=json.load(open('agegender_options.json'))
+    agegenders=agegender_options['AgeGenderOptions']
+
+    task_options=json.load(open('task_options.json'))
+    tasks=task_options['AllTasks']
+
+    names=list()
+    means=list()
+    stds=list()
+    ages=list()
+    samplenums=list()
+
+    if agegender in agegenders and feature_embedding in feature_embeddings:
+        features=feature_options[feature_embedding]
+
+        for i in range(len(tasks)):
+            data=get_reference(tasks[i], feature_embedding, feature, agegender, basedir)
+            names.append(tasks[i])
+            means.append(data['AverageValue'])
+            stds.append(data['StdValue'])
+            ages.append(agegender)
+            samplenums.append(data['SampleNumber'])
+
+    elif feature_embedding not in feature_embeddings:
+        print('ERROR - [%s] is not a recognized feature embedding'%(feature_embedding))
+    elif agegender not in agegenders:
+        print('ERROR - [%s] is not a recognized age and gender'%(agegender))
+       
+    return names, means, stds, ages, samplenums
+
+def visualize_bar(feature, feature_embedding, names, means, stds, agegender, basedir, show):
+    os.chdir(basedir)
+    os.chdir('data')
+    os.chdir('visualizations')
+    plt.title(agegender)
+    plt.bar(names, means, yerr=stds)
+    plt.xticks(rotation='vertical')
+    plt.ylabel('%s'%(feature))
+    plt.xlabel('Task type')
+    plt.tight_layout()
+    plt.savefig(feature_embedding+'_'+feature+'.png')
+    if show == True:
+        plt.show()
+    os.chdir(basedir)
+
+def visualize_bar_cohorts(feature, feature_embedding, names, means_1, stds_1, agegender_1, means_2, stds_2, agegender_2, basedir, show):
+    os.chdir(basedir)
+    os.chdir('data')
+    os.chdir('visualizations')
+
+    labels = names
+    men_means = means_1
+    women_means = means_2
+
+    x = np.arange(len(labels))  # the label locations
+    width = 0.35  # the width of the bars
+
+    fig, ax = plt.subplots()
+    rects1 = ax.bar(x - width/2, men_means, width, label=agegender_1)
+    rects2 = ax.bar(x + width/2, women_means, width, label=agegender_2)
+
+    # Add some text for labels, title and custom x-axis tick labels, etc.
+    ax.set_ylabel(feature)
+    ax.set_title(agegender_1 + ' | ' + agegender_2)
+    ax.set_xticks(x)
+    ax.set_xticklabels(labels)
+    ax.legend()
+
+    ax.bar_label(rects1, padding=3)
+    ax.bar_label(rects2, padding=3)
+
+    plt.xticks(rotation='vertical')
+
+    fig.tight_layout()
+    plt.savefig(feature_embedding+'_'+feature+'_'+agegender_1+'_'+agegender_2+'.png')
+
+    if show==True:
+        plt.show()
+    os.chdir(basedir)
 
 ######################################################################
 ##                           MAIN SCRIPT                           ##
@@ -652,15 +769,34 @@ clean_audio=settings['CleanAudio']
 agegender = settings['DefaultAgeGender']
 
 # get reference 
-print(features + ' - ' + featuretype)
+print(feature_embedding + ' - ' + featuretype)
 data=get_reference(task, feature_embedding, featuretype, agegender, basedir)
 table = BeautifulTable()
 table.columns.header = ["Task", "FeatureType", "Feature", "AgeGender", "Average", "Standard Deviation", "Sample Number"]
-table.rows.append([task, features, featuretype, agegender, data['AverageValue'], data['StdValue'], data['SampleNumber']])
-
+table.rows.append([task, feature_embedding, featuretype, agegender, data['AverageValue'], data['StdValue'], data['SampleNumber']])
 print(table)
 
+# get reference by embedding
+names, means, stds, ages, samplenums =reference_task_embedding(task, feature_embedding, agegender, basedir)
+table = BeautifulTable()
+table.columns.header = ["Task", "FeatureType", "Feature", "AgeGender", "Average", "Standard Deviation", "Sample Number"]
+for i in range(len(means)):
+    table.rows.append([task, feature_embedding, names[i], agegender, means[i], stds[i], samplenums[i]])
+print(table)
 
+# get reference by embedding
+names, means, stds, ages, samplenums =reference_feature_across_tasks(feature_embedding, featuretype, 'TwentiesMale', basedir)
+table = BeautifulTable()
+table.columns.header = ["Task", "FeatureType", "Feature", "AgeGender", "Average", "Standard Deviation", "Sample Number"]
+for i in range(len(means)):
+    table.rows.append([task, feature_embedding, names[i], agegender, means[i], stds[i], samplenums[i]])
+print(table)
+
+# visualize these as a bar chart 
+visualize_bar(featuretype, feature_embedding, names, means, stds, 'TwentiesMale', basedir, False)
+
+names_2, means_2, stds_2, ages_2, samplenums =reference_feature_across_tasks(feature_embedding, featuretype, 'TwentiesFemale', basedir)
+visualize_bar_cohorts(featuretype, feature_embedding, names, means, stds, 'TwentiesMale', means_2, stds_2, 'TwentiesFemale', basedir, True)
 
 # # now go through and ask user what they want to do...
 # ### by folder 
