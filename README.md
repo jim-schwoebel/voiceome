@@ -37,6 +37,11 @@ cd voiceome
 pip3 install -r requirements.txt
 ```
 
+Now install FFmpeg and SoX (if you don't have Homebrew, install it before this step [following these instructions](https://brew.sh/)):
+```
+brew install ffmpeg sox
+```
+
 Now install OpenSMILE:
 ```
 Opensmile installation
