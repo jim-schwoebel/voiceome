@@ -30,6 +30,7 @@ Anyone >18 years of age that could speak English was eligible to participate in 
 ## Getting started
 This assumes you are using a MacOS-related computer.
 
+### MacOS
 To get started, clone this repository in a virtual environment and install requirements.txt (note this can take 10 minutes):
 ```
 git clone git@github.com:jim-schwoebel/voiceome.git
@@ -68,6 +69,17 @@ Optionally, if you want to transcribe data with Microsoft Azure (this was the tr
 ...}
 ```
 
+### Linux OS
+```
+git clone git@github.com:jim-schwoebel/voiceome.git
+cd voiceome
+pip3 install virtualenv
+virtualenv env 
+source env/bin/activate
+pip3 install -r requirements-linux.txt
+```
+
+### Tests
 You now can load the python script to call the protocol (.TXT) and references:
 ```
 import .scripts.references
