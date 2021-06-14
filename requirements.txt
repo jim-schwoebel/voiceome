@@ -16,7 +16,6 @@ audioread==2.1.8
 backcall==0.2.0
 bcrypt==3.2.0
 beautifultable==1.0.1
-blabla==0.2.2
 bleach==3.2.1
 blis==0.4.1
 boto==2.49.0
@@ -24,7 +23,6 @@ boto3==1.14.57
 botocore==1.17.57
 cachetools==4.1.1
 catalogue==1.0.0
-catboost==0.24.2
 certifi==2020.6.20
 cffi==1.14.3
 chardet==3.0.4
@@ -35,7 +33,6 @@ contextvars==2.4
 corenlp==0.0.14
 corenlp-protobuf==3.8.0
 cryptography==3.4.6
-ctgan==0.2.1
 cycler==0.10.0
 cymem==2.0.3
 Cython==0.29.21
@@ -102,7 +99,6 @@ Keras-Preprocessing==1.1.2
 kiwisolver==1.2.0
 liac-arff==2.5.0
 librosa==0.6.2
-lightgbm==3.0.0
 llvmlite==0.31.0
 lxml==4.6.3
 Markdown==3.2.2
@@ -316,7 +312,7 @@ s3transfer==0.3.3
 sacrebleu==1.4.14
 sacremoses==0.0.43
 scikit-image==0.17.2
-scikit-learn==0.22
+scikit-learn>=0.22
 scikit-optimize==0.8.1
 scikit-plot==0.3.7
 scipy==1.5.2
