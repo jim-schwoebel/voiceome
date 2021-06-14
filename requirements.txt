@@ -74,7 +74,6 @@ graphviz==0.8.4
 grpcio==1.32.0
 h5py==2.10.0
 HeapDict==1.0.1
--e git+git@github.com:jim-schwoebel/allie.git@ee6a14fa21d665889dfeafea85c5b7ff50e4d00b#egg=hpsklearn&subdirectory=training/helpers/hyperopt-sklearn
 huggingface-hub==0.0.8
 hyperopt==0.2.4
 idna==2.10
