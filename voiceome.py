@@ -798,7 +798,6 @@ visualize_bar(featuretype, feature_embedding, names, means, stds, 'TwentiesMale'
 names_2, means_2, stds_2, ages_2, samplenums =reference_feature_across_tasks(feature_embedding, featuretype, 'TwentiesFemale', basedir)
 visualize_bar_cohorts(featuretype, feature_embedding, names, means, stds, 'TwentiesMale', means_2, stds_2, 'TwentiesFemale', basedir, False)
 
-
 ######################################################################
 ##                 TEST SURVEY A DATA ANALYSIS                      ##
 ######################################################################
@@ -979,16 +978,39 @@ for i in range(len(data)):
         wavfiles.append(wavfile)
     combine_wavfiles(wavfiles, session,'nonword')
 
-## featurize sesions
+## clean (mono 16000 Hz) featurize sesions
 for i in range(len(data)):
     session=str(sessions[i])
     os.chdir(curdir)
     os.chdir('allie')
+    # if clean_audio == True:
+        # os.system('python3 allie.py --command clean --sampletype audio --dir %s'%(curdir+'/'+session))
     os.system('python3 allie.py --command features --sampletype audio --dir %s'%(curdir+'/'+session))
 
-
-## transfer session data with azure transcripts 
-
-## transcribe BNT and nonword tasks
-
 ## visualize relative to standards
+os.chdir(basedir)
+os.chdir('data')
+os.chdir('options')
+
+tasks=json.load(open('task_options.json'))['AllTasks']
+
+os.chdir(basedir)
+os.chdir('data')
+os.chdir('test')
+os.chdir(sessions[0])
+
+means_3=list()
+stds_3=list()
+
+for i in range(len(tasks)):
+    wavfile=get_wavfile(data[all_tasks[i]][0]).replace('.wav','_cleaned.wav')
+    jsonfile=wavfile[0:-4]+'.json'
+    feature_data=json.load(open(jsonfile))['features']['audio']['opensmile_features']
+    dict_=dict(zip(feature_data['labels'],feature_data['features']))
+    value_=dict_[featuretype]
+    means_3.append(value_)
+    stds_3.append(0)
+
+# visualize recent featurizations against the data
+visualize_bar_cohorts(featuretype, feature_embedding, names, means_3, stds_3, 'Jim (ThirtiesMale)', means_2, stds_2, 'TwentiesFemale', basedir, False)
+visualize_bar_cohorts(featuretype, feature_embedding, names, means_3, stds_3, 'Jim (ThirtiesMale)', means, stds, 'TwentiesMale', basedir, False)

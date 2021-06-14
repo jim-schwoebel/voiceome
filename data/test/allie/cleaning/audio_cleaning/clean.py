@@ -350,45 +350,45 @@ else:
 
 deleted_files=list()
 
-# rename files appropriately
-for i in range(len(listdir)):
-    os.rename(listdir[i],listdir[i].replace(' ',''))
+# # rename files appropriately
+# for i in range(len(listdir)):
+#     os.rename(listdir[i],listdir[i].replace(' ',''))
 
-# remove duplicates / json files
-for i in tqdm(range(len(listdir)), desc=labelname):
-    file=listdir[i]
-    listdir2=os.listdir()
-    #now sub-loop through all files in directory and remove duplicates 
-    for j in range(len(listdir2)):
-        try:
-            if listdir2[j]==file:
-                pass
-            elif listdir2[j]=='.DS_Store':
-                pass 
-            else:
-                if filecmp.cmp(file, listdir2[j])==True:
-                    print('removing duplicate: %s ____ %s'%(file,listdir2[j]))
-                    deleted_files.append(listdir2[j])
-                    os.remove(listdir2[j])
-                else:
-                    pass
-        except:
-            pass 
+# # remove duplicates / json files
+# for i in tqdm(range(len(listdir)), desc=labelname):
+#     file=listdir[i]
+#     listdir2=os.listdir()
+#     #now sub-loop through all files in directory and remove duplicates 
+#     for j in range(len(listdir2)):
+#         try:
+#             if listdir2[j]==file:
+#                 pass
+#             elif listdir2[j]=='.DS_Store':
+#                 pass 
+#             else:
+#                 if filecmp.cmp(file, listdir2[j])==True:
+#                     print('removing duplicate: %s ____ %s'%(file,listdir2[j]))
+#                     deleted_files.append(listdir2[j])
+#                     os.remove(listdir2[j])
+#                 else:
+#                     pass
+#         except:
+#             pass 
             
-print('deleted the files below')
-print(deleted_files)
+# print('deleted the files below')
+# print(deleted_files)
 
-listdir=os.listdir() 
-for i in tqdm(range(len(listdir))):
-    # remove .JSON files
-    if listdir[i].endswith('.json'):
-        os.remove(listdir[i])
+# listdir=os.listdir() 
+# for i in tqdm(range(len(listdir))):
+#     # remove .JSON files
+#     if listdir[i].endswith('.json'):
+#         os.remove(listdir[i])
 
-# now rename files with UUIDs
-listdir=os.listdir()
-for i in range(len(listdir)):
-    file=listdir[i]
-    os.rename(file, str(uuid.uuid4())+file[-4:])
+# # now rename files with UUIDs
+# listdir=os.listdir()
+# for i in range(len(listdir)):
+#     file=listdir[i]
+#     os.rename(file, str(uuid.uuid4())+file[-4:])
     
 ################################################
 ##                NOW CLEAN!!                 ##
