@@ -153,7 +153,7 @@ Note you can clone these surveys @ https://surveylex.com and replicate our work 
 ![](https://github.com/jim-schwoebel/voiceome/blob/main/assets/images/A/A.gif)
 
 | Survey fragment    |    Description   | Sample Audio |   
-| ----------- | ----------- | 
+| ----------- | ----------- |  ----------- | 
 | [Consent form](https://github.com/jim-schwoebel/voiceome/wiki/0.-Consent-form) | A standard consent form to opt into the Voiceome study. | n/a | 
 | [Microphone check](https://github.com/jim-schwoebel/voiceome/wiki/00.-Microphone-check-task)| A fragment and information screen to test that a microphone is able to collect voice input from a browser. | 
 [![](https://github.com/jim-schwoebel/voiceome/blob/main/assets/images/thumbnails/play.svg)]() |
