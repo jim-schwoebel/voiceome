@@ -288,7 +288,7 @@ def transcribe_audio(file, transcript_engine, settingsdir, tokenizer, model):
         time.sleep(0.5)  # Let all callback run
 
 
-def opensmile_featurize(audiofile, basedir, feature_extractor):
+def opensmile_featurize(audiofile, features_dir, feature_extractor):
         feature_extractors=['avec2013.conf', 'emobase2010.conf', 'IS10_paraling.conf', 'IS13_ComParE.conf', 'IS10_paraling_compat.conf', 'emobase.conf', 
                              'emo_large.conf', 'IS11_speaker_state.conf', 'IS12_speaker_trait_compat.conf', 'IS09_emotion.conf', 'IS12_speaker_trait.conf', 
                              'prosodyShsViterbiLoudness.conf', 'ComParE_2016.conf', 'GeMAPSv01a.conf']
@@ -297,7 +297,7 @@ def opensmile_featurize(audiofile, basedir, feature_extractor):
         audiofile=audiofile.replace(' ','_')
         arff_file=audiofile[0:-4]+'.arff'
         curdir=os.getcwd()
-        opensmile_folder=basedir+'/helpers/opensmile/opensmile-2.3.0'
+        opensmile_folder=features_dir+'/helpers/opensmile/opensmile-2.3.0'
         print(opensmile_folder)
         print(feature_extractor)
         print(audiofile)
@@ -408,7 +408,6 @@ def audiotext_featurize(wavfile, transcript):
     labels=labels+labels2
 
     return features, labels 
-
 
 ######################################################################
 ##                     QUALITY METRICS                              ##
@@ -929,16 +928,65 @@ print('+/- %s'%(str(std_)))
 ######################################################################
 ##              TEST SURVEY A FEATURIZATION/CLEANING                ##
 ######################################################################
+def get_wavfile(transcript):
+    wavfile=transcript.split(' ')[0].replace('(','')+'.wav'
+    return wavfile 
+
+def combine_wavfiles(wavfiles, sessionid, type_):
+    curdir=os.getcwd()
+    cmd='sox'
+    for k in range(len(wavfiles)):
+        cmd=cmd+' '+wavfiles[k]
+    cmd=cmd+' %s_%s.wav'%(sessionid, type_)
+    os.chdir(sessionid)
+    os.system(cmd)
+    os.chdir(curdir)
 
 os.chdir(basedir)
-# we go to the right spot and need to map elictation types to prompts
+os.chdir('data')
+os.chdir('test')
 
-## CLEAN_CSV --> ages, twenties, etc. --> cleaning script to get data formats converted (using datacleaner)
+## CLEAN the CSV spreadsheet!
+os.system('python3 clean.py')
+data=pd.read_csv('clean.csv')
+sessions = data['sessionId']
+
+# we go to the right spot and need to map elictation types to prompts
+curdir=os.getcwd()
+sys.path.append(curdir)
+from prompts import * 
+
+# this unlocks bnt_tasks | nonword_tasks | all_tasks
 
 ## Make Functions ## 
-# --> stich together all the BNT-naming prompts (1 master session)
-# --> stitch together all the Nonword-naming prompts (1 master session)
+# --> stich together all the BNT-naming prompts (1 master session) --> sessionid_bnt.wav
+for i in range(len(data)):
+    session=str(sessions[i])
+    wavfiles=list()
+    for j in range(len(bnt_tasks)):
+        bnt_task=data[bnt_tasks[j]][i]
+        wavfile=get_wavfile(bnt_task)
+        wavfiles.append(wavfile)
+    combine_wavfiles(wavfiles, session,'bnt')
 
-## Transcribe Sessions (Azure) ##
-## Featurize sesions ## 
-## Visualize relative to standards ## 
+# --> stitch together all the Nonword-naming prompts (1 master session) --> sessionid_nonword.wav 
+for i in range(len(data)):
+    session=str(sessions[i])
+    wavfiles=list()
+    for j in range(len(nonword_tasks)):
+        nonword_task=data[nonword_tasks[j]][i]
+        wavfile=get_wavfile(nonword_task)
+        wavfiles.append(wavfile)
+    combine_wavfiles(wavfiles, session,'nonword')
+
+## featurize sesions
+for i in range(len(data)):
+    session=str(sessions[i])
+    os.chdir(curdir)
+    os.chdir(session)
+
+## transfer session data with azure transcripts 
+
+## transcribe BNT and nonword tasks
+
+## visualize relative to standards
