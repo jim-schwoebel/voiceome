@@ -45,7 +45,7 @@ Now install FFmpeg and SoX (if you don't have Homebrew, install it before this s
 brew install ffmpeg sox autoconf automake m4 libtool
 ```
 
-Optionally, if you want to featurize new data, install OpenSMILE:
+Next, install OpenSMILE:
 ```
 cd scripts/features/helpers/opensmile/opensmile-2.3.0
 bash autogen.sh
