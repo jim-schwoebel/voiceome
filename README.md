@@ -45,7 +45,7 @@ Now install various libraries with Homebrew (if you don't have Homebrew, install
 brew install ffmpeg sox autoconf automake m4 libtool
 ```
 
-Now download X code if you have not done so already from the app store:
+Now download [Xcode](https://www.freecodecamp.org/news/how-to-download-and-install-xcode/) if you have not done so already from the app store:
 ```
 Open the App Store on your mac.
 1. Sign in.
