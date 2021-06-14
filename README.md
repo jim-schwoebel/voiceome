@@ -34,6 +34,7 @@ To get started, clone this repository in a virtual environment and install requi
 ```
 git clone git@github.com:jim-schwoebel/voiceome.git
 cd voiceome
+pip3 install virtualenv
 virtualenv env 
 source env/bin/activate
 pip3 install -r requirements.txt
