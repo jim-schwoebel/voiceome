@@ -40,7 +40,7 @@ source env/bin/activate
 pip3 install -r requirements.txt
 ```
 
-Now install FFmpeg and SoX (if you don't have Homebrew, install it before this step [following these instructions](https://brew.sh/)):
+Now install various libraries with Homebrew (if you don't have Homebrew, install it before this step [following these instructions](https://brew.sh/)):
 ```
 brew install ffmpeg sox autoconf automake m4 libtool
 ```
