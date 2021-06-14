@@ -155,10 +155,8 @@ Note you can clone these surveys @ https://surveylex.com and replicate our work 
 | Survey fragment    |    Description   | Sample Audio |   
 | ----------- | ----------- |  ----------- | 
 | [Consent form](https://github.com/jim-schwoebel/voiceome/wiki/0.-Consent-form) | A standard consent form to opt into the Voiceome study. | n/a | 
-| [Microphone check](https://github.com/jim-schwoebel/voiceome/wiki/00.-Microphone-check-task)| A fragment and information screen to test that a microphone is able to collect voice input from a browser. | 
-[![](https://github.com/jim-schwoebel/voiceome/blob/main/assets/images/thumbnails/play.svg)]() |
+| [Microphone check](https://github.com/jim-schwoebel/voiceome/wiki/00.-Microphone-check-task)| A fragment and information screen to test that a microphone is able to collect voice input from a browser. | [![](https://github.com/jim-schwoebel/voiceome/blob/main/assets/images/thumbnails/play.svg)]() |
 | [Free speech task](https://github.com/jim-schwoebel/voiceome/wiki/01.-Free-speech-task) | A free speech prompt to collect extemporaneous speech from clinical study participants. | [![](https://github.com/jim-schwoebel/voiceome/blob/main/assets/images/thumbnails/play.svg)]() |
-[![](https://github.com/jim-schwoebel/voiceome/blob/main/assets/images/thumbnails/play.svg)]() |
 | [Category Naming Task](https://github.com/jim-schwoebel/voiceome/wiki/03.-Category-naming-task) | A prompt that asks participants to name as many animals as they can in one minute. | [![](https://github.com/jim-schwoebel/voiceome/blob/main/assets/images/thumbnails/play.svg)]() |
 | [Letter F Task](https://github.com/jim-schwoebel/voiceome/wiki/04.-Letter-%7BFAS%7D-Tasks) | A prompt that asks participants to name as many words that start with the letter F as they can in one minute. | [![](https://github.com/jim-schwoebel/voiceome/blob/main/assets/images/thumbnails/play.svg)]() |
 | [Paragraph Reading Task](https://github.com/jim-schwoebel/voiceome/wiki/05.-Paragraph-reading-task) | A prompt that asks participants to read the Caterpillar passage. | [![](https://github.com/jim-schwoebel/voiceome/blob/main/assets/images/thumbnails/play.svg)]() |
