@@ -42,7 +42,7 @@ pip3 install -r requirements.txt
 
 Now install FFmpeg and SoX (if you don't have Homebrew, install it before this step [following these instructions](https://brew.sh/)):
 ```
-brew install ffmpeg sox
+brew install ffmpeg sox autoconf automake m4 libtool
 ```
 
 Optionally, if you want to featurize new data, install OpenSMILE:
