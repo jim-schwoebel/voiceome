@@ -983,7 +983,9 @@ for i in range(len(data)):
 for i in range(len(data)):
     session=str(sessions[i])
     os.chdir(curdir)
-    os.chdir(session)
+    os.chdir('allie')
+    os.system('python3 allie.py --command features --sampletype audio --dir %s'%(curdir+'/'+session))
+
 
 ## transfer session data with azure transcripts 
 
