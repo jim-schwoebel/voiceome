@@ -13,8 +13,6 @@ attrs==20.2.0
 audeer==1.8.0
 audiofile==0.4.0
 audioread==2.1.8
-autogluon==0.0.14
-autogluon-contrib-nlp==0.0.1b20201009
 backcall==0.2.0
 bcrypt==3.2.0
 beautifultable==1.0.1
@@ -63,7 +61,6 @@ Flask-RESTful==0.3.8
 Flask-SQLAlchemy==2.4.4
 Flask-WTF==0.14.3
 future==0.18.2
-Gammatone @ git+https://github.com/detly/gammatone.git@0626328ef7c31d3b33214db2fdcd52e8601eb4c5
 gast==0.3.3
 gensim==3.8.3
 gluoncv==0.8.0
@@ -80,7 +77,6 @@ idna==2.10
 image==1.5.33
 imageio==2.9.0
 imageio-ffmpeg==0.4.2
-imgaug @ git+https://github.com/aleju/imgaug.git@0101108d4fed06bc5056c4a03e2bcb0216dac326
 immutables==0.14
 importlib-metadata==4.0.1
 iniconfig==1.1.1
@@ -102,7 +98,6 @@ jupyter-console==6.2.0
 jupyter-core==4.6.3
 jupyterlab-pygments==0.1.1
 Keras==2.4.3
-keras-compressor @ file:///Users/jimschwoebel/Desktop/allie/training/helpers/keras_compressor
 Keras-Preprocessing==1.1.2
 kiwisolver==1.2.0
 liac-arff==2.5.0
