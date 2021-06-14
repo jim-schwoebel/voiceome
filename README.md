@@ -47,8 +47,14 @@ brew install ffmpeg sox autoconf automake m4 libtool
 
 Optionally, if you want to featurize new data, install OpenSMILE:
 ```
-Opensmile installation
+cd scripts/features/helpers/opensmile/opensmile-2.3.0
+bash autogen.sh
+bash autogen.sh
+./configure
+make -j4 ; make
+make install
 ```
+
 Optionally, if you want to transcribe data with Microsoft Azure (this was the transcriber used in the Voiceome paper), update the ['settings.json'](https://github.com/jim-schwoebel/voiceome/blob/main/settings.json) Azure Key:
 ```
 {"AzureKey": "KEY_GOES_HERE", 
