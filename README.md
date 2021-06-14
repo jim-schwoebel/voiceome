@@ -38,8 +38,6 @@ pip3 install virtualenv
 virtualenv env 
 source env/bin/activate
 pip3 install -r requirements.txt
-pip3 install -U spacy
-python3 -m spacy download en_core_web_sm
 ```
 
 Now install FFmpeg and SoX (if you don't have Homebrew, install it before this step [following these instructions](https://brew.sh/)):
