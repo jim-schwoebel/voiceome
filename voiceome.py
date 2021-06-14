@@ -983,8 +983,8 @@ for i in range(len(data)):
     session=str(sessions[i])
     os.chdir(curdir)
     os.chdir('allie')
-    # if clean_audio == True:
-        # os.system('python3 allie.py --command clean --sampletype audio --dir %s'%(curdir+'/'+session))
+    if clean_audio == True:
+        os.system('python3 allie.py --command clean --sampletype audio --dir %s'%(curdir+'/'+session))
     os.system('python3 allie.py --command features --sampletype audio --dir %s'%(curdir+'/'+session))
 
 ## visualize relative to standards
