@@ -76,339 +76,6 @@ from beautifultable import BeautifulTable
 
 directory=os.getcwd()
 
-# import text libraries 
-sys.path.append(directory+'/scripts/features/helpers')
-import text_features as tfea
-import text2_features as tf
-import nltk_features as nf 
-import textacy_features as tfe
-import spacy_features as spf
-
-import spacy
-nlp=spacy.load('en_core_web_sm')
-
-# import digipsych_prosody 
-sys.path.append(directory+'/scripts/features/helpers/DigiPsych_Prosody')
-from prosody import Voice_Prosody
-
-######################################################################
-##                      HELPER FUNCTIONS                            ##
-######################################################################
-def prev_dir(directory):
-    g=directory.split('/')
-    dir_=''
-    for i in range(len(g)):
-        if i != len(g)-1:
-            if i==0:
-                dir_=dir_+g[i]
-            else:
-                dir_=dir_+'/'+g[i]
-    # print(dir_)
-    return dir_
-
-def parseArff(arff_file):
-    '''
-    Parses Arff File created by OpenSmile Feature Extraction
-    '''
-    f = open(arff_file,'r', encoding='utf-8')
-    data = []
-    labels = []
-    for line in f:
-        if '@attribute' in line:
-            temp = line.split(" ")
-            feature = temp[1]
-            labels.append(feature)
-        if ',' in line:
-            temp = line.split(",")
-            for item in temp:
-                data.append(item)
-    temp = arff_file.split('/')
-    temp = temp[-1]
-    data[0] = temp[:-5] + '.wav'
-
-    newdata=list()
-    newlabels=list()
-    for i in range(len(data)):
-        try:
-            newdata.append(float(data[i]))
-            newlabels.append(labels[i])
-        except:
-            pass
-    return newdata,newlabels
-
-def clean_audio(audiofile):
-    # replace wavfile with a version that is 16000 Hz mono audio
-    if audiofile.endswith('.wav'):
-        os.system('ffmpeg -i "%s" -ar 16000 -ac 1 "%s" -y'%(audiofile,audiofile[0:-4]+'_cleaned.wav'))
-        os.remove(audiofile)
-        return [audiofile[0:-4]+'_cleaned.wav']
-    elif audiofile.endswith('.mp3'):
-        os.system('ffmpeg -i "%s" -ar 16000 -ac 1 "%s" -y'%(audiofile,audiofile[0:-4]+'.wav'))
-        os.remove(audiofile)
-        return [audiofile[0:-4]+'_cleaned.wav']
-
-def transcribe_audio(file, transcript_engine, settingsdir, tokenizer, model):
-
-    # create all transcription methods here
-    print('%s transcribing: %s'%(transcript_engine, file))
-
-    # use the audio file as the audio source
-    r = sr.Recognizer()
-    transcript_engine = default_audio_transcriber
-
-    if transcript_engine == 'deepspeech_nodict':
-
-        curdir=os.getcwd()
-        os.chdir(settingsdir+'/features/audio_features/helpers')
-        listdir=os.listdir()
-        deepspeech_dir=os.getcwd()
-
-        # download models if not in helper directory
-        if 'deepspeech-0.7.0-models.pbmm' not in listdir:
-            os.system('wget https://github.com/mozilla/DeepSpeech/releases/download/v0.7.0/deepspeech-0.7.0-models.pbmm --no-check-certificate')
-
-        # initialize filenames
-        textfile=file[0:-4]+'.txt'
-        newaudio=file[0:-4]+'_newaudio.wav'
-        
-        if deepspeech_dir.endswith('/'):
-            deepspeech_dir=deepspeech_dir[0:-1]
-
-        # go back to main directory
-        os.chdir(curdir)
-
-        # convert audio file to 16000 Hz mono audio 
-        os.system('ffmpeg -i "%s" -acodec pcm_s16le -ac 1 -ar 16000 "%s" -y'%(file, newaudio))
-        command='deepspeech --model %s/deepspeech-0.7.0-models.pbmm --audio "%s" >> "%s"'%(deepspeech_dir, newaudio, textfile)
-        # print(command)
-        os.system(command)
-
-        # get transcript
-        transcript=open(textfile).read().replace('\n','')
-
-        # remove temporary files
-        os.remove(textfile)
-        os.remove(newaudio)
-
-    elif transcript_engine == 'deepspeech_dict':
-
-        curdir=os.getcwd()
-        os.chdir(settingsdir+'/features/audio_features/helpers')
-        listdir=os.listdir()
-        deepspeech_dir=os.getcwd()
-
-        # download models if not in helper directory
-        if 'deepspeech-0.7.0-models.pbmm' not in listdir:
-            os.system('wget https://github.com/mozilla/DeepSpeech/releases/download/v0.7.0/deepspeech-0.7.0-models.pbmm --no-check-certificate')
-        if 'deepspeech-0.7.0-models.scorer' not in listdir:
-            os.system('wget https://github.com/mozilla/DeepSpeech/releases/download/v0.7.0/deepspeech-0.7.0-models.scorer --no-check-certificate')
-
-        # initialize filenames
-        textfile=file[0:-4]+'.txt'
-        newaudio=file[0:-4]+'_newaudio.wav'
-        
-        if deepspeech_dir.endswith('/'):
-            deepspeech_dir=deepspeech_dir[0:-1]
-
-        # go back to main directory
-        os.chdir(curdir)
-
-        # convert audio file to 16000 Hz mono audio 
-        os.system('ffmpeg -i "%s" -acodec pcm_s16le -ac 1 -ar 16000 "%s" -y'%(file, newaudio))
-        command='deepspeech --model %s/deepspeech-0.7.0-models.pbmm --scorer %s/deepspeech-0.7.0-models.scorer --audio "%s" >> "%s"'%(deepspeech_dir, deepspeech_dir, newaudio, textfile)
-        # print(command)
-        os.system(command)
-
-        # get transcript
-        transcript=open(textfile).read().replace('\n','')
-
-        # remove temporary files
-        os.remove(textfile)
-        os.remove(newaudio)
-
-    elif transcript_engine == 'wav2vec':
-
-        # load pretrained model
-        audio_input, _ = sf.read(file)
-
-        # transcribe
-        input_values = tokenizer(audio_input, return_tensors="pt").input_values
-        logits = model(input_values).logits
-        predicted_ids = torch.argmax(logits, dim=-1)
-        transcript = tokenizer.batch_decode(predicted_ids)[0].lower()
-
-    elif transcript_engine == 'azure':
-        # https://colab.research.google.com/github/scgupta/yearn2learn/blob/master/speech/asr/python_speech_recognition_notebook.ipynb#scrollTo=IzfBW4kczY9l
-
-        """performs continuous speech recognition with input from an audio file"""
-        # <SpeechContinuousRecognitionWithFile>
-        transcript=''
-        done=False 
-
-        def stop_cb(evt):
-            print('CLOSING on {}'.format(evt))
-            nonlocal done
-            done = True
-
-        def get_val(evt):
-            nonlocal transcript 
-            transcript = transcript+ ' ' +evt.result.text
-            return transcript
-
-        speech_config = speechsdk.SpeechConfig(subscription=os.environ['AZURE_SPEECH_KEY'], region=os.environ['AZURE_REGION'])
-        speech_config.speech_recognition_language=os.environ['AZURE_SPEECH_RECOGNITION_LANGUAGE']
-        audio_config = speechsdk.audio.AudioConfig(filename=file)
-        speech_recognizer = speechsdk.SpeechRecognizer(speech_config=speech_config, audio_config=audio_config)
-        stream = speechsdk.audio.PushAudioInputStream()
-
-        # Connect callbacks to the events fired by the speech recognizer
-        speech_recognizer.recognizing.connect(lambda evt: print('interim text: "{}"'.format(evt.result.text)))
-        speech_recognizer.recognized.connect(lambda evt:  print('azure-streaming-stt: "{}"'.format(get_val(evt))))
-        speech_recognizer.session_stopped.connect(lambda evt: print('SESSION STOPPED {}'.format(evt)))
-        speech_recognizer.canceled.connect(lambda evt: print('CANCELED {}'.format(evt)))
-        speech_recognizer.session_stopped.connect(stop_cb)
-        speech_recognizer.canceled.connect(stop_cb)
-
-        # start continuous speech recognition
-        speech_recognizer.start_continuous_recognition()
-
-        # push buffer chunks to stream
-        buffer, rate = read_wav_file(file)
-        audio_generator = simulate_stream(buffer)
-        for chunk in audio_generator:
-          stream.write(chunk)
-          time.sleep(0.1)  # to give callback a chance against this fast loop
-
-        # stop continuous speech recognition
-        stream.close()
-        while not done:
-            time.sleep(0.5)
-
-        speech_recognizer.stop_continuous_recognition()
-        time.sleep(0.5)  # Let all callback run
-
-
-def opensmile_featurize(audiofile, features_dir, feature_extractor):
-        feature_extractors=['avec2013.conf', 'emobase2010.conf', 'IS10_paraling.conf', 'IS13_ComParE.conf', 'IS10_paraling_compat.conf', 'emobase.conf', 
-                             'emo_large.conf', 'IS11_speaker_state.conf', 'IS12_speaker_trait_compat.conf', 'IS09_emotion.conf', 'IS12_speaker_trait.conf', 
-                             'prosodyShsViterbiLoudness.conf', 'ComParE_2016.conf', 'GeMAPSv01a.conf']
-
-        os.rename(audiofile,audiofile.replace(' ','_'))
-        audiofile=audiofile.replace(' ','_')
-        arff_file=audiofile[0:-4]+'.arff'
-        curdir=os.getcwd()
-        opensmile_folder=features_dir+'/helpers/opensmile/opensmile-2.3.0'
-        print(opensmile_folder)
-        print(feature_extractor)
-        print(audiofile)
-        print(arff_file)
-
-        if feature_extractor== 'GeMAPSv01a.conf':
-            command='SMILExtract -C %s/config/gemaps/%s -I %s -O %s'%(opensmile_folder, feature_extractor, audiofile, arff_file)
-            print(command)
-            os.system(command)
-        else:
-            os.system('SMILExtract -C %s/config/%s -I %s -O %s'%(opensmile_folder, feature_extractor, audiofile, arff_file))
-
-        features, labels = parseArff(arff_file)
-
-        # remove temporary arff_file
-        os.remove(arff_file)
-        os.chdir(curdir)
-
-        return features, labels
-
-def pause_featurize(wavfile, transcript):
-    data, fs = librosa.core.load(wavfile)
-    duration=librosa.get_duration(y=data, sr=fs)
-    time = np.linspace(0, len(data)/fs, len(data))
-    newdata=list()
-    for i in range(len(data)):
-        if data[i] > 1:
-            newdata.append(1.0)
-        elif data[i] < -1:
-            newdata.append(-1.0)
-        else:
-            newdata.append(data[i])
-
-    vact = vad(np.array(newdata), fs, fs_vad = 16000, hop_length = 30, vad_mode=2)
-    vact = list(vact)
-    while len(time) > len(vact):
-        vact.append(0.0)
-    utterances=list()
-
-    for i in range(len(vact)):
-        if vact[i] != vact[i-1]:
-            # voice shift 
-            if vact[i] == 1:
-                start = i
-            else:
-                # this means it is end 
-                end = i
-                utterances.append([start/fs,end/fs])
-                
-    pauses=list()
-    pause_lengths=list()
-    for i in range(len(utterances)-1):
-        pauses.append([utterances[i][1], utterances[i+1][0]])
-        pause_length=utterances[i+1][0] - utterances[i][1]
-        pause_lengths.append(pause_length)
-    
-    # get descriptive stats of pause leengths
-    average_pause = np.mean(np.array(pause_lengths))
-    std_pause = np.std(np.array(pause_lengths))
-    
-    if len(utterances) > 0:
-        first_phonation=utterances[0][0]
-        last_phonation=utterances[len(utterances)-1][1]
-    else:
-        first_phonation=0
-        last_phonation=0
-        
-    words=transcript.lower().split()
-    
-    if len(utterances)-1 != -1:
-        features = [utterances, pauses, len(utterances), len(pauses), average_pause, std_pause, first_phonation, last_phonation, (len(utterances)/duration)*60, (len(words)/duration)*60, duration]
-    else:
-        features = [utterances, pauses, len(utterances), 0, 0, 0, first_phonation, last_phonation, (len(utterances)/duration)*60, (len(words)/duration)*60, duration]
-        
-    labels = ['UtteranceTimes', 'PauseTimes', 'UtteranceNumber', 'PauseNumber', 'AveragePauseLength', 'StdPauseLength', 'TimeToFirstPhonation','TimeToLastPhonation', 'UtterancePerMin', 'WordsPerMin', 'Duration']
-    return features, labels
-
-def prosody_featurize(audiofile,fsize):
-    df = pd.DataFrame()
-    vp = Voice_Prosody()
-    if audiofile.endswith('.wav'):
-        print('Prosody featurizing:',audiofile)
-        feat_dict = vp.featurize_audio(audiofile,int(fsize))
-        features=list(feat_dict.values())[0:-1]
-        labels=list(feat_dict)[0:-1]
-    
-    # print(features)
-    # print(labels)
-
-    return features, labels
-
-def audiotext_featurize(wavfile, transcript):
-	# get features 
-    features2, labels2 = tf.text2_featurize(transcript)
-    nltk_features, nltk_labels=nf.nltk_featurize(transcript)
-    textacy_features, textacy_labels=tfe.textacy_featurize(transcript, nlp)
-    spacy_features, spacy_labels=spf.spacy_featurize(transcript, nlp)
-    text_features,text_labels=tfea.text_featurize(transcript)
-
-    # concatenate feature arrays 
-    features=np.append(np.array(nltk_features),np.array(textacy_features))
-    features=np.append(features,np.array(spacy_features))
-    features=np.append(features, np.array(text_features))
-    
-    # concatenate labels
-    labels=nltk_labels+textacy_labels+spacy_labels+text_labels
-    features=list(np.append(features, np.array(features2)))
-    labels=labels+labels2
-
-    return features, labels 
-
 ######################################################################
 ##                     QUALITY METRICS                              ##
 ######################################################################
@@ -446,10 +113,102 @@ def passage_features(transcript, reference):
     
     return 100*seq.ratio() #, match.size, match.a, match.b
 
+def bnt_features(transcript):
+    # use 'deepspeech_dict' setting in Allie ML framework
+    transcript=transcript.lower().split()
+    # print(transcript)
+
+    counts=0
+    if 'mushroom' in transcript:
+        counts=counts+1
+    if 'bicycle' in transcript:
+        counts=counts+1
+    if 'camel' in transcript:
+        counts=counts+1
+    if 'camera' in transcript:
+        counts=counts+1
+    if 'chicken' in transcript:
+        counts=counts+1
+    if 'dinosaur' in transcript or 'brontosaurus' in transcript or 'brontosaur' in transcript:
+        counts=counts+1
+    if 'balloon' in transcript or 'bullion' in transcript:
+        counts=counts+1
+    if 'glasses' in transcript or 'spectacles' in transcript or 'bifocals' in transcript:
+        counts=counts+1
+    if 'gorilla' in transcript:
+        counts=counts+1
+    if 'volcano' in transcript:
+        counts=counts+1
+    if 'asparagus' in transcript:
+        counts=counts+1
+    if 'pizza' in transcript or 'piazza' in transcript:
+        counts=counts+1
+    if 'railroad' in transcript or 'track' in transcript or 'tracks' in transcript:
+        counts=counts+1
+    if 'scissors' in transcript:
+        counts=counts+1
+    if 'shovel' in transcript:
+        counts=counts+1
+    if 'flamingo' in transcript:
+        counts=counts+1
+    if 'suit' in transcript or 'suitcase' in transcript or 'case' in transcript:
+        counts=counts+1
+    if 'telephone' in transcript or 'phone' in transcript:
+        counts=counts+1
+    if 'later' in transcript or 'ladder' in transcript:
+        counts=counts+1
+    if 'toothbrush' in transcript or 'tooth' in transcript or 'brush' in transcript:
+        counts=counts+1
+    if 'coconut' in transcript or 'cocoanut' in transcript:
+        counts=counts+1
+    if 'while' in transcript or 'wallet' in transcript:
+        counts=counts+1
+    if 'pineapple' in transcript or 'pine' in transcript:
+        if 'pine' in transcript and 'apple' in transcript:
+            counts=counts+1
+        else:
+            counts=counts+1
+    if 'cactus' in transcript:
+        counts=counts+1
+
+    return counts 
+
+def nonword_features(transcript):
+    # use 'deepspeech_nodict' setting in Allie ML framework
+    transcript=transcript.lower().split()
+    # print(transcript)
+    counts=0
+    if 'plive' in transcript or 'pli' in transcript or 'live' in transcript or 'pliv' in transcript or 'life' in transcript or 'plife' in transcript:
+        counts=counts+1
+    if 'for' in transcript or 'flove' in transcript:
+        counts=counts+1
+    if 'zowl' in transcript or 'thou' in transcript or 'zone' in transcript or 'zoul' in transcript:
+        counts=counts+1
+    if 'zox' in transcript or 'zoolix' in transcript or 'filks' in transcript:
+        counts=counts+1
+    if 'they' in transcript or 'tave' in transcript or 'wall' in transcript or 'vave' in transcript:
+        counts=counts+1
+    if 'kwaj' in transcript or 'quash' in transcript or 'quatda' in transcript:
+        counts=counts+1
+    if 'jom' in transcript or 'joam' in transcript or 'dram' in transcript or 'jome' in transcript:
+        counts=counts+1
+    if 'boys' in transcript or 'boyl' in transcript or 'bwils' in transcript or 'bwiz' in transcript:
+        counts=counts+1
+    if 'broe' in transcript or 'brow' in transcript:
+        counts=counts+1
+    if 'nay' in transcript or 'nayb' in transcript or 'nab' in transcript or 'a' in transcript:
+        counts=counts+1
+
+    return counts 
+
+######################################################################
+##                    QUERYING DATABASES                            ##
+######################################################################
+
 def mean_std(list_):
     array_=np.array(list_)
     return np.mean(array_), np.std(array_)
-    
+
 def get_reference(task, feature_embedding, feature, agegender, basedir):
 
     curdir=os.getcwd()
@@ -750,8 +509,9 @@ def visualize_bar_cohorts(feature, feature_embedding, names, means_1, stds_1, ag
     os.chdir(basedir)
 
 ######################################################################
-##                           MAIN SCRIPT                           ##
+##                           LOAD SETTINGS                          ##
 ######################################################################
+
 settings=json.load(open('settings.json'))
 
 # specify azure settings 
@@ -767,6 +527,10 @@ featuretype=settings['FeatureType']
 task=settings['Task']
 clean_audio=settings['CleanAudio']
 agegender = settings['DefaultAgeGender']
+
+######################################################################
+##                           MAIN SCRIPT                           ##
+######################################################################
 
 # get reference 
 print(feature_embedding + ' - ' + featuretype)
@@ -927,6 +691,7 @@ print('+/- %s'%(str(std_)))
 ######################################################################
 ##              TEST SURVEY A FEATURIZATION/CLEANING                ##
 ######################################################################
+
 def get_wavfile(transcript):
     wavfile=transcript.split(' ')[0].replace('(','')+'.wav'
     return wavfile 
@@ -983,8 +748,8 @@ for i in range(len(data)):
     session=str(sessions[i])
     os.chdir(curdir)
     os.chdir('allie')
-    if clean_audio == True:
-        os.system('python3 allie.py --command clean --sampletype audio --dir %s'%(curdir+'/'+session))
+    # if clean_audio == True:
+        # os.system('python3 allie.py --command clean --sampletype audio --dir %s'%(curdir+'/'+session))
     os.system('python3 allie.py --command features --sampletype audio --dir %s'%(curdir+'/'+session))
 
 ## visualize relative to standards
@@ -1005,7 +770,17 @@ stds_3=list()
 for i in range(len(tasks)):
     wavfile=get_wavfile(data[all_tasks[i]][0]).replace('.wav','_cleaned.wav')
     jsonfile=wavfile[0:-4]+'.json'
-    feature_data=json.load(open(jsonfile))['features']['audio']['opensmile_features']
+
+    # convert to the format of this repository (Allie --> Voiceome)
+    if feature_embedding == 'OpensmileFeatures':
+        feature_data=json.load(open(jsonfile))['features']['audio']['opensmile_features']
+    elif feature_embedding == 'ProsodyFeatures':
+        feature_data=json.load(open(jsonfile))['features']['audio']['prosody_features']
+    elif feature_embedding == 'PauseFeatures':
+        feature_data=json.load(open(jsonfile))['features']['audio']['pause_features']
+    elif feature_embedding == 'AudiotextFeatures':
+        feature_data=json.load(open(jsonfile))['features']['audio']['audiotext_features']
+
     dict_=dict(zip(feature_data['labels'],feature_data['features']))
     value_=dict_[featuretype]
     means_3.append(value_)
@@ -1014,3 +789,33 @@ for i in range(len(tasks)):
 # visualize recent featurizations against the data
 visualize_bar_cohorts(featuretype, feature_embedding, names, means_3, stds_3, 'Jim (ThirtiesMale)', means_2, stds_2, 'TwentiesFemale', basedir, False)
 visualize_bar_cohorts(featuretype, feature_embedding, names, means_3, stds_3, 'Jim (ThirtiesMale)', means, stds, 'TwentiesMale', basedir, False)
+
+######################################################################
+##                      BNT AND NONWORD METRICS                     ##
+######################################################################
+
+os.chdir(basedir)
+os.chdir('data')
+os.chdir('test')
+os.chdir(sessions[0])
+
+# sample BNT value 
+listdir=os.listdir()
+for i in range(len(listdir)):
+    if listdir[i].find('bnt') >= 0 and listdir[i].endswith('.json'):
+        # used deepspeech transcript in the paper
+        transcript=json.load(open(listdir[i]))['transcripts']['audio']['deepspeech_dict']
+        bnt_metric=bnt_features(transcript)
+        print('Confrontational Naming Task:')
+        print(bnt_metric)
+        break
+# sample nonword value
+listdir=os.listdir()
+for i in range(len(listdir)):
+    if listdir[i].find('nonword') >= 0 and listdir[i].endswith('.json'):   
+        # used deepspeech no_dict in the paper
+        transcript=json.load(open(listdir[i]))['transcripts']['audio']['deepspeech_nodict']
+        nonword_metric=nonword_features(transcript)
+        print('Nonword Task:')
+        print(nonword_metric)
+        break
