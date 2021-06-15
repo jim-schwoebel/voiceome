@@ -76,13 +76,15 @@ https://www.surveylex.com/
 
 Collect your sample data on the SurveyLex A survey.
 ```
-Sample data page
+Sample data page (paste video here)
 ```
 
 Download results (audio files + responses).
 ```
 
 ```
+
+Put survey results in data/test/ folder and run voiceome.py to calculate results.
 
 ### Linux OS
 ```
