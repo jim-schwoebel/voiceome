@@ -69,6 +69,21 @@ Optionally, if you want to transcribe data with Microsoft Azure (this was the tr
 ...}
 ```
 
+Now create a SurveyLex account and a survey @ SurveyLex.com - clone SurveyLex A link as a replicated template.
+```
+https://www.surveylex.com/
+```
+
+Collect your sample data on the SurveyLex A survey.
+```
+Sample data page
+```
+
+Download results (audio files + responses).
+```
+
+```
+
 ### Linux OS
 ```
 git clone git@github.com:jim-schwoebel/voiceome.git
