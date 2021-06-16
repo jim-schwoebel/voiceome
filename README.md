@@ -153,6 +153,11 @@ python3 cli.py --command visualize --agegender FourtiesMale] --vtype bar_cohorts
 ```
 
 ### changing settings
+You can change settings.json file with the API with:
+
+```
+python3 cli.py --command settings 
+```
 
 [Settings.json](https://github.com/jim-schwoebel/voiceome/blob/main/settings.json) specifies various settings for the API. The configuration options are listed in the table below. Note all possible options are listed out in the [options folder](https://github.com/jim-schwoebel/voiceome/tree/main/data/options) as .JSON files.
 
@@ -165,12 +170,6 @@ python3 cli.py --command visualize --agegender FourtiesMale] --vtype bar_cohorts
 | 'TranscriptEngine' | "azure" | ["azure", "deepspeech_dict", "deepspeech_nodict", "wav2vec"] | The default transcription engine to use for audiotext_features. | 
 | 'CleanAudio' | True | [True, False] | Whether or not you should clean audio files during featurization to mono16000Hz. | 
 | 'DefaultAgeGender' | 'all' | ['TwentiesMale', 'TwentiesFemale', 'ThirtiesMale', 'ThirtiesFemale', 'FourtiesMale]', 'FourtiesFemale', 'FiftiesMale', 'FiftiesFemale', 'SixtiesMale', 'SixtiesFemale', 'AllAgesGenders'] | The default age and gender to use for reference ranges. | 
-
-You can do this with the CLI by:
-
-```
-python3 cli.py --command settings 
-```
 
 ### get survey urls 
 
