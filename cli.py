@@ -688,6 +688,11 @@ if str(command) != 'None' and command in commands:
 		get quality references - need certain folder formatted appropriately with surveylex export ('./data/test')
 
 		sample command:
+			python3 cli.py --command quality --file test.wav
+
+			OR, optionally specify the directory of the audio file if not in the current directory.
+
+			python3 cli.py --command quality --file test.wav --dir /Users/jimschwoebel/desktop
 		'''
 		if directories is None:
 			directories=[os.getcwd()]
