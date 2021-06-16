@@ -1,0 +1,269 @@
+--------------------------------------------------------------
+ _   _       _                               
+| | | |     (_)                              
+| | | | ___  _  ___ ___  ___  _ __ ___   ___ 
+| | | |/ _ \| |/ __/ _ \/ _ \| '_ ` _ \ / _ \
+\ \_/ / (_) | | (_|  __/ (_) | | | | | |  __/
+ \___/ \___/|_|\___\___|\___/|_| |_| |_|\___|
+                                             
+                                             
+
+--------------------------------------------------------------
+For help, type ```python3 cli.py --help```
+--------------------------------------------------------------
+For more info, visit: 
+https://github.com/jim-schwoebel/voiceome
+--------------------------------------------------------------
++--------+--------+---------------------+---------+----------+---------+-------+
+|  Task  | Featur |       Feature       | AgeGend | Average  | Standar | Sampl |
+|        | eType  |                     |   er    |          | d Devia | e Num |
+|        |        |                     |         |          |  tion   |  ber  |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | F0semitoneFrom27.5H | ['Twent |  24.907  |  5.774  |  371  |
+| hone_t | ileFea |   z_sma3nz_amean    | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | F0semitoneFrom27.5H | ['Twent |  0.159   |  0.106  |  371  |
+| hone_t | ileFea | z_sma3nz_stddevNorm | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | F0semitoneFrom27.5H | ['Twent |  22.54   |  5.598  |  371  |
+| hone_t | ileFea | z_sma3nz_percentile | iesMale |          |         |       |
+|  ask   | tures  |        20.0         |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | F0semitoneFrom27.5H | ['Twent |  24.146  |  5.716  |  371  |
+| hone_t | ileFea | z_sma3nz_percentile | iesMale |          |         |       |
+|  ask   | tures  |        50.0         |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | F0semitoneFrom27.5H | ['Twent |  26.313  |  6.209  |  371  |
+| hone_t | ileFea | z_sma3nz_percentile | iesMale |          |         |       |
+|  ask   | tures  |        80.0         |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | F0semitoneFrom27.5H | ['Twent |  3.773   |  2.744  |  371  |
+| hone_t | ileFea | z_sma3nz_pctlrange0 | iesMale |          |         |       |
+|  ask   | tures  |         -2          |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | F0semitoneFrom27.5H | ['Twent |  181.24  | 293.03  |  371  |
+| hone_t | ileFea | z_sma3nz_meanRising | iesMale |          |         |       |
+|  ask   | tures  |        Slope        |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | F0semitoneFrom27.5H | ['Twent | 177.741  | 314.493 |  371  |
+| hone_t | ileFea | z_sma3nz_stddevRisi | iesMale |          |         |       |
+|  ask   | tures  |       ngSlope       |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | F0semitoneFrom27.5H | ['Twent |  60.672  | 97.411  |  371  |
+| hone_t | ileFea | z_sma3nz_meanFallin | iesMale |          |         |       |
+|  ask   | tures  |       gSlope        |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | F0semitoneFrom27.5H | ['Twent |  57.899  | 120.13  |  371  |
+| hone_t | ileFea | z_sma3nz_stddevFall | iesMale |          |         |       |
+|  ask   | tures  |      ingSlope       |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | loudness_sma3_amean | ['Twent |  0.349   |  0.252  |  371  |
+| hone_t | ileFea |                     | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | loudness_sma3_stdde | ['Twent |  0.901   |  0.272  |  371  |
+| hone_t | ileFea |        vNorm        | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | loudness_sma3_perce | ['Twent |  0.089   |  0.101  |  371  |
+| hone_t | ileFea |      ntile20.0      | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | loudness_sma3_perce | ['Twent |  0.229   |  0.191  |  371  |
+| hone_t | ileFea |      ntile50.0      | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | loudness_sma3_perce | ['Twent |  0.593   |  0.443  |  371  |
+| hone_t | ileFea |      ntile80.0      | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | loudness_sma3_pctlr | ['Twent |  0.504   |  0.398  |  371  |
+| hone_t | ileFea |       ange0-2       | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | loudness_sma3_meanR | ['Twent |  6.433   |  4.592  |  371  |
+| hone_t | ileFea |     isingSlope      | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | loudness_sma3_stdde | ['Twent |  3.688   |  2.694  |  371  |
+| hone_t | ileFea |    vRisingSlope     | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | loudness_sma3_meanF | ['Twent |  4.804   |  3.464  |  371  |
+| hone_t | ileFea |     allingSlope     | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | loudness_sma3_stdde | ['Twent |  2.867   |  2.18   |  371  |
+| hone_t | ileFea |    vFallingSlope    | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | jitterLocal_sma3nz_ | ['Twent |   0.03   |  0.013  |  371  |
+| hone_t | ileFea |        amean        | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | jitterLocal_sma3nz_ | ['Twent |  1.082   |  0.428  |  371  |
+| hone_t | ileFea |     stddevNorm      | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | shimmerLocaldB_sma3 | ['Twent |  1.413   |  0.404  |  371  |
+| hone_t | ileFea |      nz_amean       | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | shimmerLocaldB_sma3 | ['Twent |  0.802   |  0.21   |  371  |
+| hone_t | ileFea |    nz_stddevNorm    | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | HNRdBACF_sma3nz_ame | ['Twent |   4.23   |  1.784  |  371  |
+| hone_t | ileFea |         an          | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | HNRdBACF_sma3nz_std | ['Twent |  0.692   |  1.332  |  371  |
+| hone_t | ileFea |       devNorm       | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | logRelF0-H1-H2_sma3 | ['Twent |  3.783   |  6.174  |  371  |
+| hone_t | ileFea |      nz_amean       | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | logRelF0-H1-H2_sma3 | ['Twent |  -2.468  | 203.594 |  371  |
+| hone_t | ileFea |    nz_stddevNorm    | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | logRelF0-H1-A3_sma3 | ['Twent |  22.015  |  8.122  |  371  |
+| hone_t | ileFea |      nz_amean       | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | logRelF0-H1-A3_sma3 | ['Twent |  0.511   |  0.662  |  371  |
+| hone_t | ileFea |    nz_stddevNorm    | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | F1frequency_sma3nz_ | ['Twent |  547.83  | 126.534 |  371  |
+| hone_t | ileFea |        amean        | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | F1frequency_sma3nz_ | ['Twent |  0.307   |  0.079  |  371  |
+| hone_t | ileFea |     stddevNorm      | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | F1bandwidth_sma3nz_ | ['Twent | 1406.105 | 246.924 |  371  |
+| hone_t | ileFea |        amean        | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | F1bandwidth_sma3nz_ | ['Twent |  0.156   |  0.055  |  371  |
+| hone_t | ileFea |     stddevNorm      | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | F1amplitudeLogRelF0 | ['Twent | -137.468 | 24.801  |  371  |
+| hone_t | ileFea |    _sma3nz_amean    | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | F1amplitudeLogRelF0 | ['Twent |  -0.643  |  0.213  |  371  |
+| hone_t | ileFea | _sma3nz_stddevNorm  | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | F2frequency_sma3nz_ | ['Twent | 1443.097 | 255.927 |  371  |
+| hone_t | ileFea |        amean        | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | F2frequency_sma3nz_ | ['Twent |  0.143   |  0.036  |  371  |
+| hone_t | ileFea |     stddevNorm      | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | F2amplitudeLogRelF0 | ['Twent | -139.385 | 23.984  |  371  |
+| hone_t | ileFea |    _sma3nz_amean    | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | F2amplitudeLogRelF0 | ['Twent |   -0.6   |  0.192  |  371  |
+| hone_t | ileFea | _sma3nz_stddevNorm  | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | F3frequency_sma3nz_ | ['Twent | 2401.48  | 408.194 |  371  |
+| hone_t | ileFea |        amean        | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | F3frequency_sma3nz_ | ['Twent |  0.081   |  0.023  |  371  |
+| hone_t | ileFea |     stddevNorm      | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | F3amplitudeLogRelF0 | ['Twent | -141.62  | 23.205  |  371  |
+| hone_t | ileFea |    _sma3nz_amean    | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | F3amplitudeLogRelF0 | ['Twent |  -0.565  |  0.178  |  371  |
+| hone_t | ileFea | _sma3nz_stddevNorm  | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | alphaRatioV_sma3nz_ | ['Twent | -13.234  |  5.317  |  371  |
+| hone_t | ileFea |        amean        | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | alphaRatioV_sma3nz_ | ['Twent |  -0.603  |  0.421  |  371  |
+| hone_t | ileFea |     stddevNorm      | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | hammarbergIndexV_sm | ['Twent |  24.245  |  6.874  |  371  |
+| hone_t | ileFea |     a3nz_amean      | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | hammarbergIndexV_sm | ['Twent |  0.364   |  0.187  |  371  |
+| hone_t | ileFea |   a3nz_stddevNorm   | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | slopeV0-500_sma3nz_ | ['Twent |  0.028   |  0.03   |  371  |
+| hone_t | ileFea |        amean        | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | slopeV0-500_sma3nz_ | ['Twent |  0.841   | 10.358  |  371  |
+| hone_t | ileFea |     stddevNorm      | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | slopeV500-1500_sma3 | ['Twent |  -0.014  |  0.012  |  371  |
+| hone_t | ileFea |      nz_amean       | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | slopeV500-1500_sma3 | ['Twent |  8.402   | 203.814 |  371  |
+| hone_t | ileFea |    nz_stddevNorm    | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | alphaRatioUV_sma3nz | ['Twent |  -8.073  |  5.94   |  371  |
+| hone_t | ileFea |       _amean        | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | hammarbergIndexUV_s | ['Twent |  17.64   |  6.902  |  371  |
+| hone_t | ileFea |     ma3nz_amean     | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | slopeUV0-500_sma3nz | ['Twent |  0.015   |  0.034  |  371  |
+| hone_t | ileFea |       _amean        | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | slopeUV500-1500_sma | ['Twent |  0.011   |  0.011  |  371  |
+| hone_t | ileFea |      3nz_amean      | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | loudnessPeaksPerSec | ['Twent |  2.904   |  0.901  |  371  |
+| hone_t | ileFea |                     | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | VoicedSegmentsPerSe | ['Twent |  1.923   |  0.742  |  371  |
+| hone_t | ileFea |          c          | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | MeanVoicedSegmentLe | ['Twent |  0.165   |  0.072  |  371  |
+| hone_t | ileFea |       ngthSec       | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | StddevVoicedSegment | ['Twent |  0.132   |  0.077  |  371  |
+| hone_t | ileFea |      LengthSec      | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | MeanUnvoicedSegment | ['Twent |  0.506   |  0.996  |  371  |
+| hone_t | ileFea |       Length        | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
+| microp | Opensm | StddevUnvoicedSegme | ['Twent |  0.414   |  0.396  |  371  |
+| hone_t | ileFea |      ntLength       | iesMale |          |         |       |
+|  ask   | tures  |                     |   ']    |          |         |       |
++--------+--------+---------------------+---------+----------+---------+-------+
