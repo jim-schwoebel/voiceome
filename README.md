@@ -69,401 +69,54 @@ Optionally, if you want to transcribe data with Microsoft Azure (this was the tr
 ...}
 ```
 
-Now create a SurveyLex account and a survey @ SurveyLex.com - clone SurveyLex A link as a replicated template.
+You can now use the convenient Voiceome CLI tool for a few things:
 ```
-https://www.surveylex.com/
+Usage: cli.py [options]
+
+Options:
+  -h, --help            show this help message and exit
+  --c=command, --command=command
+                        the target command (cleaning API = 'clean',  features
+                        API = 'features',  quality API = 'quality',
+                        references API = 'reference',  samples API = 'sample',
+                        testing API = 'test',  urls API = 'urls',  visualize
+                        API = 'visualize',  list/change default settings =
+                        'settings')
+  --a=age_gender, --agegender=age_gender
+                        specify the age and gender in CamelCase for references
+                        ('TwentiesMale' =  male aged 20s); if not used will
+                        default to settings.json value.
+  --d=dir, --dir=dir    an array of the target directory (or directories) that
+                        contains sample files all APIs (e.g.
+                        '/Users/jim/desktop/allie/train_dir/teens/')
+  --e=feature_embedding, --embedding=feature_embedding
+                        the feature embedding to use for reference ranges
+                        (e.g. 'OpenSmile'); if not used it will default to
+                        settings.json value.
+  --f=feature, --feature=feature
+                        the feature value in a feature embedding to use for a
+                        reference range (e.g.
+                        'F0semitoneFrom27.5Hz_sma3nz_amean'); if not used it
+                        will default to settings.json value.
+  --fi=file, --file=file
+                        an audio file to extract relevant quality metrics and
+                        transcribe (e.g. 'test.wav')
+  --t=task, --task=task
+                        the task type to focus on (e.g. 'microphone_task'); if
+                        not used it will default to settings.json value.
+  --v=visualizationtype, --vtype=visualizationtype
+                        the visualization type that you'd like to use - two
+                        options: ['bar', 'bar_cohorts']
+  --verbosity=verbosity
+                        whether or not to display visualizations/charts on the
+                        screen ([True or False]).
+  --u=urls, --urls=urls
+                        the url links for surveys in the Voiceome Study
+                        (useful for cloning surveys via the SurveyLex
+                        interface).
 ```
 
-Collect your sample data on the SurveyLex A survey.
-```
-Sample data page (paste video here)
-```
-
-Download results (audio files + responses).
-```
-
-```
-
-Put survey results in data/test/ folder and run voiceome.py to calculate results.
-
-### Linux OS
-```
-git clone git@github.com:jim-schwoebel/voiceome.git
-cd voiceome
-pip3 install virtualenv
-virtualenv env 
-source env/bin/activate
-pip3 install -r requirements-linux.txt
-```
-
-### Tests
-You now can load the python script to call the protocol (.TXT) and references:
-```
-import .scripts.references
-
-## protocols
-def get_urls():
-  A-https://app.surveylex.com/surveys/e1f88ee0-a636-11eb-bcc9-eba67643f616
-  B-https://app.surveylex.com/surveys/061da3f0-a637-11eb-bcc9-eba67643f616
-  C-https://app.surveylex.com/surveys/a66494c0-a824-11ea-88c1-ab37bac1e1d4
-  D-https://app.surveylex.com/surveys/53737620-a637-11eb-bcc9-eba67643f616
-
-def get_questions():
-  --> questions 
-  --> sample responses 
-  --> sample audio
-  --> sample features
-  From surveylex export (sample.csv)
-
-def clean_audio(audiofile):
-  --> clean audio into mono 16000 Hz with Allie script
-
-def transcribe_audio():
-  --> transcribe using Microsoft Azure with a key
-  
-def featurize_audio(audiofile, embedding):
-  if / elif
-  --> featurize audio file (acoustic)
-  --> featurize audio file (linguistic)
-
-def check_quality(audiofile, task):
-  --> quality references 
- 
-def get_reference(task, embedding, feature, age):
-  00. Microphone check task
-  01. Free speech task
-  02. Picture description task
-  03. Category naming task
-  04. Letter {FAS} Tasks
-  05. Paragraph reading task
-  06. Sustained phonation ('ahh')
-  07. Pa pa pa task
-  08. Pa ta ka task
-  09. Confrontational naming task
-  10. Nonword task
-  11. Immediate recall task
-  12. Spoken diagnosis task
-  13. Spoken medication task
-
-def visualize(task):
--- visualize scripts
-```
-
-You can then get references for a specific feature within an embedding:
-```
-+---------+---------+------------------+---------+---------+----------+--------+
-|  Task   | Feature |     Feature      | AgeGend | Average | Standard | Sample |
-|         |  Type   |                  |   er    |         |  Deviati |  Numbe |
-|         |         |                  |         |         |    on    |   r    |
-+---------+---------+------------------+---------+---------+----------+--------+
-| microph | Opensmi | F0semitoneFrom27 | AllAges | 30.258  |  6.547   |  2466  |
-| one_tas | leFeatu | .5Hz_sma3nz_amea | Genders |         |          |        |
-|    k    |   res   |        n         |         |         |          |        |
-+---------+---------+------------------+---------+---------+----------+--------+
-```
-You can also get all the features for a specific age/gender and speech task:
-```
-+--------+---------+---------------------+--------+----------+---------+-------+
-|  Task  | Feature |       Feature       | AgeGen | Average  | Standar | Sampl |
-|        |  Type   |                     |  der   |          | d Devia | e Num |
-|        |         |                     |        |          |  tion   |  ber  |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | F0semitoneFrom27.5H | AllAge |  30.258  |  6.547  | 2466  |
-| hone_t | leFeatu |   z_sma3nz_amean    | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | F0semitoneFrom27.5H | AllAge |  0.134   |  0.09   | 2466  |
-| hone_t | leFeatu | z_sma3nz_stddevNorm | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | F0semitoneFrom27.5H | AllAge |  27.806  |  6.854  | 2466  |
-| hone_t | leFeatu | z_sma3nz_percentile | sGende |          |         |       |
-|  ask   |   res   |        20.0         |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | F0semitoneFrom27.5H | AllAge |  29.863  |  6.792  | 2466  |
-| hone_t | leFeatu | z_sma3nz_percentile | sGende |          |         |       |
-|  ask   |   res   |        50.0         |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | F0semitoneFrom27.5H | AllAge |  32.277  |  6.962  | 2466  |
-| hone_t | leFeatu | z_sma3nz_percentile | sGende |          |         |       |
-|  ask   |   res   |        80.0         |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | F0semitoneFrom27.5H | AllAge |  4.471   |  3.678  | 2466  |
-| hone_t | leFeatu | z_sma3nz_pctlrange0 | sGende |          |         |       |
-|  ask   |   res   |         -2          |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | F0semitoneFrom27.5H | AllAge | 169.055  | 241.752 | 2466  |
-| hone_t | leFeatu | z_sma3nz_meanRising | sGende |          |         |       |
-|  ask   |   res   |        Slope        |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | F0semitoneFrom27.5H | AllAge | 165.449  | 258.389 | 2466  |
-| hone_t | leFeatu | z_sma3nz_stddevRisi | sGende |          |         |       |
-|  ask   |   res   |       ngSlope       |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | F0semitoneFrom27.5H | AllAge |  65.253  | 108.258 | 2466  |
-| hone_t | leFeatu | z_sma3nz_meanFallin | sGende |          |         |       |
-|  ask   |   res   |       gSlope        |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | F0semitoneFrom27.5H | AllAge |  67.611  | 143.412 | 2466  |
-| hone_t | leFeatu | z_sma3nz_stddevFall | sGende |          |         |       |
-|  ask   |   res   |      ingSlope       |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | loudness_sma3_amean | AllAge |  0.365   |  0.277  | 2466  |
-| hone_t | leFeatu |                     | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | loudness_sma3_stdde | AllAge |  0.938   |  0.278  | 2466  |
-| hone_t | leFeatu |        vNorm        | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | loudness_sma3_perce | AllAge |  0.094   |  0.111  | 2466  |
-| hone_t | leFeatu |      ntile20.0      | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | loudness_sma3_perce | AllAge |  0.231   |  0.21   | 2466  |
-| hone_t | leFeatu |      ntile50.0      | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | loudness_sma3_perce | AllAge |  0.628   |  0.499  | 2466  |
-| hone_t | leFeatu |      ntile80.0      | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | loudness_sma3_pctlr | AllAge |  0.534   |  0.446  | 2466  |
-| hone_t | leFeatu |       ange0-2       | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | loudness_sma3_meanR | AllAge |  7.091   |  5.202  | 2466  |
-| hone_t | leFeatu |     isingSlope      | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | loudness_sma3_stdde | AllAge |  4.103   |  3.196  | 2466  |
-| hone_t | leFeatu |    vRisingSlope     | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | loudness_sma3_meanF | AllAge |   5.02   |  3.834  | 2466  |
-| hone_t | leFeatu |     allingSlope     | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | loudness_sma3_stdde | AllAge |   2.96   |  2.462  | 2466  |
-| hone_t | leFeatu |    vFallingSlope    | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | jitterLocal_sma3nz_ | AllAge |  0.029   |  0.013  | 2466  |
-| hone_t | leFeatu |        amean        | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | jitterLocal_sma3nz_ | AllAge |  1.228   |  0.467  | 2466  |
-| hone_t | leFeatu |     stddevNorm      | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | shimmerLocaldB_sma3 | AllAge |  1.321   |  0.359  | 2466  |
-| hone_t | leFeatu |      nz_amean       | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | shimmerLocaldB_sma3 | AllAge |  0.827   |  0.189  | 2466  |
-| hone_t | leFeatu |    nz_stddevNorm    | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | HNRdBACF_sma3nz_ame | AllAge |  6.201   |  2.411  | 2466  |
-| hone_t | leFeatu |         an          | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | HNRdBACF_sma3nz_std | AllAge |  0.593   |  2.226  | 2466  |
-| hone_t | leFeatu |       devNorm       | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | logRelF0-H1-H2_sma3 | AllAge |  4.971   |  6.175  | 2466  |
-| hone_t | leFeatu |      nz_amean       | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | logRelF0-H1-H2_sma3 | AllAge |  1.799   | 87.279  | 2466  |
-| hone_t | leFeatu |    nz_stddevNorm    | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | logRelF0-H1-A3_sma3 | AllAge |  22.207  |  7.702  | 2466  |
-| hone_t | leFeatu |      nz_amean       | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | logRelF0-H1-A3_sma3 | AllAge |  0.568   |  2.625  | 2466  |
-| hone_t | leFeatu |    nz_stddevNorm    | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | F1frequency_sma3nz_ | AllAge | 622.454  | 123.019 | 2466  |
-| hone_t | leFeatu |        amean        | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | F1frequency_sma3nz_ | AllAge |  0.268   |  0.071  | 2466  |
-| hone_t | leFeatu |     stddevNorm      | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | F1bandwidth_sma3nz_ | AllAge | 1416.315 | 204.453 | 2466  |
-| hone_t | leFeatu |        amean        | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | F1bandwidth_sma3nz_ | AllAge |  0.154   |  0.045  | 2466  |
-| hone_t | leFeatu |     stddevNorm      | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | F1amplitudeLogRelF0 | AllAge | -134.965 | 24.788  | 2466  |
-| hone_t | leFeatu |    _sma3nz_amean    | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | F1amplitudeLogRelF0 | AllAge |  -0.66   |  0.203  | 2466  |
-| hone_t | leFeatu | _sma3nz_stddevNorm  | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | F2frequency_sma3nz_ | AllAge | 1532.885 | 227.086 | 2466  |
-| hone_t | leFeatu |        amean        | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | F2frequency_sma3nz_ | AllAge |  0.132   |  0.032  | 2466  |
-| hone_t | leFeatu |     stddevNorm      | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | F2amplitudeLogRelF0 | AllAge | -135.562 | 24.285  | 2466  |
-| hone_t | leFeatu |    _sma3nz_amean    | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | F2amplitudeLogRelF0 | AllAge |  -0.625  |  0.184  | 2466  |
-| hone_t | leFeatu | _sma3nz_stddevNorm  | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | F3frequency_sma3nz_ | AllAge | 2498.829 | 351.12  | 2466  |
-| hone_t | leFeatu |        amean        | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | F3frequency_sma3nz_ | AllAge |  0.081   |  0.02   | 2466  |
-| hone_t | leFeatu |     stddevNorm      | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | F3amplitudeLogRelF0 | AllAge | -138.061 |  23.45  | 2466  |
-| hone_t | leFeatu |    _sma3nz_amean    | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | F3amplitudeLogRelF0 | AllAge |  -0.586  |  0.168  | 2466  |
-| hone_t | leFeatu | _sma3nz_stddevNorm  | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | alphaRatioV_sma3nz_ | AllAge | -12.686  |  5.009  | 2466  |
-| hone_t | leFeatu |        amean        | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | alphaRatioV_sma3nz_ | AllAge |  -0.719  |  1.985  | 2466  |
-| hone_t | leFeatu |     stddevNorm      | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | hammarbergIndexV_sm | AllAge |  24.405  |  6.37   | 2466  |
-| hone_t | leFeatu |     a3nz_amean      | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | hammarbergIndexV_sm | AllAge |  0.377   |  0.211  | 2466  |
-| hone_t | leFeatu |   a3nz_stddevNorm   | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | slopeV0-500_sma3nz_ | AllAge |  0.042   |  0.033  | 2466  |
-| hone_t | leFeatu |        amean        | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | slopeV0-500_sma3nz_ | AllAge |   0.42   |  19.24  | 2466  |
-| hone_t | leFeatu |     stddevNorm      | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | slopeV500-1500_sma3 | AllAge |  -0.014  |  0.011  | 2466  |
-| hone_t | leFeatu |      nz_amean       | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | slopeV500-1500_sma3 | AllAge |  -1.153  |  90.51  | 2466  |
-| hone_t | leFeatu |    nz_stddevNorm    | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | alphaRatioUV_sma3nz | AllAge |  -7.893  |  6.042  | 2466  |
-| hone_t | leFeatu |       _amean        | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | hammarbergIndexUV_s | AllAge |  17.478  |  7.116  | 2466  |
-| hone_t | leFeatu |     ma3nz_amean     | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | slopeUV0-500_sma3nz | AllAge |  0.018   |  0.036  | 2466  |
-| hone_t | leFeatu |       _amean        | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | slopeUV500-1500_sma | AllAge |   0.01   |  0.011  | 2466  |
-| hone_t | leFeatu |      3nz_amean      | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | loudnessPeaksPerSec | AllAge |  2.816   |  1.034  | 2466  |
-| hone_t | leFeatu |                     | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | VoicedSegmentsPerSe | AllAge |  1.926   |  0.711  | 2466  |
-| hone_t | leFeatu |          c          | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | MeanVoicedSegmentLe | AllAge |   0.18   |  0.096  | 2466  |
-| hone_t | leFeatu |       ngthSec       | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | StddevVoicedSegment | AllAge |  0.141   |  0.085  | 2466  |
-| hone_t | leFeatu |      LengthSec      | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | MeanUnvoicedSegment | AllAge |  0.463   |  0.934  | 2466  |
-| hone_t | leFeatu |       Length        | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-| microp | Opensmi | StddevUnvoicedSegme | AllAge |  0.427   |  0.342  | 2466  |
-| hone_t | leFeatu |      ntLength       | sGende |          |         |       |
-|  ask   |   res   |                     |   rs   |          |         |       |
-+--------+---------+---------------------+--------+----------+---------+-------+
-```
-
-You can also get how a specific feature is distributed across speech tasks:
-```
-+----------+------------+-----------+---------+---------+------------+---------+
-|   Task   | FeatureTyp |  Feature  | AgeGend | Average | Standard D | Sample  |
-|          |     e      |           |   er    |         |  eviation  | Number  |
-+----------+------------+-----------+---------+---------+------------+---------+
-| micropho | OpensmileF | microphon | AllAges | 24.907  |   5.774    |   371   |
-| ne_task  |  eatures   |  e_task   | Genders |         |            |         |
-+----------+------------+-----------+---------+---------+------------+---------+
-| micropho | OpensmileF | freespeec | AllAges | 24.839  |   5.125    |   371   |
-| ne_task  |  eatures   |  h_task   | Genders |         |            |         |
-+----------+------------+-----------+---------+---------+------------+---------+
-| micropho | OpensmileF | picture_t | AllAges |  25.07  |    4.71    |   371   |
-| ne_task  |  eatures   |    ask    | Genders |         |            |         |
-+----------+------------+-----------+---------+---------+------------+---------+
-| micropho | OpensmileF | category_ | AllAges | 25.659  |   5.474    |   371   |
-| ne_task  |  eatures   |   task    | Genders |         |            |         |
-+----------+------------+-----------+---------+---------+------------+---------+
-| micropho | OpensmileF | letterf_t | AllAges | 25.638  |   5.578    |   371   |
-| ne_task  |  eatures   |    ask    | Genders |         |            |         |
-+----------+------------+-----------+---------+---------+------------+---------+
-| micropho | OpensmileF | paragraph | AllAges | 25.474  |   5.653    |   369   |
-| ne_task  |  eatures   |   _task   | Genders |         |            |         |
-+----------+------------+-----------+---------+---------+------------+---------+
-| micropho | OpensmileF | ahh_task  | AllAges | 26.309  |   6.227    |   371   |
-| ne_task  |  eatures   |           | Genders |         |            |         |
-+----------+------------+-----------+---------+---------+------------+---------+
-| micropho | OpensmileF | papapa_ta | AllAges | 25.475  |    7.77    |   371   |
-| ne_task  |  eatures   |    sk     | Genders |         |            |         |
-+----------+------------+-----------+---------+---------+------------+---------+
-| micropho | OpensmileF | pataka_ta | AllAges | 25.626  |   7.049    |   371   |
-| ne_task  |  eatures   |    sk     | Genders |         |            |         |
-+----------+------------+-----------+---------+---------+------------+---------+
-| micropho | OpensmileF | mandog_ta | AllAges |  24.25  |    8.59    |   371   |
-| ne_task  |  eatures   |    sk     | Genders |         |            |         |
-+----------+------------+-----------+---------+---------+------------+---------+
-| micropho | OpensmileF | tourbus_t | AllAges | 24.281  |   7.271    |   371   |
-| ne_task  |  eatures   |    ask    | Genders |         |            |         |
-+----------+------------+-----------+---------+---------+------------+---------+
-| micropho | OpensmileF | diagnosis | AllAges | 24.382  |   6.588    |   335   |
-| ne_task  |  eatures   |   _task   | Genders |         |            |         |
-+----------+------------+-----------+---------+---------+------------+---------+
-| micropho | OpensmileF | medicatio | AllAges | 24.601  |   6.445    |   323   |
-| ne_task  |  eatures   |  n_task   | Genders |         |            |         |
-+----------+------------+-----------+---------+---------+------------+---------+
-```
+Some sample commands are in the table below.
 
 If you have any thing else you'd find valuable - feel free to [suggest some new features here!](https://github.com/jim-schwoebel/voiceome/issues/new)
 
