@@ -210,35 +210,41 @@ class test_references(unittest.TestCase):
 
     Get sample reference values to see if everything is working / database is queryable.
     '''
-    def table_by_feature(self, curdir=curdir):
-        os.system('python3 cli.py --command reference --vtype table_by_feature --agegender TwentiesMale > tablebyfeature.txt')
-        contents=open('tablebyfeature.txt').read()
-        expected=''
+    def test_table_by_feature(self, curdir=curdir):
+        file='tablebyfeature.txt'
+        os.system('python3 cli.py --command reference --vtype table_by_feature --agegender TwentiesMale > %s'%(file))
+        contents=open(file).read()
+        expected=open(curdir+'/tests/'+file).read()
         if contents == expected:
             b=True
         else:
             b=False
         msg='Unexpected reference range.'
+        os.remove(file)
         self.assertEqual(True, b, msg) 
-    def table_by_embedding(self, curdir=curdir):
-        os.system('python3 cli.py --command reference --vtype table_by_embedding --agegender TwentiesMale > tablebyembedding.txt')
-        contents=open('tablebyembedding.text').read()
-        expected=''
+    def test_table_by_embedding(self, curdir=curdir):
+        file='tablebyembedding.txt'
+        os.system('python3 cli.py --command reference --vtype table_by_embedding --agegender TwentiesMale > %s'%(file))
+        contents=open(file).read()
+        expected=open(curdir+'/tests/'+file).read()
         if contents == expected:
             b=True
         else:
             b=False
         msg='Unexpected reference range.'
+        os.remove(file)
         self.assertEqual(True, b, msg) 
-    def table_across_tasks(self, curdir=curdir):
-        os.system('python3 cli.py --command reference --vtype table_across_tasks --agegender TwentiesMale > tableacrosstasks.txt')
-        contents=open('tableacrosstasks.txt').read()
-        expected=''
+    def test_table_across_tasks(self, curdir=curdir):
+        file='tableacrosstasks.txt'
+        os.system('python3 cli.py --command reference --vtype table_across_tasks --agegender TwentiesMale > %s'%(file))
+        contents=open(file).read()
+        expected=open(curdir+'/tests/'+file).read()
         if contents == expected:
             b=True
         else:
             b=False
         msg='Unexpected reference range.'
+        os.remove(file)
         self.assertEqual(True, b, msg) 
 
 
@@ -337,43 +343,42 @@ class test_visualization(unittest.TestCase):
     '''
     VISUALIZATION API TESTS
     '''
-    def visualize_bar(self, curdir=curdir):
+    def test_visualize_bar(self, curdir=curdir):
         # delete all visualizations 
         os.chdir(curdir)
         os.chdir('data')
         os.chdir('visualizations')
         visual_dir=os.getcwd()
-        # remove all visualizations 
         listdir=os.listdir()
         for i in range(len(listdir)):
             if listdir[i].endswith('.png'):
                 os.remove(listdir[i])
         os.chdir(curdir)
-        os.system('python3 cli.py --command visualize --agegender FourtiesMale] --vtype bar --agegender ThirtiesMale')
+        os.system('python3 cli.py --command visualize --agegender FourtiesMale] --vtype bar --agegender ThirtiesMale --verbosity False')
         os.chdir(visual_dir)
         listdir=os.listdir()
-        if 'hi' in listdir:
+        if 'OpensmileFeatures_F0semitoneFrom27.5Hz_sma3nz_amean.png' in listdir:
             b=True
         else:
             b=False
         msg='visualization does not work, check matplotlib installation.'
         self.assertEqual(True, b, msg) 
 
-    def visualize_bar_cohort(self, curdir=curdir):
+    def test_visualize_bar_cohort(self, curdir=curdir):
         # delete all visualizations 
         os.chdir(curdir)
         os.chdir('data')
         os.chdir('visualizations')
-        # remove all visualizations 
+        visual_dir=os.getcwd()
         listdir=os.listdir()
         for i in range(len(listdir)):
             if listdir[i].endswith('.png'):
                 os.remove(listdir[i])
         os.chdir(curdir)
-        os.system('python3 cli.py --command visualize --agegender FourtiesMale] --vtype bar_cohorts --agegender ThirtiesMale --agegender FiftiesMale')
+        os.system('python3 cli.py --command visualize --agegender FourtiesMale] --vtype bar_cohorts --agegender ThirtiesMale --agegender FiftiesMale --verbosity False')
         os.chdir(visual_dir)
         listdir=os.listdir()
-        if 'hi' in listdir:
+        if 'OpensmileFeatures_F0semitoneFrom27.5Hz_sma3nz_amean_FourtiesMale]_ThirtiesMale.png' in listdir:
             b=True
         else:
             b=False
