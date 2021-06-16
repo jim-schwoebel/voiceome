@@ -58,8 +58,7 @@ make install
 
 Optionally, if you want to transcribe data with Microsoft Azure (this was the transcriber used in the Voiceome paper), update the ['settings.json'](https://github.com/jim-schwoebel/voiceome/blob/main/settings.json) Azure Key:
 ```
-{"AzureKey": "KEY_GOES_HERE", 
-...}
+{"AzureKey": "KEY_GOES_HERE",...}
 ```
 
 You can now use the convenient Voiceome CLI tool for a few things:
