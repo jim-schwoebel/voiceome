@@ -32,7 +32,7 @@ Thank you for your interest in our work!
                 LICENSE TERMS                      
 ================================================ 
 
-Copyright 2021 Sonde Health, Inc. 
+Copyright 2021 NeuroLex Laboratories, Inc. 
 Licensed under the Apache License, Version 2.0 (the "License"); 
 you may not use this file except in compliance with the License. 
 You may obtain a copy of the License at 
@@ -94,6 +94,22 @@ class test_cleaning(unittest.TestCase):
         os.chdir('voiceome_test_data')
         os.chdir('a871b730-cc8a-11eb-a78c-b9f05e289d42')
         clean_dir=os.getcwd()
+
+        # pick a random wavfile and use this for cleaning
+        listdir=os.listdir()
+        wavfiles=list()
+        
+        for i in range(len(listdir)):
+            if listdir[i].endswith('.wav'):
+                wavfiles.append(listdir[i])
+
+        wavfile=random.choice(wavfiles)
+
+        for i in range(len(listdir)):
+            if listdir[i] not in [wavfile]:
+                os.remove(listdir[i])
+
+        # now clean this one file 
         os.chdir(curdir)
         os.system('python3 cli.py --command clean --dir %s'%(clean_dir))
         os.chdir(clean_dir)
@@ -103,7 +119,7 @@ class test_cleaning(unittest.TestCase):
             if listdir[i].find('cleaned.wav'):
                 cleanfiles.append(listdir[i])
 
-        if len(cleanfiles) == 50:
+        if len(cleanfiles) == 1:
             b=True
         else:
             b=False
@@ -132,6 +148,19 @@ class test_featurization(unittest.TestCase):
         os.chdir('a871b730-cc8a-11eb-a78c-b9f05e289d42')
         features_dir=os.getcwd()
         os.chdir(curdir)
+
+        # pick a random wavfile and use this for cleaning
+        listdir=os.listdir()
+        wavfiles=list()
+        for i in range(len(listdir)):
+            if listdir[i].endswith('.wav'):
+                wavfiles.append(listdir[i])
+        wavfile=random.choice(wavfiles)
+        for i in range(len(listdir)):
+            if listdir[i] not in [wavfile]:
+                os.remove(listdir[i])
+
+        # now featurize this one file 
         os.system('python3 cli.py --command features --dir %s'%(features_dir))
         os.chdir(features_dir)
         listdir=os.listdir()
@@ -140,7 +169,7 @@ class test_featurization(unittest.TestCase):
             if listdir[i].endswith('.json'):
                 jsonfiles.append(listdir[i])
 
-        if len(jsonfiles) == 50:
+        if len(jsonfiles) == 1:
             b=True
         else:
             b=False
@@ -218,7 +247,7 @@ class test_settings(unittest.TestCase):
         msg='%s not in transcription options: \n%s'%(transcript_option, transcript_options)
         self.assertEqual(True, b, msg) 
 
-    def test_feature_embedding(self, curdir=curdir):
+    def test_feature_embedding(self, curdir=curdir, settings=settings):
         os.chdir(curdir)
         os.chdir('data')
         os.chdir('options')
@@ -232,7 +261,7 @@ class test_settings(unittest.TestCase):
         msg='%s not in possible list of feature embeddings: \n%s'%(feature_embedding, str(feature_embeddings))
         self.assertEqual(True, b, msg) 
 
-    def test_featuretype(self, curdir=curdir):
+    def test_featuretype(self, curdir=curdir, settings=settings):
         os.chdir(curdir)
         os.chdir('data')
         os.chdir('options')
@@ -246,7 +275,7 @@ class test_settings(unittest.TestCase):
         msg='%s not in list of possible feature types (in the %s embedding).'%(featuretype, feature_embedding)
         self.assertEqual(True, b, msg) 
 
-    def test_task(self, curdir=curdir):
+    def test_task(self, curdir=curdir, settings=settings):
         os.chdir(curdir)
         os.chdir('data')
         os.chdir('options')
@@ -259,7 +288,7 @@ class test_settings(unittest.TestCase):
         msg='%s not in task options: \n%s'%(task_option, task_options)
         self.assertEqual(True, b, msg) 
 
-    def test_cleanaudio(self, curdir=curdir):
+    def test_cleanaudio(self, curdir=curdir, settings=settings):
         os.chdir(curdir)
         os.chdir('data')
         os.chdir('options')
@@ -273,7 +302,7 @@ class test_settings(unittest.TestCase):
         msg='%s not in options: \n%s'%(option, options)
         self.assertEqual(True, b, msg) 
 
-    def test_agegender(self, curdir=curdir):
+    def test_agegender(self, curdir=curdir, settings=settings):
         os.chdir(curdir)
         os.chdir('data')
         os.chdir('options')
