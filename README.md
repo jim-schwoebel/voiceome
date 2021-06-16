@@ -179,6 +179,13 @@ python3 cli.py --command settings
 | 'CleanAudio' | True | [True, False] | Whether or not you should clean audio files during featurization to mono16000Hz. | 
 | 'DefaultAgeGender' | 'all' | ['TwentiesMale', 'TwentiesFemale', 'ThirtiesMale', 'ThirtiesFemale', 'FourtiesMale]', 'FourtiesFemale', 'FiftiesMale', 'FiftiesFemale', 'SixtiesMale', 'SixtiesFemale', 'AllAgesGenders'] | The default age and gender to use for reference ranges. | 
 
+### listening to samples 
+You can listen to samples (in a specific task like 'microphone_task' as specified by settings.json) with:
+```
+python3 cli.py --command samples 
+```
+Note these files are hosted on Google Drive for maximal flexibility with listening and playback.
+
 ### get survey urls 
 
 You can get the survey urls with:
