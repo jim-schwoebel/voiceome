@@ -769,10 +769,7 @@ if str(command) != 'None' and command in commands:
 		sample command:
 			python3 cli.py --command test 
 		'''
-		# clone a repository
-		# perform unit tests  
-		# delete repository 
-		pass
+		os.system('python3 test.py')
 		
 	elif command == 'urls':
 		'''
