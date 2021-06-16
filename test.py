@@ -86,28 +86,17 @@ class test_cleaning(unittest.TestCase):
         os.chdir(curdir)
         os.chdir('tests')
         # get a fresh dataset in case it was manipulated 
-        if 'voiceome_test_data' in os.listdir():
-            shutil.rmtree('voiceome_test_data')
-            os.system('git clone https://github.com/jim-schwoebel/voiceome_test_data')
+        if 'voiceome_test' in os.listdir():
+            shutil.rmtree('voiceome_test')
+            os.system('git clone https://github.com/jim-schwoebel/voiceome_test')
         else:
-            os.system('git clone https://github.com/jim-schwoebel/voiceome_test_data')
-        os.chdir('voiceome_test_data')
+            os.system('git clone https://github.com/jim-schwoebel/voiceome_test')
+        os.chdir('voiceome_test')
         os.chdir('a871b730-cc8a-11eb-a78c-b9f05e289d42')
         clean_dir=os.getcwd()
 
         # pick a random wavfile and use this for cleaning
-        listdir=os.listdir()
-        wavfiles=list()
-        
-        for i in range(len(listdir)):
-            if listdir[i].endswith('.wav'):
-                wavfiles.append(listdir[i])
-
-        wavfile=random.choice(wavfiles)
-
-        for i in range(len(listdir)):
-            if listdir[i] not in [wavfile]:
-                os.remove(listdir[i])
+        wavfile='nlx-4d2f5480-cc8b-11eb-aefd-7de9011dbebd.wav'
 
         # now clean this one file 
         os.chdir(curdir)
@@ -135,32 +124,24 @@ class test_featurization(unittest.TestCase):
     '''
     #### ##### ##### ##### ##### ##### ##### ##### ##### #####
 
-    def test_audio_features(self, curdir=curdir):
+    def test_features(self, curdir=curdir):
         os.chdir(curdir)
         os.chdir('tests')
         # get a fresh dataset in case it was manipulated 
-        if 'voiceome_test_data' in os.listdir():
-            shutil.rmtree('voiceome_test_data')
-            os.system('git clone https://github.com/jim-schwoebel/voiceome_test_data')
+        if 'voiceome_test' in os.listdir():
+            shutil.rmtree('voiceome_test')
+            os.system('git clone https://github.com/jim-schwoebel/voiceome_test')
         else:
-            os.system('git clone https://github.com/jim-schwoebel/voiceome_test_data')
-        os.chdir('voiceome_test_data')
+            os.system('git clone https://github.com/jim-schwoebel/voiceome_test')
+        os.chdir('voiceome_test')
         os.chdir('a871b730-cc8a-11eb-a78c-b9f05e289d42')
         features_dir=os.getcwd()
-        os.chdir(curdir)
 
         # pick a random wavfile and use this for cleaning
-        listdir=os.listdir()
-        wavfiles=list()
-        for i in range(len(listdir)):
-            if listdir[i].endswith('.wav'):
-                wavfiles.append(listdir[i])
-        wavfile=random.choice(wavfiles)
-        for i in range(len(listdir)):
-            if listdir[i] not in [wavfile]:
-                os.remove(listdir[i])
+        wavfile='nlx-4d2f5480-cc8b-11eb-aefd-7de9011dbebd.wav'
 
         # now featurize this one file 
+        os.chdir(curdir)
         os.system('python3 cli.py --command features --dir %s'%(features_dir))
         os.chdir(features_dir)
         listdir=os.listdir()
@@ -180,16 +161,19 @@ class test_featurization(unittest.TestCase):
 ##### ##### ##### ##### ##### ##### ##### ##### ##### #####
 class test_quality(unittest.TestCase):
     '''
-    TRANSCRIPTION API TESTS
-    tests the ability to transcribe across many
-    data types
+    QUALITY API TESTS
+
+    Test calculating quality metrics from inputting a wav file.
     '''
     def test_quality_featurization(self, curdir=curdir):
         os.chdir(curdir)
         os.chdir('tests')
-        if 'voiceome_test_data' not in os.listdir():
-            os.system('git clone https://github.com/jim-schwoebel/voiceome_test_data')
-        os.chdir('voiceome_test_data')
+        if 'voiceome_test_data' in os.listdir():
+            shutil.rmtree('voiceome_test')
+            os.system('git clone https://github.com/jim-schwoebel/voiceome_test')
+        else:
+            os.system('git clone https://github.com/jim-schwoebel/voiceome_test')
+        os.chdir('voiceome_test')
         os.chdir('a871b730-cc8a-11eb-a78c-b9f05e289d42')
         new_dir=os.getcwd()
         os.chdir(curdir)
@@ -220,10 +204,43 @@ class test_quality(unittest.TestCase):
 
         self.assertEqual(True, b, msg) 
 
-# class test_references(unittest.TestCase):
-#     # git clone https://github.com/jim-schwoebel/voiceome_test_data
-#     # cd .. 
-#     # os.system('python3 clean.py')
+class test_references(unittest.TestCase):
+    '''
+    REFERENCES TEST API 
+
+    Get sample reference values to see if everything is working / database is queryable.
+    '''
+    def table_by_feature(self, curdir=curdir):
+        os.system('python3 cli.py --command reference --vtype table_by_feature --agegender TwentiesMale > tablebyfeature.txt')
+        contents=open('tablebyfeature.txt').read()
+        expected=''
+        if contents == expected:
+            b=True
+        else:
+            b=False
+        msg='Unexpected reference range.'
+        self.assertEqual(True, b, msg) 
+    def table_by_embedding(self, curdir=curdir):
+        os.system('python3 cli.py --command reference --vtype table_by_embedding --agegender TwentiesMale > tablebyembedding.txt')
+        contents=open('tablebyembedding.text').read()
+        expected=''
+        if contents == expected:
+            b=True
+        else:
+            b=False
+        msg='Unexpected reference range.'
+        self.assertEqual(True, b, msg) 
+    def table_across_tasks(self, curdir=curdir):
+        os.system('python3 cli.py --command reference --vtype table_across_tasks --agegender TwentiesMale > tableacrosstasks.txt')
+        contents=open('tableacrosstasks.txt').read()
+        expected=''
+        if contents == expected:
+            b=True
+        else:
+            b=False
+        msg='Unexpected reference range.'
+        self.assertEqual(True, b, msg) 
+
 
 ##### ##### ##### ##### ##### ##### ##### ##### ##### #####
 class test_settings(unittest.TestCase):
@@ -315,13 +332,53 @@ class test_settings(unittest.TestCase):
         msg='%s not in options: \n%s'%(option, options)
         self.assertEqual(True, b, msg) 
 
-# ##### ##### ##### ##### ##### ##### ##### ##### ##### #####
-# class test_visualization(unittest.TestCase):
-#     '''
-#     VISUALIZATION API TESTS
-#     '''
-#     # self.assertEqual(True, b, msg) 
+##### ##### ##### ##### ##### ##### ##### ##### ##### #####
+class test_visualization(unittest.TestCase):
+    '''
+    VISUALIZATION API TESTS
+    '''
+    def visualize_bar(self, curdir=curdir):
+        # delete all visualizations 
+        os.chdir(curdir)
+        os.chdir('data')
+        os.chdir('visualizations')
+        visual_dir=os.getcwd()
+        # remove all visualizations 
+        listdir=os.listdir()
+        for i in range(len(listdir)):
+            if listdir[i].endswith('.png'):
+                os.remove(listdir[i])
+        os.chdir(curdir)
+        os.system('python3 cli.py --command visualize --agegender FourtiesMale] --vtype bar --agegender ThirtiesMale')
+        os.chdir(visual_dir)
+        listdir=os.listdir()
+        if 'hi' in listdir:
+            b=True
+        else:
+            b=False
+        msg='visualization does not work, check matplotlib installation.'
+        self.assertEqual(True, b, msg) 
 
+    def visualize_bar_cohort(self, curdir=curdir):
+        # delete all visualizations 
+        os.chdir(curdir)
+        os.chdir('data')
+        os.chdir('visualizations')
+        # remove all visualizations 
+        listdir=os.listdir()
+        for i in range(len(listdir)):
+            if listdir[i].endswith('.png'):
+                os.remove(listdir[i])
+        os.chdir(curdir)
+        os.system('python3 cli.py --command visualize --agegender FourtiesMale] --vtype bar_cohorts --agegender ThirtiesMale --agegender FiftiesMale')
+        os.chdir(visual_dir)
+        listdir=os.listdir()
+        if 'hi' in listdir:
+            b=True
+        else:
+            b=False
+        msg='visualization does not work, check matplotlib installation.'
+        self.assertEqual(True, b, msg) 
 
 if __name__ == '__main__':
     unittest.main()
