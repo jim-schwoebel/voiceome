@@ -97,7 +97,7 @@ def clean_folder(allie_dir, target_directory):
 	'''
 	cur_dir=os.getcwd()
 	os.chdir(allie_dir)
-	os.system('python3 allie.py --command clean --dir %s'%(target_directory))
+	os.system('python3 allie.py --command clean --dir %s --sampletype audio'%(target_directory))
 	os.chdir(cur_dir)
 
 def featurize_folder(allie_dir, target_directory):
@@ -107,8 +107,8 @@ def featurize_folder(allie_dir, target_directory):
 	(here it is ['deepspeech_dict', 'deepspeech_nodict'])
 	'''
 	cur_dir=os.getcwd()
-	os.chdir(alie_dir)
-	os.system('python3 allie.py --command features --dir %s'%(target_directory))
+	os.chdir(allie_dir)
+	os.system('python3 allie.py --command features --dir %s --sampletype audio'%(target_directory))
 	os.chdir(cur_dir)
 
 def get_quality_features(folder):
