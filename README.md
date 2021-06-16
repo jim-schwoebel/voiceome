@@ -113,12 +113,13 @@ Options:
 There are many things you can do with the Voiceome CLI. Primarily, you can use it to extract features and references, as well as make cool visualizations to do quick experiments from the means and standard deviations of the features. A full list of things is below:
 * [cleaning data](https://github.com/jim-schwoebel/voiceome/blob/main/README.md#cleaning-data)
 * [featurizing data](https://github.com/jim-schwoebel/voiceome/blob/main/README.md#featurizing-data)
-* [extracting quality metrics]()
-* [querying reference ranges]()
-* [visualizing data cohorts]()
-* [changing settings]()
-* [get survey URLs]()
-* [running unit tests]()
+* [extracting quality metrics](https://github.com/jim-schwoebel/voiceome/blob/main/README.md#extracting-quality-metrics)
+* [querying reference ranges](https://github.com/jim-schwoebel/voiceome/blob/main/README.md#querying-references)
+* [visualizing data cohorts](https://github.com/jim-schwoebel/voiceome/blob/main/README.md#visualizing-data)
+* [changing settings](https://github.com/jim-schwoebel/voiceome/blob/main/README.md#changing-settings)
+* [listening to samples](https://github.com/jim-schwoebel/voiceome/blob/main/README.md#listening-to-samples)
+* [get survey URLs](https://github.com/jim-schwoebel/voiceome/blob/main/README.md#get-survey-urls)
+* [running unit tests](https://github.com/jim-schwoebel/voiceome/blob/main/README.md#running-unit-tests)
 
 If you have any thing else you'd find valuable - feel free to [suggest some new features here!](https://github.com/jim-schwoebel/voiceome/issues/new)
 
