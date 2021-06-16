@@ -597,17 +597,17 @@ Which returns:
 #### Visualizing single features across tasks
 Visualize the means and standard deviations for a feature with a bar chart:
 ```
-python3 cli.py --command visualize --agegender FourtiesMale] --vtype bar
+python3 cli.py --command visualize --agegender TwentiesMale --vtype bar
 ```
 Which returns the image below:
-![]()
+![](https://github.com/jim-schwoebel/voiceome/blob/main/tests/test_1.png)
 #### Visualizing cohorts and features across tasks
 Visualize multiple features and references next to each other in a bar chart:
 ```
-python3 cli.py --command visualize --agegender FourtiesMale] --vtype bar_cohorts --agegender ThirtiesMale --agegender FiftiesMale
+python3 cli.py --command visualize --agegender TwentiesFemale --vtype bar_cohorts --agegender ThirtiesMale
 ```
 Which returns the image below:
-![]()
+![](https://github.com/jim-schwoebel/voiceome/blob/main/tests/test_2.png)
 ### changing settings
 You can change settings.json file with the API with:
 
