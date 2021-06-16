@@ -110,7 +110,7 @@ Options:
 
 ## Using the CLI 
 
-There are many things you can do with the Voiceome CLI. Primarily, you can use it to extract feautures and references, as well as make cool visualizations to do quick experiments from the means and standard deviations of the features. A full list of things is below:
+There are many things you can do with the Voiceome CLI. Primarily, you can use it to extract features and references, as well as make cool visualizations to do quick experiments from the means and standard deviations of the features. A full list of things is below:
 * [cleaning data](https://github.com/jim-schwoebel/voiceome/blob/main/README.md#cleaning-data)
 * [featurizing data](https://github.com/jim-schwoebel/voiceome/blob/main/README.md#featurizing-data)
 * [extracting quality metrics]()
