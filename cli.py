@@ -758,7 +758,7 @@ if str(command) != 'None' and command in commands:
 				table = BeautifulTable()
 				table.columns.header = ["Task", "FeatureType", "Feature", "AgeGender", "Average", "Standard Deviation", "Sample Number"]
 				for i in range(len(means)):
-				    table.rows.append([task, feature_embedding, names[i], agegender, means[i], stds[i], samplenums[i]])
+				    table.rows.append([names[i], feature_embedding, feature, agegender, means[i], stds[i], samplenums[i]])
 				print(table)
 		except:
 			print('ERROR - reference does not exist for feature_embedding=%s, feature=%s, and agegender=%s. This may be updated later.'%(feature_embedding, feature, agegender))
