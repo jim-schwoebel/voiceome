@@ -61,7 +61,7 @@ Optionally, if you want to transcribe data with Microsoft Azure (this was the tr
 {"AzureKey": "KEY_GOES_HERE",...}
 ```
 
-You can now use the convenient Voiceome CLI tool for a few things:
+You can now use the convenient Voiceome CLI tool for [a few things](https://github.com/jim-schwoebel/voiceome#using-the-cli):
 ```
 Usage: cli.py [options]
 
