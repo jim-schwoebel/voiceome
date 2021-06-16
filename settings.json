@@ -1,5 +1,5 @@
 {"AzureKey": "KEY_GOES_HERE", 
- "TranscriptEngine": "Azure",
+ "TranscriptEngine": "DeepspeechDict",
  "FeatureEmbedding": "OpensmileFeatures",
  "FeatureType": "F0semitoneFrom27.5Hz_sma3nz_amean",
  "Task": "microphone_task",
