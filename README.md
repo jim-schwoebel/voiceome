@@ -108,11 +108,51 @@ Options:
                         interface).
 ```
 
-Some sample commands are in the table below.
+## Using the CLI 
+
+There are many things you can do with the Voiceome CLI. Primarily, you can use it to extract feautures and references, as well as make cool visualizations to do quick experiments from the means and standard deviations of the features.
 
 If you have any thing else you'd find valuable - feel free to [suggest some new features here!](https://github.com/jim-schwoebel/voiceome/issues/new)
 
-## Changing settings
+### cleaning data
+You can clean data with the CLI by specifying the command and directory of interest. This will clean files to mono 16000 Hz:
+```
+python3 cli.py --command clean --dir /Users/jimschwoebel/desktop/files
+```
+### featurizing data
+You can also featurize a folder of files with OpenSmileFeatures, ProsodyFeatures, PauseFeatures, and AudioText features with:
+```
+python3 cli.py --command features --dir /Users/jimschwoebel/desktop/files
+```
+### extracting quality metrics 
+You can featurize an audio file and get back quality metrics with:
+```
+python3 cli.py --command quality --file test.wav
+```
+### querying references 
+You can get a reference feature with a specified age and gender (e.g. TwentiesMale) with:
+```
+python3 cli.py --command reference --vtype table_by_feature --agegender TwentiesMale
+```
+You can get a reference table for a speech task (e.g. microphone task) and feature embedding (e.g. OpensmileFeatures) with:
+```
+python3 cli.py --command reference --vtype table_by_embedding --agegender TwentiesMale
+```
+You can get a reference table across sample tasks while keeping a feature constant with:
+```
+python3 cli.py --command reference --vtype table_across_tasks --agegender TwentiesMale
+```
+### visualizing data
+Visualize the means and standard deviations for a feature with a bar chart:
+```
+python3 cli.py --command visualize --agegender FourtiesMale] 
+```
+Visualize multiple features and references next to each other in a bar chart:
+```
+python3 cli.py --command visualize --agegender FourtiesMale] --vtype bar_cohorts --agegender ThirtiesMale --agegender FiftiesMale
+```
+
+### changing settings
 
 [Settings.json](https://github.com/jim-schwoebel/voiceome/blob/main/settings.json) specifies various settings for the API. The configuration options are listed in the table below. Note all possible options are listed out in the [options folder](https://github.com/jim-schwoebel/voiceome/tree/main/data/options) as .JSON files.
 
@@ -125,6 +165,27 @@ If you have any thing else you'd find valuable - feel free to [suggest some new 
 | 'TranscriptEngine' | "azure" | ["azure", "deepspeech_dict", "deepspeech_nodict", "wav2vec"] | The default transcription engine to use for audiotext_features. | 
 | 'CleanAudio' | True | [True, False] | Whether or not you should clean audio files during featurization to mono16000Hz. | 
 | 'DefaultAgeGender' | 'all' | ['TwentiesMale', 'TwentiesFemale', 'ThirtiesMale', 'ThirtiesFemale', 'FourtiesMale]', 'FourtiesFemale', 'FiftiesMale', 'FiftiesFemale', 'SixtiesMale', 'SixtiesFemale', 'AllAgesGenders'] | The default age and gender to use for reference ranges. | 
+
+You can do this with the CLI by:
+
+```
+python3 cli.py --command settings 
+```
+
+### get survey urls 
+
+You can get the survey urls with:
+```
+python3 cli.py --command urls
+```
+
+This is useful for cloning surveys on the SurveyLex interface.
+
+### running unit tests
+You can run unit tests with:
+```
+python3 cli.py --command test 
+```
 
 ## surveys 
 Here are the 4 main surveys used in the Voiceome clinical study:
