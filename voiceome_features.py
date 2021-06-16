@@ -10,6 +10,14 @@ directory=os.getcwd()
 ##                     QUALITY METRICS                              ##
 ######################################################################
 
+def transcribe(transcript_type):
+    if transcript_type == :
+        # 
+    elif transcript_type == :
+        #
+    elif transcript_type == :
+        # 
+        
 def extract_transcript(transcript):
     try:
         return transcript.split(') ')[1]
@@ -152,7 +160,7 @@ def nonword_featurize(transcript):
 
     return counts 
 
-def voiceome_featurize(transcript):
+def voiceome_featurize(audiofile, transcript, directory):
     # define feature labels and extract unique quality features in the Voiceome 
 
     labels = ['brownfox_feature', 'animal_feature', 'letterf_feature', 'caterpillar_feature', 
@@ -178,6 +186,3 @@ def voiceome_featurize(transcript):
     features.append(nonword_feature)
 
     return features, labels
-
-    
-
