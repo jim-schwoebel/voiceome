@@ -46,13 +46,6 @@ Now install various libraries with Homebrew (if you don't have Homebrew, install
 brew install ffmpeg sox autoconf automake m4 libtool autoconf gcc portaudio lasound
 ```
 
-Now download [Xcode](https://www.freecodecamp.org/news/how-to-download-and-install-xcode/) if you have not done so already from the app store:
-```
-Open the App Store on your mac.
-1. Sign in.
-2. Search for Xcode.
-3. Click install or update.
-```
 Next, install OpenSMILE:
 ```
 cd scripts/features/helpers/opensmile/opensmile-2.3.0
