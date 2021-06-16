@@ -441,7 +441,7 @@ def get_reference(task, feature_embedding, feature, agegender, basedir):
     # print(features)
 
     # age options
-    agegenders=['TwentiesMale', 'TwentiesFemale', 'ThirtiesMale', 'ThirtiesFemale', 'FourtiesMale]', 'FourtiesFemale', 'FiftiesMale', 'FiftiesFemale', 'SixtiesMale', 'SixtiesFemale', 'AllAgesGenders']
+    agegenders=['TwentiesMale', 'TwentiesFemale', 'ThirtiesMale', 'ThirtiesFemale', 'FourtiesMale', 'FourtiesFemale', 'FiftiesMale', 'FiftiesFemale', 'SixtiesMale', 'SixtiesFemale', 'AllAgesGenders']
 
     os.chdir(curdir)
 
@@ -730,38 +730,38 @@ if str(command) != 'None' and command in commands:
 		'''
 		get reference ranges across an age and gender for a specific task and feature.
 		'''
-		try:
-			if vtype == 'table_by_feature':
-				'''
-				sample command:
-					python3 cli.py --command reference --vtype table_by_feature --agegender TwentiesMale
-				'''
-				data=get_reference(task, feature_embedding, feature, agegender[0], cur_dir)
-				print(data)
-			elif vtype == 'table_by_embedding':
-				'''
-				sample command:
-					python3 cli.py --command reference --vtype table_by_embedding --agegender TwentiesMale
-				'''
-				names, means, stds, ages, samplenums =reference_task_embedding(task, feature_embedding, agegender[0], cur_dir)
-				table = BeautifulTable()
-				table.columns.header = ["Task", "FeatureType", "Feature", "AgeGender", "Average", "Standard Deviation", "Sample Number"]
-				for i in range(len(means)):
-				    table.rows.append([task, feature_embedding, names[i], agegender, means[i], stds[i], samplenums[i]])
-				print(table)
-			elif vtype == 'table_across_tasks':
-				'''
-				sample command:
-					python3 cli.py --command reference --vtype table_across_tasks --agegender TwentiesMale
-				'''
-				names, means, stds, ages, samplenums =reference_feature_across_tasks(feature_embedding, feature, agegender[0], cur_dir)
-				table = BeautifulTable()
-				table.columns.header = ["Task", "FeatureType", "Feature", "AgeGender", "Average", "Standard Deviation", "Sample Number"]
-				for i in range(len(means)):
-				    table.rows.append([names[i], feature_embedding, feature, agegender, means[i], stds[i], samplenums[i]])
-				print(table)
-		except:
-			print('ERROR - reference does not exist for feature_embedding=%s, feature=%s, and agegender=%s. This may be updated later.'%(feature_embedding, feature, agegender))
+		# try:
+		if vtype == 'table_by_feature':
+			'''
+			sample command:
+				python3 cli.py --command reference --vtype table_by_feature --agegender TwentiesMale
+			'''
+			data=get_reference(task, feature_embedding, feature, agegender[0], cur_dir)
+			print(data)
+		elif vtype == 'table_by_embedding':
+			'''
+			sample command:
+				python3 cli.py --command reference --vtype table_by_embedding --agegender TwentiesMale
+			'''
+			names, means, stds, ages, samplenums =reference_task_embedding(task, feature_embedding, agegender[0], cur_dir)
+			table = BeautifulTable()
+			table.columns.header = ["Task", "FeatureType", "Feature", "AgeGender", "Average", "Standard Deviation", "Sample Number"]
+			for i in range(len(means)):
+			    table.rows.append([task, feature_embedding, names[i], agegender, means[i], stds[i], samplenums[i]])
+			print(table)
+		elif vtype == 'table_across_tasks':
+			'''
+			sample command:
+				python3 cli.py --command reference --vtype table_across_tasks --agegender TwentiesMale
+			'''
+			names, means, stds, ages, samplenums =reference_feature_across_tasks(feature_embedding, feature, agegender[0], cur_dir)
+			table = BeautifulTable()
+			table.columns.header = ["Task", "FeatureType", "Feature", "AgeGender", "Average", "Standard Deviation", "Sample Number"]
+			for i in range(len(means)):
+			    table.rows.append([names[i], feature_embedding, feature, agegender, means[i], stds[i], samplenums[i]])
+			print(table)
+		# except:
+			# print('ERROR - reference does not exist for feature_embedding=%s, feature=%s, and agegender=%s. This may be updated later.'%(feature_embedding, feature, agegender))
 
 	elif command == 'samples':
 		'''
