@@ -685,6 +685,7 @@ if str(command) != 'None' and command in commands:
 		Clean audio files to be mono 16000Hz using Allie API.
 
 		sample command:
+			python3 cli.py --command clean --dir /Users/jimschwoebel/desktop/files
 		'''
 		for i in range(len(directories)):
 			clean_folder(allie_dir, directories[i])
@@ -694,6 +695,7 @@ if str(command) != 'None' and command in commands:
 		featurize using Allie (all features) - transcribes with deepspeech_dict and deepspeech_nodict for analysis
 
 		sample command:
+			python3 cli.py --command features --dir /Users/jimschwoebel/desktop/files
 		'''
 		for i in range(len(directories)):
 			featurize_folder(allie_dir, directories[i])
