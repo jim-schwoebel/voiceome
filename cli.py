@@ -576,10 +576,11 @@ def visualize_bar_cohorts(feature, feature_embedding, names, means_1, stds_1, ag
 
 # initialize variables for the test 
 cur_dir=os.getcwd()
-allie_dir = os.getcwd()+'/test/allie/'
+allie_dir = os.getcwd()+'/data/test/allie/'
 settings=json.load(open(cur_dir+'/settings.json'))
 feature_options=json.load(open(cur_dir+'/data/options/feature_options.json'))
 agegender_options=json.load(open(cur_dir+'/data/options/agegender_options.json'))['AgeGenderOptions']
+transcription_engine=settings['TranscriptEngine']
 
 # for if/then statements later
 commands=['clean', 'features', 'quality', 'reference', 'test', 'visualize', 'settings']
@@ -607,6 +608,8 @@ parser.add_option("--e", "--embedding", dest="feature_embedding",
 				  help="the feature embedding to use for reference ranges (e.g. 'OpenSmile'); if not used it will default to settings.json value.", metavar="feature_embedding")
 parser.add_option("--f", "--feature", dest="feature",
 				  help="the feature value in a feature embedding to use for a reference range (e.g. 'F0semitoneFrom27.5Hz_sma3nz_amean'); if not used it will default to settings.json value.", metavar="feature")
+parser.add_option("--fi", "--file", dest="file",
+				  help="an audio file to extract relevant quality metrics and transcribe (e.g. 'test.wav')", metavar="file")
 parser.add_option("--t", "--task", dest="task",
 				  help="the task type to focus on (e.g. 'microphone_task'); if not used it will default to settings.json value.", metavar="task")
 parser.add_option("--v", "--vtype", dest="visualizationtype",
@@ -629,7 +632,7 @@ except:
 try:
 	directories=options.dir
 except:
-	pass
+	directories=[os.getcwd()]
 try:
 	feature_embedding = options.feature_embedding.lower()
 except:
@@ -638,6 +641,10 @@ try:
 	feature = options.feature.lower()
 except:
 	feature=settings['FeatureType']
+try:
+	file = options.file.lower()
+except:
+	pass
 try:
 	task = options.task.lower()
 except:
@@ -682,7 +689,20 @@ if str(command) != 'None' and command in commands:
 
 		sample command:
 		'''
-		pass 
+		if directories is None:
+			directories=[os.getcwd()]
+
+		if len(directories) == 1:
+			import voiceome_features as vf 
+			features, labels = vf.voiceome_featurize(file, transcription_engine, directories[0], allie_dir)
+			features_dict = dict(zip(labels, features))
+			print('--------------------------------------------------------------')
+			render('METRICS - %s'%(file.upper()),f)
+			print('--------------------------------------------------------------')
+			print(features_dict)
+			print('--------------------------------------------------------------')
+		else:
+			print('You need to specify a --dir and --file (wavfile) in order to transcribe audio and featurize it with quality metrics.')
 
 	elif command == 'reference':
 		'''

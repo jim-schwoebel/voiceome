@@ -1,23 +1,171 @@
 ######################################################################
-##                           IMPORTS                               ##
-######################################################################
-import sys, os, json, time, shutil, argparse, random, math
-import difflib
-
-directory=os.getcwd()
-
-######################################################################
 ##                     QUALITY METRICS                              ##
 ######################################################################
+# define feature labels and extract unique quality features in the Voiceome 
+import sys, os, json, time, shutil, argparse, random, math
+import difflib
+import nltk
+from nltk import word_tokenize
+import speech_recognition as sr
 
-def transcribe(transcript_type):
-    if transcript_type == :
-        # 
-    elif transcript_type == :
-        #
-    elif transcript_type == :
-        # 
+def transcribe(file, transcript_engine, allie_dir):
+    # transcript types here.
+    import os 
+    import speech_recognition as sr
+
+    # use the audio file as the audio source
+    r = sr.Recognizer()
+    settingsdir = allie_dir 
+
+    # transcription imports (slows down on a per-file vs. folder basis if you load Wav2Vec model - not recommended)
+    if transcript_engine == 'Azure':
+        import azure.cognitiveservices.speech as speechsdk
+    if transcript_engine == 'Wav2Vec':
+        import os, pandas as pd, soundfile as sf, torch, glob
+        from pathlib import Path
+        from transformers import Wav2Vec2ForMaskedLM, Wav2Vec2Tokenizer
+        tokenizer = Wav2Vec2Tokenizer.from_pretrained("facebook/wav2vec2-base-960h")
+        model = Wav2Vec2ForMaskedLM.from_pretrained("facebook/wav2vec2-base-960h")
+    else:
+        tokenizer=''
+        model=''
+
+    with sr.AudioFile(file) as source:
+        audio = r.record(source)  # read the entire audio file
+
+    # now iterate through each transcription type
+    if transcript_engine == 'DeepspeechDict':
+
+        curdir=os.getcwd()
+        os.chdir(settingsdir+'/features/audio_features/helpers')
+        listdir=os.listdir()
+        deepspeech_dir=os.getcwd()
+
+        # download models if not in helper directory
+        if 'deepspeech-0.7.0-models.pbmm' not in listdir:
+            os.system('wget https://github.com/mozilla/DeepSpeech/releases/download/v0.7.0/deepspeech-0.7.0-models.pbmm --no-check-certificate')
+        if 'deepspeech-0.7.0-models.scorer' not in listdir:
+            os.system('wget https://github.com/mozilla/DeepSpeech/releases/download/v0.7.0/deepspeech-0.7.0-models.scorer --no-check-certificate')
+
+        # initialize filenames
+        textfile=file[0:-4]+'.txt'
+        newaudio=file[0:-4]+'_newaudio.wav'
         
+        if deepspeech_dir.endswith('/'):
+            deepspeech_dir=deepspeech_dir[0:-1]
+
+        # go back to main directory
+        os.chdir(curdir)
+
+        # convert audio file to 16000 Hz mono audio 
+        os.system('ffmpeg -i "%s" -acodec pcm_s16le -ac 1 -ar 16000 "%s" -y'%(file, newaudio))
+        command='deepspeech --model %s/deepspeech-0.7.0-models.pbmm --scorer %s/deepspeech-0.7.0-models.scorer --audio "%s" >> "%s"'%(deepspeech_dir, deepspeech_dir, newaudio, textfile)
+        print(command)
+        os.system(command)
+
+        # get transcript
+        transcript=open(textfile).read().replace('\n','')
+
+        # remove temporary files
+        os.remove(textfile)
+        os.remove(newaudio)
+
+
+    elif transcript_engine == 'DeepspeechNoDict':
+
+        curdir=os.getcwd()
+        os.chdir(settingsdir+'/features/audio_features/helpers')
+        listdir=os.listdir()
+        deepspeech_dir=os.getcwd()
+
+        # download models if not in helper directory
+        if 'deepspeech-0.7.0-models.pbmm' not in listdir:
+            os.system('wget https://github.com/mozilla/DeepSpeech/releases/download/v0.7.0/deepspeech-0.7.0-models.pbmm --no-check-certificate')
+
+        # initialize filenames
+        textfile=file[0:-4]+'.txt'
+        newaudio=file[0:-4]+'_newaudio.wav'
+        
+        if deepspeech_dir.endswith('/'):
+            deepspeech_dir=deepspeech_dir[0:-1]
+
+        # go back to main directory
+        os.chdir(curdir)
+
+        # convert audio file to 16000 Hz mono audio 
+        os.system('ffmpeg -i "%s" -acodec pcm_s16le -ac 1 -ar 16000 "%s" -y'%(file, newaudio))
+        command='deepspeech --model %s/deepspeech-0.7.0-models.pbmm --audio "%s" >> "%s"'%(deepspeech_dir, newaudio, textfile)
+        print(command)
+        os.system(command)
+
+        # get transcript
+        transcript=open(textfile).read().replace('\n','')
+
+        # remove temporary files
+        os.remove(textfile)
+        os.remove(newaudio)
+
+
+    elif transcript_engine == 'Wav2Vec':
+
+        # load pretrained model
+        audio_input, _ = sf.read(file)
+
+        # transcribe
+        input_values = tokenizer(audio_input, return_tensors="pt").input_values
+        logits = model(input_values).logits
+        predicted_ids = torch.argmax(logits, dim=-1)
+        transcript = tokenizer.batch_decode(predicted_ids)[0].lower()
+
+    elif transcript_engine == 'Azure':
+
+        transcript=''
+        done=False 
+
+        def stop_cb(evt):
+            print('CLOSING on {}'.format(evt))
+            nonlocal done
+            done = True
+
+        def get_val(evt):
+            nonlocal transcript 
+            transcript = transcript+ ' ' +evt.result.text
+            return transcript
+
+        speech_config = speechsdk.SpeechConfig(subscription=os.environ['AZURE_SPEECH_KEY'], region=os.environ['AZURE_REGION'])
+        speech_config.speech_recognition_language=os.environ['AZURE_SPEECH_RECOGNITION_LANGUAGE']
+        audio_config = speechsdk.audio.AudioConfig(filename=file)
+        speech_recognizer = speechsdk.SpeechRecognizer(speech_config=speech_config, audio_config=audio_config)
+        stream = speechsdk.audio.PushAudioInputStream()
+
+        # Connect callbacks to the events fired by the speech recognizer
+        speech_recognizer.recognizing.connect(lambda evt: print('interim text: "{}"'.format(evt.result.text)))
+        speech_recognizer.recognized.connect(lambda evt:  print('azure-streaming-stt: "{}"'.format(get_val(evt))))
+        speech_recognizer.session_stopped.connect(lambda evt: print('SESSION STOPPED {}'.format(evt)))
+        speech_recognizer.canceled.connect(lambda evt: print('CANCELED {}'.format(evt)))
+        speech_recognizer.session_stopped.connect(stop_cb)
+        speech_recognizer.canceled.connect(stop_cb)
+
+        # start continuous speech recognition
+        speech_recognizer.start_continuous_recognition()
+
+        # push buffer chunks to stream
+        buffer, rate = read_wav_file(file)
+        audio_generator = simulate_stream(buffer)
+        for chunk in audio_generator:
+          stream.write(chunk)
+          time.sleep(0.1)  # to give callback a chance against this fast loop
+
+        # stop continuous speech recognition
+        stream.close()
+        while not done:
+            time.sleep(0.5)
+
+        speech_recognizer.stop_continuous_recognition()
+        time.sleep(0.5)  # Let all callback run
+
+    return transcript 
+
 def extract_transcript(transcript):
     try:
         return transcript.split(') ')[1]
@@ -42,7 +190,7 @@ def animal_featurize(transcript):
                'commas',' audi', 'salon', 'milk']
     count=0
     for j in range(len(transcript)):
-        if nltk.pos_tag(word_tokenize(transcript[j])) == 'NN' and if transcript[j] not in stopwords:
+        if nltk.pos_tag(word_tokenize(transcript[j])) == 'NN' and transcript[j] not in stopwords:
             count=count+1
 
     return count 
@@ -160,12 +308,17 @@ def nonword_featurize(transcript):
 
     return counts 
 
-def voiceome_featurize(audiofile, transcript, directory):
-    # define feature labels and extract unique quality features in the Voiceome 
+def voiceome_featurize(audiofile, transcript_type, audiofile_directory, allie_dir):
+    # go to audio file directory
+    curdir=os.getcwd()
+    os.chdir(audiofile_directory)
 
     labels = ['brownfox_feature', 'animal_feature', 'letterf_feature', 'caterpillar_feature', 
               'mandog_feature', 'tourbus_feature', 'bnt_feature', 'nonword_feature']
     features = list()
+
+    # get transcript_type
+    transcript = transcribe(audiofile, transcript_type, allie_dir)
 
     # get features 
     brownfox_feature=brownfox_featurize(transcript)
@@ -184,5 +337,8 @@ def voiceome_featurize(audiofile, transcript, directory):
     features.append(bnt_feature)
     nonword_feature=nonword_featurize(transcript)
     features.append(nonword_feature)
+
+    # return back to normal directory
+    os.chdir(curdir)
 
     return features, labels
