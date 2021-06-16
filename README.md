@@ -125,7 +125,7 @@ If you have any thing else you'd find valuable - feel free to [suggest some new 
 ### cleaning data
 You can clean data with the CLI by specifying the command and directory of interest. This will clean files to mono 16000 Hz:
 ```
-python3 cli.py --command clean --dir /Users/jimschwoebel/desktop/files
+python3 cli.py --command clean --dir /Users/jimschwoebel/desktop/voiceome/data/test/a871b730-cc8a-11eb-a78c-b9f05e289d42
 ```
 This will then clean audio files with FFmpeg:
 ```
@@ -213,9 +213,35 @@ video:0kB audio:64kB subtitle:0kB other streams:0kB global headers:0kB muxing ov
 ...
 ```
 ### featurizing data
-You can also featurize a folder of files with OpenSmileFeatures, ProsodyFeatures, PauseFeatures, and AudioText features with:
+You can also featurize a folder of files with:
 ```
-python3 cli.py --command features --dir /Users/jimschwoebel/desktop/files
+python3 cli.py --command features --dir /Users/jimschwoebel/desktop/voiceome/data/test/a871b730-cc8a-11eb-a78c-b9f05e289d42
+```
+This will then featurize all the files with OpenSmileFeatures, ProsodyFeatures, PauseFeatures, and AudioText features via the Allie ML framework:
+```
+Requirement already satisfied: numba==0.48 in /usr/local/lib/python3.8/site-packages (0.48.0)
+Requirement already satisfied: setuptools in /usr/local/lib/python3.8/site-packages (from numba==0.48) (49.2.0)
+Requirement already satisfied: numpy>=1.15 in /usr/local/lib/python3.8/site-packages (from numba==0.48) (1.17.3)
+Requirement already satisfied: llvmlite<0.32.0,>=0.31.0dev0 in /usr/local/lib/python3.8/site-packages (from numba==0.48) (0.31.0)
+a871b730-cc8a-11eb-a78c-b9f05e289d42:   0%|              | 0/50 [00:00<?, ?it/s]deepspeech_dict transcribing: nlx-b66e6260-cc8b-11eb-aefd-7de9011dbebd_cleaned.wav
+--2021-06-16 15:45:37--  https://github.com/mozilla/DeepSpeech/releases/download/v0.7.0/deepspeech-0.7.0-models.pbmm
+Resolving github.com (github.com)... 140.82.113.3
+Connecting to github.com (github.com)|140.82.113.3|:443... connected.
+WARNING: cannot verify github.com's certificate, issued by ‘CN=Bitdefender CA SSL,O=Endpoint,L=Bucharest,ST=Bucharest,C=RO’:
+  Self-signed certificate encountered.
+HTTP request sent, awaiting response... 302 Found
+Location: https://github-releases.githubusercontent.com/60273704/db3b3f80-84bd-11ea-93d7-1ddb76a21efe?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20210616%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210616T194537Z&X-Amz-Expires=300&X-Amz-Signature=ac030f0772fcefa16d7d8707dab78a2397d796101946d6090feaf865f50db6b8&X-Amz-SignedHeaders=host&actor_id=0&key_id=0&repo_id=60273704&response-content-disposition=attachment%3B%20filename%3Ddeepspeech-0.7.0-models.pbmm&response-content-type=application%2Foctet-stream [following]
+--2021-06-16 15:45:37--  https://github-releases.githubusercontent.com/60273704/db3b3f80-84bd-11ea-93d7-1ddb76a21efe?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20210616%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210616T194537Z&X-Amz-Expires=300&X-Amz-Signature=ac030f0772fcefa16d7d8707dab78a2397d796101946d6090feaf865f50db6b8&X-Amz-SignedHeaders=host&actor_id=0&key_id=0&repo_id=60273704&response-content-disposition=attachment%3B%20filename%3Ddeepspeech-0.7.0-models.pbmm&response-content-type=application%2Foctet-stream
+Resolving github-releases.githubusercontent.com (github-releases.githubusercontent.com)... 185.199.109.154, 185.199.110.154, 185.199.111.154, ...
+Connecting to github-releases.githubusercontent.com (github-releases.githubusercontent.com)|185.199.109.154|:443... connected.
+WARNING: cannot verify github-releases.githubusercontent.com's certificate, issued by ‘CN=Bitdefender CA SSL,O=Endpoint,L=Bucharest,ST=Bucharest,C=RO’:
+  Self-signed certificate encountered.
+HTTP request sent, awaiting response... 200 OK
+Length: 188916323 (180M) [application/octet-stream]
+Saving to: ‘deepspeech-0.7.0-models.pbmm’
+
+ch-0.7.0-models.pbm  53%[=========>          ]  97.11M  25.8MB/s    et
+...
 ```
 ### extracting quality metrics 
 You can featurize an audio file and get back quality metrics with:
