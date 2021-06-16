@@ -52,12 +52,18 @@ Options:
                         reference range (e.g.
                         'F0semitoneFrom27.5Hz_sma3nz_amean'); if not used it
                         will default to settings.json value.
+  --fi=file, --file=file
+                        an audio file to extract relevant quality metrics and
+                        transcribe (e.g. 'test.wav')
   --t=task, --task=task
                         the task type to focus on (e.g. 'microphone_task'); if
                         not used it will default to settings.json value.
   --v=visualizationtype, --vtype=visualizationtype
                         the visualization type that you'd like to use - two
                         options: ['bar', 'bar_cohorts']
+  --verbosity=verbosity
+                        whether or not to display visualizations/charts on the
+                        screen ([True or False]).
   --u=urls, --urls=urls
                         the url links for surveys in the Voiceome Study
                         (useful for cloning surveys via the SurveyLex
