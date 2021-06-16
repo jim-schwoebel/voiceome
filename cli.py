@@ -614,6 +614,8 @@ parser.add_option("--t", "--task", dest="task",
 				  help="the task type to focus on (e.g. 'microphone_task'); if not used it will default to settings.json value.", metavar="task")
 parser.add_option("--v", "--vtype", dest="visualizationtype",
 				  help="the visualization type that you'd like to use - two options: ['bar', 'bar_cohorts']", metavar='visualizationtype')
+parser.add_option("--verbosity", dest="verbosity",
+				  help="whether or not to display visualizations/charts on the screen ([True or False]).", metavar='verbosity')
 parser.add_option("--u", "--urls", dest="urls",
 				  help="the url links for surveys in the Voiceome Study (useful for cloning surveys via the SurveyLex interface).", metavar="urls")
 
@@ -657,8 +659,15 @@ try:
 	vtype = options.visualizationtype.lower()
 except:
 	vtype = 'table_across_tasks'
+try:
+	verbosity=options.verbosity.lower()
+	if verbosity == 'True':
+		verbosity=True
+	elif verbosity=='False':
+		verbosity=False
+except:
+	verbosity=True
 
-print(command)
 # now pursue relevant command passed
 commands=['clean', 'features', 'quality', 'reference', 'samples', 'settings', 'test', 'visualize', 'urls']
 
@@ -783,7 +792,10 @@ if str(command) != 'None' and command in commands:
 				python3 cli.py --command visualize --agegender FourtiesMale] --vtype bar --agegender ThirtiesMale
 			'''
 			names, means, stds, ages, samplenums =reference_feature_across_tasks(feature_embedding, feature, agegender[0], cur_dir)
-			visualize_bar(feature, feature_embedding, names, means, stds, agegender[0], cur_dir, True)
+			if verbosity == True:
+				visualize_bar(feature, feature_embedding, names, means, stds, agegender[0], cur_dir, True)
+			else:
+				visualize_bar(feature, feature_embedding, names, means, stds, agegender[0], cur_dir, False)
 
 		elif vtype == 'bar_cohorts':
 			# visualize these as a bar chart 
@@ -794,7 +806,10 @@ if str(command) != 'None' and command in commands:
 			if len(agegender) > 1:
 				names, means, stds, ages, samplenums =reference_feature_across_tasks(feature_embedding, feature, agegender[0], cur_dir)
 				names_2, means_2, stds_2, ages_2, samplenums =reference_feature_across_tasks(feature_embedding, feature, agegender[1], cur_dir)
-				visualize_bar_cohorts(feature, feature_embedding, names, means, stds, agegender[0], means_2, stds_2, agegender[1], cur_dir, True)
+				if verbosity == True:
+					visualize_bar_cohorts(feature, feature_embedding, names, means, stds, agegender[0], means_2, stds_2, agegender[1], cur_dir, True)
+				else:
+					visualize_bar_cohorts(feature, feature_embedding, names, means, stds, agegender[0], means_2, stds_2, agegender[1], cur_dir, False)
 			else:
 				print('ERROR - you need to pass at least 2 instances of agegender in order for it to be recognized.')
 
