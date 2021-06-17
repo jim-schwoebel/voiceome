@@ -218,7 +218,7 @@ You can also featurize a folder of files with:
 ```
 python3 cli.py --command features --dir /Users/jimschwoebel/desktop/voiceome/data/test/a871b730-cc8a-11eb-a78c-b9f05e289d42
 ```
-This will then featurize all the files with OpenSmileFeatures, ProsodyFeatures, PauseFeatures, and AudioText features via the Allie ML framework:
+This will then featurize all the files with OpenSmileFeatures, ProsodyFeatures, PauseFeatures, and AudiotextFeatures via the Allie ML framework:
 ```
 Requirement already satisfied: numba==0.48 in /usr/local/lib/python3.8/site-packages (0.48.0)
 Requirement already satisfied: setuptools in /usr/local/lib/python3.8/site-packages (from numba==0.48) (49.2.0)
