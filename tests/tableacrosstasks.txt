@@ -14,46 +14,60 @@ For help, type ```python3 cli.py --help```
 For more info, visit: 
 https://github.com/jim-schwoebel/voiceome
 --------------------------------------------------------------
-+----------+-----------+----------+----------+---------+-------------+---------+
-|   Task   | FeatureTy | Feature  | AgeGende | Average | Standard De | Sample  |
-|          |    pe     |          |    r     |         |   viation   | Number  |
-+----------+-----------+----------+----------+---------+-------------+---------+
-| micropho | Opensmile | micropho | ['Twenti | 24.907  |    5.774    |   371   |
-| ne_task  | Features  | ne_task  | esMale'] |         |             |         |
-+----------+-----------+----------+----------+---------+-------------+---------+
-| micropho | Opensmile | freespee | ['Twenti | 24.839  |    5.125    |   371   |
-| ne_task  | Features  | ch_task  | esMale'] |         |             |         |
-+----------+-----------+----------+----------+---------+-------------+---------+
-| micropho | Opensmile | picture_ | ['Twenti |  25.07  |    4.71     |   371   |
-| ne_task  | Features  |   task   | esMale'] |         |             |         |
-+----------+-----------+----------+----------+---------+-------------+---------+
-| micropho | Opensmile | category | ['Twenti | 25.659  |    5.474    |   371   |
-| ne_task  | Features  |  _task   | esMale'] |         |             |         |
-+----------+-----------+----------+----------+---------+-------------+---------+
-| micropho | Opensmile | letterf_ | ['Twenti | 25.638  |    5.578    |   371   |
-| ne_task  | Features  |   task   | esMale'] |         |             |         |
-+----------+-----------+----------+----------+---------+-------------+---------+
-| micropho | Opensmile | paragrap | ['Twenti | 25.474  |    5.653    |   369   |
-| ne_task  | Features  |  h_task  | esMale'] |         |             |         |
-+----------+-----------+----------+----------+---------+-------------+---------+
-| micropho | Opensmile | ahh_task | ['Twenti | 26.309  |    6.227    |   371   |
-| ne_task  | Features  |          | esMale'] |         |             |         |
-+----------+-----------+----------+----------+---------+-------------+---------+
-| micropho | Opensmile | papapa_t | ['Twenti | 25.475  |    7.77     |   371   |
-| ne_task  | Features  |   ask    | esMale'] |         |             |         |
-+----------+-----------+----------+----------+---------+-------------+---------+
-| micropho | Opensmile | pataka_t | ['Twenti | 25.626  |    7.049    |   371   |
-| ne_task  | Features  |   ask    | esMale'] |         |             |         |
-+----------+-----------+----------+----------+---------+-------------+---------+
-| micropho | Opensmile | mandog_t | ['Twenti |  24.25  |    8.59     |   371   |
-| ne_task  | Features  |   ask    | esMale'] |         |             |         |
-+----------+-----------+----------+----------+---------+-------------+---------+
-| micropho | Opensmile | tourbus_ | ['Twenti | 24.281  |    7.271    |   371   |
-| ne_task  | Features  |   task   | esMale'] |         |             |         |
-+----------+-----------+----------+----------+---------+-------------+---------+
-| micropho | Opensmile | diagnosi | ['Twenti | 24.382  |    6.588    |   335   |
-| ne_task  | Features  |  s_task  | esMale'] |         |             |         |
-+----------+-----------+----------+----------+---------+-------------+---------+
-| micropho | Opensmile | medicati | ['Twenti | 24.601  |    6.445    |   323   |
-| ne_task  | Features  | on_task  | esMale'] |         |             |         |
-+----------+-----------+----------+----------+---------+-------------+---------+
++--------+---------+------------------+----------+---------+----------+--------+
+|  Task  | Feature |     Feature      | AgeGende | Average | Standard | Sample |
+|        |  Type   |                  |    r     |         |  Deviati |  Numbe |
+|        |         |                  |          |         |    on    |   r    |
++--------+---------+------------------+----------+---------+----------+--------+
+| microp | Opensmi | F0semitoneFrom27 | ['Twenti | 24.907  |  5.774   |  371   |
+| hone_t | leFeatu | .5Hz_sma3nz_amea | esMale'] |         |          |        |
+|  ask   |   res   |        n         |          |         |          |        |
++--------+---------+------------------+----------+---------+----------+--------+
+| freesp | Opensmi | F0semitoneFrom27 | ['Twenti | 24.839  |  5.125   |  371   |
+| eech_t | leFeatu | .5Hz_sma3nz_amea | esMale'] |         |          |        |
+|  ask   |   res   |        n         |          |         |          |        |
++--------+---------+------------------+----------+---------+----------+--------+
+| pictur | Opensmi | F0semitoneFrom27 | ['Twenti |  25.07  |   4.71   |  371   |
+| e_task | leFeatu | .5Hz_sma3nz_amea | esMale'] |         |          |        |
+|        |   res   |        n         |          |         |          |        |
++--------+---------+------------------+----------+---------+----------+--------+
+| catego | Opensmi | F0semitoneFrom27 | ['Twenti | 25.659  |  5.474   |  371   |
+| ry_tas | leFeatu | .5Hz_sma3nz_amea | esMale'] |         |          |        |
+|   k    |   res   |        n         |          |         |          |        |
++--------+---------+------------------+----------+---------+----------+--------+
+| letter | Opensmi | F0semitoneFrom27 | ['Twenti | 25.638  |  5.578   |  371   |
+| f_task | leFeatu | .5Hz_sma3nz_amea | esMale'] |         |          |        |
+|        |   res   |        n         |          |         |          |        |
++--------+---------+------------------+----------+---------+----------+--------+
+| paragr | Opensmi | F0semitoneFrom27 | ['Twenti | 25.474  |  5.653   |  369   |
+| aph_ta | leFeatu | .5Hz_sma3nz_amea | esMale'] |         |          |        |
+|   sk   |   res   |        n         |          |         |          |        |
++--------+---------+------------------+----------+---------+----------+--------+
+| ahh_ta | Opensmi | F0semitoneFrom27 | ['Twenti | 26.309  |  6.227   |  371   |
+|   sk   | leFeatu | .5Hz_sma3nz_amea | esMale'] |         |          |        |
+|        |   res   |        n         |          |         |          |        |
++--------+---------+------------------+----------+---------+----------+--------+
+| papapa | Opensmi | F0semitoneFrom27 | ['Twenti | 25.475  |   7.77   |  371   |
+| _task  | leFeatu | .5Hz_sma3nz_amea | esMale'] |         |          |        |
+|        |   res   |        n         |          |         |          |        |
++--------+---------+------------------+----------+---------+----------+--------+
+| pataka | Opensmi | F0semitoneFrom27 | ['Twenti | 25.626  |  7.049   |  371   |
+| _task  | leFeatu | .5Hz_sma3nz_amea | esMale'] |         |          |        |
+|        |   res   |        n         |          |         |          |        |
++--------+---------+------------------+----------+---------+----------+--------+
+| mandog | Opensmi | F0semitoneFrom27 | ['Twenti |  24.25  |   8.59   |  371   |
+| _task  | leFeatu | .5Hz_sma3nz_amea | esMale'] |         |          |        |
+|        |   res   |        n         |          |         |          |        |
++--------+---------+------------------+----------+---------+----------+--------+
+| tourbu | Opensmi | F0semitoneFrom27 | ['Twenti | 24.281  |  7.271   |  371   |
+| s_task | leFeatu | .5Hz_sma3nz_amea | esMale'] |         |          |        |
+|        |   res   |        n         |          |         |          |        |
++--------+---------+------------------+----------+---------+----------+--------+
+| diagno | Opensmi | F0semitoneFrom27 | ['Twenti | 24.382  |  6.588   |  335   |
+| sis_ta | leFeatu | .5Hz_sma3nz_amea | esMale'] |         |          |        |
+|   sk   |   res   |        n         |          |         |          |        |
++--------+---------+------------------+----------+---------+----------+--------+
+| medica | Opensmi | F0semitoneFrom27 | ['Twenti | 24.601  |  6.445   |  323   |
+| tion_t | leFeatu | .5Hz_sma3nz_amea | esMale'] |         |          |        |
+|  ask   |   res   |        n         |          |         |          |        |
++--------+---------+------------------+----------+---------+----------+--------+
