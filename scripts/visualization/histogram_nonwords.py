@@ -41,9 +41,10 @@ csvfiles=['01_plive.csv', '02_fwov.csv', '03_zowl.csv', '04_zulx.csv', '05_vave.
 fig, axes = plt.subplots(nrows=2, ncols=5, figsize=(12, 8))
 width = 0.4
 
-for i in range(5):
-    for j in range(2):
+for i in range(2):
+    for j in range(5):
         # get transcript word 
+        print((i)*5+j)
         csvfile=csvfiles[(i)*5+j]
         data=pd.read_csv(csvfile)
         data=list(data['azure'])
@@ -61,6 +62,6 @@ for ax in axes.flat:
     ax.set(ylabel='counts')
     ax.tick_params(axis='x', rotation=90)
     
-fig.suptitle('Top 5 keywords across Confrontational Naming Tasks for Survey A')
+fig.suptitle('Top 5 keywords across Nonword Naming Tasks for Survey A')
 plt.tight_layout()
 plt.show()
