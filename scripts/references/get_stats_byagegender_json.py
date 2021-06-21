@@ -289,7 +289,7 @@ for i in range(len(labels)):
 										 'Description': 'Thirties Female (Ages 30-39)',
 										 'SampleNumber': int(n_thirties_female)}
 
-	data[core][label]['FourtiesMale]'] = {'AverageValue': get_average(dict_fourties_male[labels[i]]),
+	data[core][label]['FourtiesMale'] = {'AverageValue': get_average(dict_fourties_male[labels[i]]),
 								        'StdValue': get_std(dict_fourties_male[labels[i]]),
 										'Description': 'Fourties Male (Ages 40-49)',
 										'SampleNumber': int(n_fourties_male)}
