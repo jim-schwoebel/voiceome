@@ -646,7 +646,7 @@ try:
 except:
 	feature_embedding=settings['FeatureEmbedding']
 try:
-	feature = options.feature.lower()
+	feature = options.feature
 except:
 	feature=settings['FeatureType']
 try:
