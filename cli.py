@@ -794,7 +794,7 @@ if str(command) != 'None' and command in commands:
 			# visualize these as a bar chart 
 			'''
 			sample command:
-				python3 cli.py --command visualize --agegender FourtiesMale] --vtype bar --agegender ThirtiesMale
+				python3 cli.py --command visualize --agegender FourtiesMale --vtype bar --agegender ThirtiesMale
 			'''
 			names, means, stds, ages, samplenums =reference_feature_across_tasks(feature_embedding, feature, agegender[0], cur_dir)
 			if verbosity == True:
@@ -806,7 +806,7 @@ if str(command) != 'None' and command in commands:
 			# visualize these as a bar chart 
 			'''
 			sample command: 
-				python3 cli.py --command visualize --agegender FourtiesMale] --vtype bar_cohorts --agegender ThirtiesMale --agegender FiftiesMale
+				python3 cli.py --command visualize --agegender FourtiesMale --vtype bar_cohorts --agegender ThirtiesMale --agegender FiftiesMale
 			'''
 			if len(agegender) > 1:
 				names, means, stds, ages, samplenums =reference_feature_across_tasks(feature_embedding, feature, agegender[0], cur_dir)
