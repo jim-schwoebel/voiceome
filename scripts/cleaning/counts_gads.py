@@ -1,6 +1,6 @@
 import pandas as pd 
 import numpy as np
-import os, time 
+import os
 
 def get_survey(csvfile):
 	if csvfile.find('A1') > 0:
@@ -89,7 +89,7 @@ id_list=list()
 
 for i in range(len(csv_files)):
 	g=pd.read_csv(csv_files[i])
-	ids_=g['mTurk worker ID']
+	ids_=g['Email address']
 	starts=g['startTime']
 	survey=get_survey(csv_files[i])
 
@@ -154,8 +154,8 @@ for i in range(len(values_)):
 		paths.append(list(values_[i][0])[0][0]+list(values_[i][1])[0][0]+list(values_[i][2])[0][0])
 		paths.append(list(values_[i][0])[0][0]+list(values_[i][1])[0][0]+list(values_[i][2])[0][0]+list(values_[i][3])[0][0])
 	else:
-		pass
-
+		print(list(values_[i]))
+		
 print(np.mean(np.array(day_difs)))
 print(np.std(np.array(day_difs)))
 print(paths)
