@@ -35,10 +35,6 @@ To get started, clone this repository in a virtual environment and install requi
 ```
 git clone git@github.com:jim-schwoebel/voiceome.git
 cd voiceome
-pip3 install virtualenv
-virtualenv env 
-source env/bin/activate
-pip3 install -r requirements.txt
 ```
 
 Now install various libraries with Homebrew (if you don't have Homebrew, install it before this step [following these instructions](https://brew.sh/)):
@@ -55,6 +51,7 @@ pyenv install 3.6.5
 pyenv global 3.6.5
 pyenv shell 3.6.5
 pip3 install --upgrade pip
+pip3 install -r requirements.txt
 ```
 
 Next, install OpenSMILE:
