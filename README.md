@@ -53,10 +53,11 @@ pyenv install 3.8.6
 pyenv global 3.8.6
 ```
 
-Now install dependencies:
+Now install dependencies (along with matplotlib, new version):
 ```
 pip3 install --upgrade pip
 pip3 install -r requirements.txt
+pip3 install https://github.com/matplotlib/matplotlib/archive/refs/tags/v3.4.2.tar.gz
 ```
 
 Next, install OpenSMILE:
