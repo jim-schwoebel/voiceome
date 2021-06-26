@@ -37,11 +37,15 @@ git clone git@github.com:jim-schwoebel/voiceome.git
 cd voiceome
 ```
 
-Now install various libraries with Homebrew and install python 3.6.5 (if you don't have Homebrew, install it before this step [following these instructions](https://brew.sh/)):
+Now install various libraries with Homebrew (if you don't have Homebrew, install it before this step [following these instructions](https://brew.sh/)):
 ```
 brew install ffmpeg sox autoconf automake m4 libtool autoconf gcc portaudio lasound pyenv pyenv-virtualenv bzip2 zlib asdf
 brew unlink python
 brew link bzip2
+```
+
+Now setup python 3.6.5 with pyenv:
+```
 echo 'eval "$(pyenv init -)"' >> ~/.zshrc
 LDFLAGS="-L/usr/local/opt/zlib/lib -L/usr/local/opt/bzip2/lib" \
 CPPFLAGS="-I/usr/local/opt/zlib/include -I/usr/local/opt/bzip2/include" \
