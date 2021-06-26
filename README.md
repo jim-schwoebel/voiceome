@@ -47,6 +47,11 @@ brew install ffmpeg sox autoconf automake m4 libtool autoconf gcc portaudio laso
 brew link bzip2
 ```
 
+Now put bzip2 in your path:
+```
+echo 'export PATH="/usr/local/opt/bzip2/bin:$PATH"' >> ~/.zshrc
+```
+
 Now install Python 3.7.1 with pyenv:
 ```
 pyenv install 3.7.3
