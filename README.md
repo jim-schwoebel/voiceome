@@ -46,6 +46,16 @@ Now install various libraries with Homebrew (if you don't have Homebrew, install
 brew install ffmpeg sox autoconf automake m4 libtool autoconf gcc portaudio lasound pyenv
 ```
 
+Now install Python 3.7.1 with pyenv:
+```
+pyenv install 3.7.3
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init --path)"
+pyenv shell 3.7.3
+pyenv shell --unset
+```
+
 Next, install OpenSMILE:
 ```
 cd scripts/features/helpers/opensmile/opensmile-2.3.0
