@@ -42,8 +42,7 @@ Now install various libraries with Homebrew and install python 3.6.5 (if you don
 brew install ffmpeg sox autoconf automake m4 libtool autoconf gcc portaudio lasound pyenv pyenv-virtualenv bzip2 zlib asdf
 brew unlink python
 brew link bzip2
-asdf plugin-add python
-asdf install python 3.6.9 && asdf global python 3.6.9
+echo 'eval "$(pyenv init -)"' >> ~/.zshrc
 ```
 
 Now install dependencies:
