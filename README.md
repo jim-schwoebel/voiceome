@@ -46,12 +46,11 @@ brew link bzip2
 
 Now setup python 3.6.5 with pyenv:
 ```
-echo 'eval "$(pyenv init -)"' >> ~/.zshrc
+echo 'eval "$(pyenv init -)"' >> ~/.zshrc 
 LDFLAGS="-L/usr/local/opt/zlib/lib -L/usr/local/opt/bzip2/lib" \
 CPPFLAGS="-I/usr/local/opt/zlib/include -I/usr/local/opt/bzip2/include" \
-pyenv install 3.6.5
-pyenv global 3.6.5
-pyenv shell 3.6.5
+pyenv install 3.8.6
+pyenv global 3.8.6
 ```
 
 Now install dependencies:
