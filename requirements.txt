@@ -24,6 +24,7 @@ pathy>=0.5.2
 pooch>=1.4.0
 preshed>=3.0.5
 pycparser>=2.20
+Pyfiglet==0.8.post1
 pydantic>=1.7.4
 pyparsing>=2.4.7
 python-dateutil>=2.8.1
