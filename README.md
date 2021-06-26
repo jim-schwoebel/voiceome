@@ -43,7 +43,7 @@ brew install ffmpeg sox autoconf automake m4 libtool autoconf gcc portaudio laso
 brew link bzip2
 ```
 
-Now install python 3.8.6 with [pyenv](https://realpython.com/intro-to-pyenv/) / upgrade pip:
+Now install python 3.6.5 with [pyenv](https://realpython.com/intro-to-pyenv/) / upgrade pip:
 ```
 LDFLAGS="-L/usr/local/opt/zlib/lib -L/usr/local/opt/bzip2/lib" \
 CPPFLAGS="-I/usr/local/opt/zlib/include -I/usr/local/opt/bzip2/include" \
