@@ -52,7 +52,7 @@ pyenv install 3.7.3
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init --path)"
-pyenv shell 3.7.3
+pyenv shell 3.7.5
 pyenv shell --unset
 ```
 
