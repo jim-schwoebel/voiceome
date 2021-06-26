@@ -44,14 +44,14 @@ brew unlink python
 brew link bzip2
 ```
 
-Now setup python 3.6.5 with pyenv (note you need to replace line 2 {YOUR USERNAME} with your account username on mac - e.g. /Users/jim/.pyenv/plugins/python-build/../.. && git pull && cd -):
+Now setup python 3.6.5 with pyenv:
 ```
 echo 'eval "$(pyenv init -)"' >> ~/.zshrc 
-cd /Users/{YOUR USERNAME}/.pyenv/plugins/python-build/../.. && git pull && cd -
+cd /Users/$USER/.pyenv/plugins/python-build/../.. && git pull && cd -
 LDFLAGS="-L/usr/local/opt/zlib/lib -L/usr/local/opt/bzip2/lib" \
 CPPFLAGS="-I/usr/local/opt/zlib/include -I/usr/local/opt/bzip2/include" \
-pyenv install 3.8.6
-pyenv global 3.8.6
+pyenv install 3.9.5
+pyenv global 3.9.5
 ```
 
 Now install dependencies (along with matplotlib, new version):
