@@ -39,9 +39,8 @@ cd voiceome
 
 Now install various libraries with Homebrew (if you don't have Homebrew, install it before this step [following these instructions](https://brew.sh/)):
 ```
-brew install ffmpeg sox autoconf automake m4 libtool autoconf gcc portaudio lasound pyenv bzip2 zlib
+brew install ffmpeg sox autoconf automake m4 libtool autoconf gcc portaudio lasound pyenv pyenv-virtualenv bzip2 zlib
 brew link bzip2
-brew unlink python3
 ```
 
 Now install python 3.8.6 with [pyenv](https://realpython.com/intro-to-pyenv/) / upgrade pip:
