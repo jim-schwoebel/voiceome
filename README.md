@@ -43,7 +43,8 @@ pip3 install -r requirements.txt
 
 Now install various libraries with Homebrew (if you don't have Homebrew, install it before this step [following these instructions](https://brew.sh/)):
 ```
-brew install ffmpeg sox autoconf automake m4 libtool autoconf gcc portaudio lasound pyenv
+brew install ffmpeg sox autoconf automake m4 libtool autoconf gcc portaudio lasound pyenv bzip2
+brew link bzip2
 ```
 
 Now install Python 3.7.1 with pyenv:
