@@ -631,6 +631,8 @@ parser.add_option("--u", "--urls", dest="urls",
 # pull arguments from CLI
 try:
 	agegender = options.age_gender
+	if agegender is None:
+		agegender = settings['DefaultAgeGender']
 except:
 	agegender = settings['DefaultAgeGender']
 try:
@@ -643,10 +645,14 @@ except:
 	directories=[os.getcwd()]
 try:
 	feature_embedding = options.feature_embedding
+	if feature_embedding is None:
+		feature_embedding=settings['FeatureEmbedding']
 except:
 	feature_embedding=settings['FeatureEmbedding']
 try:
 	feature = options.feature
+	if feature is None:
+		feature=settings['FeatureType']
 except:
 	feature=settings['FeatureType']
 try:
@@ -655,6 +661,8 @@ except:
 	pass
 try:
 	task = options.task
+	if task is None:
+		task=settings['Task']
 except:
 	task=settings['Task']
 try:
@@ -663,14 +671,18 @@ except:
 	pass
 try:
 	vtype = options.visualizationtype.lower()
+	if vtype is None:
+		vtype = 'table_across_tasks'
 except:
 	vtype = 'table_across_tasks'
 try:
-	verbosity=options.verbosity.lower()
+	verbosity=options.verbosity.title()
 	if verbosity == 'True':
 		verbosity=True
 	elif verbosity=='False':
 		verbosity=False
+	elif verbosity is None:
+		verbosity=True
 except:
 	verbosity=True
 
