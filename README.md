@@ -43,7 +43,7 @@ pip3 install -r requirements.txt
 
 Now install various libraries with Homebrew (if you don't have Homebrew, install it before this step [following these instructions](https://brew.sh/)):
 ```
-brew install ffmpeg sox autoconf automake m4 libtool autoconf gcc portaudio lasound
+brew install ffmpeg sox autoconf automake m4 libtool autoconf gcc portaudio lasound pyenv
 ```
 
 Next, install OpenSMILE:
