@@ -642,7 +642,7 @@ try:
 except:
 	directories=[os.getcwd()]
 try:
-	feature_embedding = options.feature_embedding.lower()
+	feature_embedding = options.feature_embedding
 except:
 	feature_embedding=settings['FeatureEmbedding']
 try:
@@ -650,11 +650,11 @@ try:
 except:
 	feature=settings['FeatureType']
 try:
-	file = options.file.lower()
+	file = options.file
 except:
 	pass
 try:
-	task = options.task.lower()
+	task = options.task
 except:
 	task=settings['Task']
 try:
