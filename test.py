@@ -375,10 +375,10 @@ class test_visualization(unittest.TestCase):
             if listdir[i].endswith('.png'):
                 os.remove(listdir[i])
         os.chdir(curdir)
-        os.system('python3 cli.py --command visualize --agegender FourtiesMale --vtype bar_cohorts --agegender ThirtiesMale --agegender FiftiesMale --verbosity False')
+        os.system('python3 cli.py --command visualize --agegender FourtiesMale --vtype bar_cohorts --agegender ThirtiesMale --verbosity False')
         os.chdir(visual_dir)
         listdir=os.listdir()
-        if 'OpensmileFeatures_F0semitoneFrom27.5Hz_sma3nz_amean_FourtiesMale]_ThirtiesMale.png' in listdir:
+        if 'OpensmileFeatures_F0semitoneFrom27.5Hz_sma3nz_amean_FourtiesMale_ThirtiesMale.png' in listdir:
             b=True
         else:
             b=False
