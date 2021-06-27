@@ -56,7 +56,7 @@ eval "$(pyenv init -)"
 export PATH="/usr/local/opt/llvm@8/bin:$PATH"
 ```
 
-Now setup python 3.6.5 with pyenv:
+Now setup python 3.9.5 with pyenv:
 ```
 echo 'eval "$(pyenv init -)"' >> ~/.zshrc 
 cd /Users/$USER/.pyenv/plugins/python-build/../.. && git pull && cd -
