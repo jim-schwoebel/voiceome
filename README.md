@@ -39,9 +39,21 @@ cd voiceome
 
 Now install various libraries with Homebrew (if you don't have Homebrew, install it before this step [following these instructions](https://brew.sh/)):
 ```
-brew install ffmpeg sox autoconf automake m4 libtool autoconf gcc portaudio lasound pyenv pyenv-virtualenv bzip2 zlib asdf
+brew install ffmpeg sox autoconf automake m4 libtool autoconf gcc portaudio lasound pyenv pyenv-virtualenv bzip2 zlib llvm@8
 brew unlink python
 brew link bzip2
+```
+
+Edit some environment variables in .bash_profile:
+```
+nano ~/.bash_profile
+```
+Then paste this in:
+```
+export LDFLAGS="-L/usr/local/opt/llvm@8/lib"
+export CPPFLAGS="-I/usr/local/opt/llvm@8/include"
+eval "$(pyenv init -)"
+export PATH="/usr/local/opt/llvm@8/bin:$PATH"
 ```
 
 Now setup python 3.6.5 with pyenv:
