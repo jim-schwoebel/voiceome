@@ -44,6 +44,11 @@ brew unlink python
 brew link bzip2
 ```
 
+Now install [Xcode](https://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/) if you have not already:
+```
+sudo xcode-select --install
+```
+
 Edit some environment variables in .bash_profile:
 ```
 nano ~/.bash_profile
