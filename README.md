@@ -28,7 +28,7 @@ Anyone >18 years of age that could speak English was eligible to participate in 
 |  ![](https://github.com/jim-schwoebel/voiceome/blob/main/assets/images/thumbnails/overview.png) | ![](https://github.com/jim-schwoebel/voiceome/blob/main/assets/images/thumbnails/locations.png) |
 
 ## Getting started
-This assumes you are using a MacOS-related computer.
+This assumes you are using a MacOS-related computer with a MacOS Big Sur operating system.
 
 ### MacOS
 To get started, clone this repository in a virtual environment and install requirements.txt (note this can take 10 minutes):
