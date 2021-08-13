@@ -48,6 +48,7 @@ Edit some environment variables in .bash_profile:
 ```
 nano ~/.bash_profile
 ```
+
 Then paste this in:
 ```
 export LDFLAGS="-L/usr/local/opt/llvm@8/lib"
@@ -56,7 +57,7 @@ eval "$(pyenv init -)"
 export PATH="/usr/local/opt/llvm@8/bin:$PATH"
 ```
 
-Now setup python 3.9.5 with pyenv:
+Now go back to the main terminal. Now setup python 3.9.5 with pyenv:
 ```
 echo 'eval "$(pyenv init -)"' >> ~/.zshrc 
 cd /Users/$USER/.pyenv/plugins/python-build/../.. && git pull && cd -
