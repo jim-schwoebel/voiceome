@@ -748,8 +748,10 @@ Note you can clone these surveys @ https://surveylex.com and replicate our work 
 ## Cite us
 If you incorporate our work in your research, feel free to reference us with the APA format below:
 ```
-Schwoebel, James, et al. "The Voiceome Study: A Longitudinal Normative Dataset and Protocol for Speech and Language Biomarker Research." Nature Methods. 2021.
+Schwoebel, James, et al. "A Longitudinal Normative Dataset and Protocol for Speech and Language Biomarker Research." medRxiv. 2021.
 ```
+
+Preprint link can be found [here](https://www.medrxiv.org/content/10.1101/2021.08.16.21262125v1).
 
 ## Data access
 We have tried to make acoustic and linguistic feature reference ranges for each task as open as possible. These are available in this repository under an Apache 2.0 license.
