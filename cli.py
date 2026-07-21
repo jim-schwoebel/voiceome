@@ -831,7 +831,7 @@ if str(command) != 'None' and command in commands:
 				print('ERROR - you need to pass at least 2 instances of agegender in order for it to be recognized.')
 
 		else:
-			print("Visualization type (%s) not recognized. Please try again with a new --vtype paramater (options: ['bar', 'bar_cohorts'])."%(vtype))
+			print("Visualization type (%s) not recognized. Please try again with a new --vtype parameter (options: ['bar', 'bar_cohorts'])."%(vtype))
 	elif command == 'settings':
 		'''
 		Change various settings within the voiceome API in settings.json
